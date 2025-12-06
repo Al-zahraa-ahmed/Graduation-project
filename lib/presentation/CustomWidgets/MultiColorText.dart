@@ -10,7 +10,7 @@ class MultiColorText extends StatelessWidget {
       children: [
         Text(
           "$txt1",
-          style: TextStyle(fontSize: 13, color: Color(0xff999999)),
+          style: TextStyle(fontWeight: FontWeight.w500,fontSize: 13, color: Color(0xff999999)),
         ),
         Text(
           " $txt2",

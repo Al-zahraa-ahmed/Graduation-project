@@ -1,13 +1,14 @@
+
 import 'package:flutter/material.dart';
 import 'package:graduation_project/presentation/CustomWidgets/Head1Text.dart';
 import 'package:graduation_project/presentation/CustomWidgets/MultiColorText.dart';
-import 'package:graduation_project/presentation/LogIn/LoginScreen.dart';
+import 'package:graduation_project/presentation/LogIn/Widgets/LoginForm.dart';
+import 'package:graduation_project/presentation/SignUp/SignUpScreen.dart';
 import 'package:graduation_project/presentation/SignUp/Widgets/GoogleOrFacebook.dart';
-import 'package:graduation_project/presentation/SignUp/Widgets/RegistrationForm.dart';
 import 'package:graduation_project/presentation/SignUp/Widgets/SeparatorLine.dart';
 
-class SignupContainer extends StatelessWidget {
-  const SignupContainer({super.key});
+class LoginContainer extends StatelessWidget {
+  const LoginContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +24,7 @@ class SignupContainer extends StatelessWidget {
             spreadRadius: 2,
           ),
         ],
-        color: Colors.white,
+        color: const Color.fromARGB(255, 255, 255, 255),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
@@ -31,12 +32,12 @@ class SignupContainer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Head1Text(txt: "Get Started"),
-          SizedBox(height: 31),
-          RegistrationForm(),
-          SizedBox(height: 35),
-          SeparatorLine(txt: "Or sign up with"),
+          Head1Text(txt: "welcome Back!"),
+          SizedBox(height: 51),
+          LoginForm(),
           SizedBox(height: 25),
+          SeparatorLine(txt: "Or log in with"),
+          SizedBox(height: 35),
           GoogleOrFacebook(),
           SizedBox(height: 20),
           GestureDetector(
@@ -44,15 +45,15 @@ class SignupContainer extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (buildContext) {
-                    return Loginscreen();
+                  builder: (buildcontext) {
+                    return SignUp();
                   },
                 ),
               );
             },
             child: MultiColorText(
-              txt1: "Already have an account?",
-              txt2: "Log in",
+              txt1: "Don’t have an account",
+              txt2: "Sign up",
             ),
           ),
         ],
