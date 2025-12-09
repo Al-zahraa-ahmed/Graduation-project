@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/presentation/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/presentation/CustomWidgets/CustomTextField.dart';
 import 'package:graduation_project/presentation/CustomWidgets/MultiColorText.dart';
+import 'package:graduation_project/presentation/Otp/OtpPage.dart';
 
 class RegistrationForm extends StatelessWidget {
   const RegistrationForm({super.key});
@@ -13,11 +13,11 @@ class RegistrationForm extends StatelessWidget {
       child: Column(
         children: [
           CustomTextField(label: "Name", hint: "Enter your name"),
-          SizedBox(height: 60),
+          SizedBox(height: 50),
           CustomTextField(label: "Email", hint: "Enter Your Email"),
-          SizedBox(height: 60),
+          SizedBox(height: 50),
           CustomTextField(label: "Password", hint: "Enter Your Password"),
-          SizedBox(height: 60),
+          SizedBox(height: 50),
           CustomTextField(
             label: "Confirm Password",
             hint: "Confirm Your Password",
@@ -31,7 +31,10 @@ class RegistrationForm extends StatelessWidget {
                   value: false,
                   onChanged: (newvalue) {},
                 ),
-                MultiColorText(txt1: "I agree to the processing of",txt2: "Personal data",)
+                MultiColorText(
+                  txt1: "I agree to the processing of",
+                  txt2: "Personal data",
+                ),
               ],
             ),
           ),
@@ -45,3 +48,4 @@ class RegistrationForm extends StatelessWidget {
     );
   }
 }
+

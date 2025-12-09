@@ -1,5 +1,5 @@
-
 import 'package:flutter/material.dart';
+import 'package:graduation_project/presentation/Otp/OtpPage.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({super.key, required this.txt});
@@ -14,7 +14,16 @@ class CustomButton extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 10),
         backgroundColor: Color(0xff8484E1),
       ),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (buildContext) {
+              return OtpPage();
+            },
+          ),
+        );
+      },
       child: Text(
         txt,
         style: TextStyle(

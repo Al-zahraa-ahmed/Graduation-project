@@ -11,7 +11,7 @@ class SignUp extends StatelessWidget {
       body: Column(
         children: [
           SizedBox(height: 100),
-          Expanded(child: SingleChildScrollView(child: SignupContainer())),
+          Expanded(child: SignupContainer()),
         ],
       ),
     );
