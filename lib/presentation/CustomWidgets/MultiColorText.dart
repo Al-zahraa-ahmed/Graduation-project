@@ -24,3 +24,27 @@ class MultiColorText extends StatelessWidget {
     );
   }
 }
+class MultiColorText2 extends StatelessWidget {
+  const MultiColorText2({super.key,required this.txt1,required this.txt2});
+  final String txt1, txt2;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "$txt1",
+          style: TextStyle(fontSize: 13, color: Colors.black),
+        ),
+        Text(
+          " $txt2",
+          style: TextStyle(
+            fontSize: 13,
+            color: Color(0xff8484E1),
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ],
+    );
+  }
+}

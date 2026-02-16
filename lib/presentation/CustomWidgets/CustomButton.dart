@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/presentation/Otp/OtpPage.dart';
+
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.txt});
+  const CustomButton({super.key, required this.txt, this.onpressed});
   final String txt;
+  final void Function()? onpressed;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -11,19 +12,10 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(16),
         ),
-        padding: EdgeInsets.symmetric(vertical: 10),
+        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 55),
         backgroundColor: Color(0xff8484E1),
       ),
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (buildContext) {
-              return OtpPage();
-            },
-          ),
-        );
-      },
+      onPressed: onpressed,
       child: Text(
         txt,
         style: TextStyle(

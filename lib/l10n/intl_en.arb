@@ -1,0 +1,184 @@
+{
+    "screen1":"onboarding introduction",
+    "screen1_title":"Learn and Communicate with Sign Language",
+    "screen1_desc":"Learn sign language , translate instantly and connect with confidence.",
+
+    "screen2":"onbroading learning",
+    "screen2_title":"Learn Sign Language Visually",
+    "screen2_desc":"Interactive lessons , videos , and quizzes designed for everyone.",
+
+    "screen3":"onboarding translation",
+    "screen3_title":"Instant Translation",
+    "screen3_desc":"Translate sign langauge and speech to text in realtime.",
+
+    "screen4":"onboarding games",
+    "screen4_title":"Learn Through Play",
+    "screen4_desc":"Games that help you practise signs and improve faster.",
+
+    "onboarding_btn":"Next",
+    "skip_btn":"Skip",
+    
+    "screen5":"onboarding mode",
+    "screen5_title":"How would you like to use the app?",
+    "screen5_desc1":"Choose a mode to get the best experience.You can change this later in settings.",
+    "mode1":"Platform Mode",
+    "mode1_desc":"Learn sign language through lessons, games, and quizzes.",
+    "mode2":"Translation Mode",
+    "mode2_desc":"Translate sign language and speech instantly",
+    "screen5_desc2":"Not sure?You cann switch modes anytime.Both Modes include full accessibility support.",
+
+    "screen6":"welcome1",
+    "screen6_title":"Welcome to",
+    "screen6_transmode":"TRANS MODE",
+    "screen6_desc":"This mode helps you commuincate instanlty using real-time translation.",
+    
+    "screen7":"welcome2",
+    "screen7_title":"Welcome to",
+    "screen7_platformmode":"PLATFORM Mode",
+    "screen7_desc":"This mode helps you learn sign language step by step through interactive content.",
+
+    "welcome_btn":"Get Started",
+    "welcome.desc":"Already have an account?Log in",
+
+    "screen8":"Sign up",
+    "register.title":"Get Started",
+    "username":"username",
+    "email":"Email",
+    "password":"Password",
+    "password.confirmation":"Password Confirmation",
+    "register.alternative":"Or sign up with",
+    "register.already":"Already have an account?Log in",
+    "agreement":"I agree to the processing of personal data",
+    "register.btn":"Sign Up",
+
+    "screen9":"login",
+    "login.title":"Welcome Back!",
+    "remember":"Remember me",
+    "forget.hyper":"Forgot Password?",
+    "login.btn":"Log In",
+    "login.alternative":"Or log in with",
+
+    "enter.username":"Enter your username",
+    "enter.email":"Enter you email",
+    "enter.pass":"Enter your password",
+    "enter.pass.conf":"Enter your password",
+
+    "screen10":"otp code",
+    "otp.title":"Enter your OTP",
+    "otp.desc":"For you security, We have sent a One-Time code to your e-mail user@gmail.com.Enter it to access your account.",
+    "otp.resent":"Resend code?",
+    "otp.btn":"Verify",
+    "otp.sec":"Remaining",
+
+    "screen20":"Forget Password",
+    "forget.title":"Forget Password?",
+    "forget.desc":"Please enter your email to recieve a confirmation code to set a new password",
+    "forget.email":"Email",
+    "forget.field":"Enter your email",
+    "forget.btn":"Confirm mail",
+
+    "screen21":"New Password",
+    "new.title":"Set New Password",
+    "new.desc":"Your new password should be different from the previous old password",
+    "new.password":"Password",
+    "new.field1":"Enter your password",
+    "new.warning1":"Must be at least 8 characters",
+    "new.confirm":"Confirmed Password",
+    "new.field2":"Enter your password",
+    "new.warning2":"Both passwords must match",
+    "new.btn":"Reset Password",
+
+    "screen11":"home for learning",
+    "home1.welcome":"Welcome Back!",
+    "home1.message":"Continue yout lessons!",
+    "home1.submessage":"Because everyone deserves to be understood",
+    "home1.services":"Our Services",
+    "home1.service1":"Learn Sign Language",
+    "home1.service1.desc":"Start from the basics and build your signing skills step by step.",
+    "home1.service2":"Dictionary",
+    "home1.service2.desc":"Find any sign instantly , exactly when you need it.",
+    "home1.service3":"Quick Practice",
+    "home1.service3.desc":"Consistent practice , meaningful results.",
+    "home1.service4":"Game To Learn",
+    "home1.service4.desc":"Interactive games to learn sign language.",
+
+    "screen12":"Category",
+    "categories.title":"Categories",
+    "categories.search":"Search",
+
+    "screen13":"lessons",
+    "lessons.vocab":"Vocabulary",
+    "lessons.num":"Lessons",
+    "lessons.all":"All Lessons",
+    "lessons.viewed":"Viewed",
+
+    "screen14":"quiz",
+    "quiz.title":"Check your understanding",
+    "quiz.desc":"Choose a category to begin!",
+    "quiz.btn":"Start now!",
+
+    "screen15":"question",
+    "question.num":"Question",
+    
+    "screen16":"quizSubmit",
+    "submit.title":"Quiz Completed!",
+    "submit.desc":"You've reached the end of the quiz",
+    "submit.btn1":"Submit",
+    "submit.btn2":"Cancel",
+
+    "screen17":"results",
+    "result.score1":"Score",
+    "result.score2":"Out Of",
+    "result.time":"Time",
+    "result.sec":"Seconds",
+    "result.play":"Play Again",
+    "result.review":"Review Answers",
+    "result.share":"Share Score",
+    "result.home":"Return Home",
+
+    "screen18":"Profile information",
+    "profile.username":"Username",
+    "profile.name":"Name",
+    "profile.email":"Email",
+    "profile.current.pass":"Current Password",
+    "profile.new.pass":"New Password",
+    "profile.confirm.pass":"Confirm Password",
+    "profile.btn1":"Save Changes",
+    "profile.btn2":"Cancel",
+
+    "screen19":"profile",
+    "account.title":"Account",
+    "account.info":"Profile information",
+    "account.lang":"Language",
+    "lang.ar":"ar",
+    "lang.en":"en",
+    "account.mode":"App mode",
+    "mode.ass":"Assistive Mode",
+    "mode.learn":"Learning Mode",
+    "about.title":"About",
+    "about.about":"About us",
+    "about.terms":"Terms & Conditions",
+    "about.privacy":"Privacy Policy",
+    "about.version":"App version",
+    "support.title":"Support",
+    "support.contact":"Contact Us",
+    "support.help":"Help Center",
+    "logout":"Log out",
+    "account.delete":"Delete Account",
+    "delete.title":"Confirm Account Deletion",
+    "delete.desc":"Are you sure you want to delete your account?This action is permanent and cannot be undone.",
+    "delete.btn1":"Delete Account",
+    "delete.btn2":"Cancel",
+
+
+    "screen22": "Terms & Conditions",
+    "term.desc": "Welcome to SignLingo.\nBy downloading, accessing, or using this application, you agree to these Terms & Conditions.\nIf you do not agree, please do not use the app.\n\n1. About SignLingo\nSignLingo is an educational and communication support application designed to help deaf and mute users learn, understand, and practice sign language.\nThe app is not a medical, legal, or professional service and should not be used as a substitute for professional advice.\n\n2. Eligibility\nYou must be at least 13 years old to use SignLingo.\nIf you are under 13, a parent or legal guardian must approve your use of the app.\nBy using the app, you confirm that the information you provide is accurate.\n\n3. User Accounts\nYou are responsible for keeping your account information secure.\nYou are responsible for all activities that occur under your account.\nCreating fake accounts or misusing the app is not allowed.\n\n4. Acceptable Use\nYou agree to use SignLingo:\nIn a respectful and lawful manner\nOnly for its intended educational and communication purposes\nYou agree not to:\nMisuse or abuse the app\nAttempt to hack, copy, or modify the app\nUpload harmful, offensive, or inappropriate content\nUse the app in a way that may harm other users\n\n5. Camera, Video & Media Use\nSignLingo may request access to your device’s camera or media features to:\nPractice or recognize sign language\nImprove learning and interaction\nWe do not record, store, or share videos or images unless:\nIt is clearly stated\nYou give explicit permission\nYou can manage permissions through your device settings at any time.\n\n6. Content Accuracy & Limitations\nSign language may vary by region, culture, and context.\nWhile we aim to provide accurate content, SignLingo does not guarantee 100% accuracy in translations or learning materials.\nThe app should be used as a learning aid, not a certified translation tool.\n\n7. Intellectual Property\nAll content in SignLingo, including:\nText\nVideos\nImages\nIcons\nDesign and branding\nis owned by SignLingo and protected by intellectual property laws.\nYou may not copy, distribute, or reuse any content without written permission.\n\n8. Privacy\nYour privacy matters to us. Any personal information collected is handled according to our Privacy Policy.\nPlease review the Privacy Policy to understand how your data is collected, used, and protected.\n\n9. Limitation of Liability\nSignLingo is provided \"as is\" and \"as available.\"\nWe are not responsible for:\nMisinterpretations or misunderstandings\nErrors in translation or learning content\nAny direct or indirect damages resulting from using the app\nUse of the app is at your own responsibility.\n\n10. Account Suspension or Termination\nWe reserve the right to:\nSuspend or terminate accounts\nRestrict access\nif a user violates these Terms & Conditions or misuses the app.\n\n11. Changes to Terms\nWe may update these Terms & Conditions from time to time.\nContinued use of SignLingo after updates means you accept the revised terms.\n\n12. Contact Us\nIf you have questions, feedback, or need support, please contact us:\n📧 support@signlingo.com\n\n♿ Accessibility Commitment\nSignLingo is built with accessibility in mind.\nWe aim to provide:\nClear language\nInclusive design\nSupportive user experience for deaf and mute users"
+
+    
+
+
+
+
+    
+
+}
