@@ -1,7 +1,7 @@
 import 'dart:async' show Timer;
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/presentation/CustomWidgets/CustomButton.dart';
+import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 
 class OtpPage extends StatefulWidget {
   const OtpPage({super.key});

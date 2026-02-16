@@ -417,9 +417,35 @@ class S {
     );
   }
 
-  // skipped getter for the 'forget.title' key
+  /// `Forget Password?`
+  String get forget_title {
+    return Intl.message(
+      'Forget Password?',
+      name: 'forget_title',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'forget.desc' key
+  /// `Please enter your email to recieve a confirmation`
+  String get forget_desc {
+    return Intl.message(
+      'Please enter your email to recieve a confirmation',
+      name: 'forget_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `code to set a new password`
+  String get forget_desc2 {
+    return Intl.message(
+      'code to set a new password',
+      name: 'forget_desc2',
+      desc: '',
+      args: [],
+    );
+  }
 
   // skipped getter for the 'forget.email' key
 
@@ -432,23 +458,105 @@ class S {
     return Intl.message('New Password', name: 'screen21', desc: '', args: []);
   }
 
-  // skipped getter for the 'new.title' key
+  /// `Set New Password`
+  String get new_title {
+    return Intl.message(
+      'Set New Password',
+      name: 'new_title',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'new.desc' key
+  /// `Your new password should be different from the previous`
+  String get new_desc {
+    return Intl.message(
+      'Your new password should be different from the previous',
+      name: 'new_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `old password`
+  String get new_desc2 {
+    return Intl.message('old password', name: 'new_desc2', desc: '', args: []);
+  }
 
   // skipped getter for the 'new.password' key
 
   // skipped getter for the 'new.field1' key
 
-  // skipped getter for the 'new.warning1' key
+  /// `Must be at least 8 characters`
+  String get new_warning1 {
+    return Intl.message(
+      'Must be at least 8 characters',
+      name: 'new_warning1',
+      desc: '',
+      args: [],
+    );
+  }
 
   // skipped getter for the 'new.confirm' key
 
   // skipped getter for the 'new.field2' key
 
-  // skipped getter for the 'new.warning2' key
+  /// `Both passwords must match`
+  String get new_warning2 {
+    return Intl.message(
+      'Both passwords must match',
+      name: 'new_warning2',
+      desc: '',
+      args: [],
+    );
+  }
 
   // skipped getter for the 'new.btn' key
+
+  /// `Password Changed `
+  String get passwordchanged {
+    return Intl.message(
+      'Password Changed ',
+      name: 'passwordchanged',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `successfully!`
+  String get success {
+    return Intl.message('successfully!', name: 'success', desc: '', args: []);
+  }
+
+  /// `Your password has been changed successfully,`
+  String get confirmsg {
+    return Intl.message(
+      'Your password has been changed successfully,',
+      name: 'confirmsg',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `we will let you know if there are more problems`
+  String get confirmsg2 {
+    return Intl.message(
+      'we will let you know if there are more problems',
+      name: 'confirmsg2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// ` with your account `
+  String get confirmsg3 {
+    return Intl.message(
+      ' with your account ',
+      name: 'confirmsg3',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `home for learning`
   String get screen11 {

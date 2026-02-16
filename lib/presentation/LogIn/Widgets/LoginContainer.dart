@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:graduation_project/presentation/CustomWidgets/Head1Text.dart';
-import 'package:graduation_project/presentation/CustomWidgets/MultiColorText.dart';
+import 'package:graduation_project/Core/CustomWidgets/Head1Text.dart';
+import 'package:graduation_project/Core/CustomWidgets/MultiColorText.dart';
 import 'package:graduation_project/presentation/LogIn/Widgets/LoginForm.dart';
 import 'package:graduation_project/presentation/SignUp/SignUpScreen.dart';
 import 'package:graduation_project/presentation/SignUp/Widgets/GoogleOrFacebook.dart';

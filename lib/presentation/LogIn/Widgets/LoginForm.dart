@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
-import 'package:graduation_project/presentation/CustomWidgets/CustomButton.dart';
-import 'package:graduation_project/presentation/CustomWidgets/CustomTextField.dart';
+import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
+import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
+import 'package:graduation_project/presentation/ForgetPasswordScreens/ForgetPassword.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -29,12 +29,24 @@ class LoginForm extends StatelessWidget {
                   style: TextStyle(fontSize: 13, color: Color(0xff999999)),
                 ),
                 Spacer(),
-                Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Color(0xff1E1E7B),
-                    fontWeight: FontWeight.w500,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (buildcontext) {
+                          return Forgetpassword();
+                        },
+                      ),
+                    );
+                  },
+                  child: Text(
+                    "Forgot Password?",
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: Color(0xff1E1E7B),
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ],
@@ -50,3 +62,5 @@ class LoginForm extends StatelessWidget {
     );
   }
 }
+
+

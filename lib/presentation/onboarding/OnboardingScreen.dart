@@ -2,7 +2,7 @@ import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/Appmodes/ChooseAppMode.dart';
-import 'package:graduation_project/presentation/CustomWidgets/CustomButton.dart';
+import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/presentation/onboarding/Widgets/Screen.dart';
 
 

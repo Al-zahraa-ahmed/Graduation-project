@@ -25,7 +25,21 @@ class MessageLookup extends MessageLookupByLibrary {
     "agreement": MessageLookupByLibrary.simpleMessage(
       "I agree to the processing of personal data",
     ),
+    "confirmsg": MessageLookupByLibrary.simpleMessage(
+      "Your password has been changed successfully,",
+    ),
+    "confirmsg2": MessageLookupByLibrary.simpleMessage(
+      "we will let you know if there are more problems",
+    ),
+    "confirmsg3": MessageLookupByLibrary.simpleMessage(" with your account "),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
+    "forget_desc": MessageLookupByLibrary.simpleMessage(
+      "Please enter your email to recieve a confirmation",
+    ),
+    "forget_desc2": MessageLookupByLibrary.simpleMessage(
+      "code to set a new password",
+    ),
+    "forget_title": MessageLookupByLibrary.simpleMessage("Forget Password?"),
     "logout": MessageLookupByLibrary.simpleMessage("Log out"),
     "mode1": MessageLookupByLibrary.simpleMessage("Platform Mode"),
     "mode1_desc": MessageLookupByLibrary.simpleMessage(
@@ -35,8 +49,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "mode2_desc": MessageLookupByLibrary.simpleMessage(
       "Translate sign language and speech instantly",
     ),
+    "new_desc": MessageLookupByLibrary.simpleMessage(
+      "Your new password should be different from the previous",
+    ),
+    "new_desc2": MessageLookupByLibrary.simpleMessage("old password"),
+    "new_title": MessageLookupByLibrary.simpleMessage("Set New Password"),
+    "new_warning1": MessageLookupByLibrary.simpleMessage(
+      "Must be at least 8 characters",
+    ),
+    "new_warning2": MessageLookupByLibrary.simpleMessage(
+      "Both passwords must match",
+    ),
     "onboarding_btn": MessageLookupByLibrary.simpleMessage("Next"),
     "password": MessageLookupByLibrary.simpleMessage("Password"),
+    "passwordchanged": MessageLookupByLibrary.simpleMessage(
+      "Password Changed ",
+    ),
     "remember": MessageLookupByLibrary.simpleMessage("Remember me"),
     "screen1": MessageLookupByLibrary.simpleMessage("onboarding introduction"),
     "screen10": MessageLookupByLibrary.simpleMessage("otp code"),
@@ -104,6 +132,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "screen8": MessageLookupByLibrary.simpleMessage("Sign up"),
     "screen9": MessageLookupByLibrary.simpleMessage("login"),
     "skip_btn": MessageLookupByLibrary.simpleMessage("Skip"),
+    "success": MessageLookupByLibrary.simpleMessage("successfully!"),
     "username": MessageLookupByLibrary.simpleMessage("username"),
     "welcome_btn": MessageLookupByLibrary.simpleMessage("Get Started"),
   };

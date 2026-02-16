@@ -15,6 +15,7 @@ class GraduationProject extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(appBarTheme: AppBarTheme(backgroundColor: Colors.white,),scaffoldBackgroundColor: Colors.white),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         S.delegate,

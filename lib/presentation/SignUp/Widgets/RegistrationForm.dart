@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/presentation/CustomWidgets/CustomButton.dart';
-import 'package:graduation_project/presentation/CustomWidgets/CustomTextField.dart';
-import 'package:graduation_project/presentation/CustomWidgets/MultiColorText.dart';
+import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
+import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
+import 'package:graduation_project/Core/CustomWidgets/MultiColorText.dart';
 import 'package:graduation_project/presentation/Otp/OtpPage.dart';
 
 class RegistrationForm extends StatelessWidget {
