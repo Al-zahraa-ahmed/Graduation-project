@@ -693,9 +693,40 @@ class S {
     return Intl.message('Category', name: 'screen12', desc: '', args: []);
   }
 
-  // skipped getter for the 'categories.title' key
+  /// `Categories`
+  String get categories_title {
+    return Intl.message(
+      'Categories',
+      name: 'categories_title',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'categories.search' key
+  /// `Search`
+  String get categories_search {
+    return Intl.message(
+      'Search',
+      name: 'categories_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Family`
+  String get family {
+    return Intl.message('Family', name: 'family', desc: '', args: []);
+  }
+
+  /// `Signs for family and social relationships.`
+  String get familydec {
+    return Intl.message(
+      'Signs for family and social relationships.',
+      name: 'familydec',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `lessons`
   String get screen13 {

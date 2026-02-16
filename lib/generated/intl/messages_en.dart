@@ -25,6 +25,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "agreement": MessageLookupByLibrary.simpleMessage(
       "I agree to the processing of personal data",
     ),
+    "categories_search": MessageLookupByLibrary.simpleMessage("Search"),
+    "categories_title": MessageLookupByLibrary.simpleMessage("Categories"),
     "confirmsg": MessageLookupByLibrary.simpleMessage(
       "Your password has been changed successfully,",
     ),
@@ -33,6 +35,10 @@ class MessageLookup extends MessageLookupByLibrary {
     ),
     "confirmsg3": MessageLookupByLibrary.simpleMessage(" with your account "),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
+    "family": MessageLookupByLibrary.simpleMessage("Family"),
+    "familydec": MessageLookupByLibrary.simpleMessage(
+      "Signs for family and social relationships.",
+    ),
     "forget_desc": MessageLookupByLibrary.simpleMessage(
       "Please enter your email to recieve a confirmation",
     ),

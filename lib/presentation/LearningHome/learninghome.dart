@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/generated/l10n.dart';
+import 'package:graduation_project/presentation/CategouriesPage/CategouriesPage.dart';
 import 'package:graduation_project/presentation/LearningHome/widgets/HomeService.dart';
 import 'package:graduation_project/presentation/LearningHome/widgets/Homecard.dart';
 
@@ -40,10 +41,22 @@ class LearingHome extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
                 children: [
-                  HomeService(
-                    txt1: S.of(context).home1_service1,
-                    txt2: S.of(context).home1_service1_desc,
-                    img: "Assets/images/hands.png",
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (buildcontext) {
+                            return CategoriesPage();
+                          },
+                        ),
+                      );
+                    },
+                    child: HomeService(
+                      txt1: S.of(context).home1_service1,
+                      txt2: S.of(context).home1_service1_desc,
+                      img: "Assets/images/hands.png",
+                    ),
                   ),
                   HomeService(
                     txt1: S.of(context).home1_service2,

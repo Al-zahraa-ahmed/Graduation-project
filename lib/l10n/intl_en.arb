@@ -111,9 +111,12 @@
     "home1_service4_desc":"Interactive games to learn sign language.",
 
     "screen12":"Category",
-    "categories.title":"Categories",
-    "categories.search":"Search",
+    "categories_title":"Categories",
+    "categories_search":"Search",
 
+    "family":"Family",
+    "familydec":"Signs for family and social relationships.",
+    
     "screen13":"lessons",
     "lessons.vocab":"Vocabulary",
     "lessons.num":"Lessons",

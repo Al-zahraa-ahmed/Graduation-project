@@ -11,4 +11,11 @@ abstract class Textstyles {
     fontWeight: FontWeight.w600,
     fontSize: 13,
   );
+  static  TextStyle medium20 = TextStyle(
+    fontWeight: FontWeight.w600,
+    fontSize: 20,
+  );
+  static  TextStyle regular13 = TextStyle(
+    fontSize: 13,
+  );
 }
