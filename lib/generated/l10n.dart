@@ -568,29 +568,125 @@ class S {
     );
   }
 
-  // skipped getter for the 'home1.welcome' key
+  /// `Welcome Back!`
+  String get home1_welcome {
+    return Intl.message(
+      'Welcome Back!',
+      name: 'home1_welcome',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.message' key
+  /// `Continue your lessons!`
+  String get home1_message {
+    return Intl.message(
+      'Continue your lessons!',
+      name: 'home1_message',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.submessage' key
+  /// `Because everyone deserves to be understood`
+  String get home1_submessage {
+    return Intl.message(
+      'Because everyone deserves to be understood',
+      name: 'home1_submessage',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.services' key
+  /// `Our Services`
+  String get home1_services {
+    return Intl.message(
+      'Our Services',
+      name: 'home1_services',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.service1' key
+  /// `Learn Sign Language`
+  String get home1_service1 {
+    return Intl.message(
+      'Learn Sign Language',
+      name: 'home1_service1',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.service1.desc' key
+  /// `Start from the basics and build your signing skills step by step.`
+  String get home1_service1_desc {
+    return Intl.message(
+      'Start from the basics and build your signing skills step by step.',
+      name: 'home1_service1_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.service2' key
+  /// `Dictionary`
+  String get home1_service2 {
+    return Intl.message(
+      'Dictionary',
+      name: 'home1_service2',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.service2.desc' key
+  /// `Find any sign instantly , exactly when you need it.`
+  String get home1_service2_desc {
+    return Intl.message(
+      'Find any sign instantly , exactly when you need it.',
+      name: 'home1_service2_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.service3' key
+  /// `Quick Practice`
+  String get home1_service3 {
+    return Intl.message(
+      'Quick Practice',
+      name: 'home1_service3',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.service3.desc' key
+  /// `Consistent practice , meaningful results.`
+  String get home1_service3_desc {
+    return Intl.message(
+      'Consistent practice , meaningful results.',
+      name: 'home1_service3_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.service4' key
+  /// `Game To Learn`
+  String get home1_service4 {
+    return Intl.message(
+      'Game To Learn',
+      name: 'home1_service4',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'home1.service4.desc' key
+  /// `Interactive games to learn sign language.`
+  String get home1_service4_desc {
+    return Intl.message(
+      'Interactive games to learn sign language.',
+      name: 'home1_service4_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Category`
   String get screen12 {

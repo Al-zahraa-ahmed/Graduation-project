@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
 import 'package:graduation_project/presentation/ForgetPasswordScreens/ForgetPassword.dart';
+import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -53,9 +54,21 @@ class LoginForm extends StatelessWidget {
             ),
           ),
           SizedBox(height: 30),
-          SizedBox(
-            width: double.infinity,
-            child: CustomButton(txt: "Log In"),
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext) {
+                    return LearingHome();
+                  },
+                ),
+              );
+            },
+            child: SizedBox(
+              width: double.infinity,
+              child: CustomButton(txt: "Log In"),
+            ),
           ),
         ],
       ),

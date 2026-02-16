@@ -40,6 +40,32 @@ class MessageLookup extends MessageLookupByLibrary {
       "code to set a new password",
     ),
     "forget_title": MessageLookupByLibrary.simpleMessage("Forget Password?"),
+    "home1_message": MessageLookupByLibrary.simpleMessage(
+      "Continue your lessons!",
+    ),
+    "home1_service1": MessageLookupByLibrary.simpleMessage(
+      "Learn Sign Language",
+    ),
+    "home1_service1_desc": MessageLookupByLibrary.simpleMessage(
+      "Start from the basics and build your signing skills step by step.",
+    ),
+    "home1_service2": MessageLookupByLibrary.simpleMessage("Dictionary"),
+    "home1_service2_desc": MessageLookupByLibrary.simpleMessage(
+      "Find any sign instantly , exactly when you need it.",
+    ),
+    "home1_service3": MessageLookupByLibrary.simpleMessage("Quick Practice"),
+    "home1_service3_desc": MessageLookupByLibrary.simpleMessage(
+      "Consistent practice , meaningful results.",
+    ),
+    "home1_service4": MessageLookupByLibrary.simpleMessage("Game To Learn"),
+    "home1_service4_desc": MessageLookupByLibrary.simpleMessage(
+      "Interactive games to learn sign language.",
+    ),
+    "home1_services": MessageLookupByLibrary.simpleMessage("Our Services"),
+    "home1_submessage": MessageLookupByLibrary.simpleMessage(
+      "Because everyone deserves to be understood",
+    ),
+    "home1_welcome": MessageLookupByLibrary.simpleMessage("Welcome Back!"),
     "logout": MessageLookupByLibrary.simpleMessage("Log out"),
     "mode1": MessageLookupByLibrary.simpleMessage("Platform Mode"),
     "mode1_desc": MessageLookupByLibrary.simpleMessage(
