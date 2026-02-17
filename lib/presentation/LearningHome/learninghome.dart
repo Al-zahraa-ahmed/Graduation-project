@@ -4,6 +4,7 @@ import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/CategouriesPage/CategouriesPage.dart';
 import 'package:graduation_project/presentation/LearningHome/widgets/HomeService.dart';
 import 'package:graduation_project/presentation/LearningHome/widgets/Homecard.dart';
+import 'package:graduation_project/presentation/QuickPractice/quickpractice.dart';
 
 class LearingHome extends StatelessWidget {
   const LearingHome({super.key});
@@ -63,10 +64,22 @@ class LearingHome extends StatelessWidget {
                     txt2: S.of(context).home1_service2_desc,
                     img: "Assets/images/dict.png",
                   ),
-                  HomeService(
-                    txt1: S.of(context).home1_service3,
-                    txt2: S.of(context).home1_service3_desc,
-                    img: "Assets/images/practice.png",
+                  GestureDetector(
+                    onTap: () {
+                        Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (buildcontext) {
+                            return Quickpractice();
+                          },
+                        ),
+                      );
+                    },
+                    child: HomeService(
+                      txt1: S.of(context).home1_service3,
+                      txt2: S.of(context).home1_service3_desc,
+                      img: "Assets/images/practice.png",
+                    ),
                   ),
                   HomeService(
                     txt1: S.of(context).home1_service4,

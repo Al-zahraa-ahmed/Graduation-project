@@ -97,6 +97,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "passwordchanged": MessageLookupByLibrary.simpleMessage(
       "Password Changed ",
     ),
+    "quiz_btn": MessageLookupByLibrary.simpleMessage("Start now!"),
+    "quiz_desc": MessageLookupByLibrary.simpleMessage(
+      "Choose a category to begin!",
+    ),
+    "quiz_title": MessageLookupByLibrary.simpleMessage(
+      "Check your understanding",
+    ),
     "remember": MessageLookupByLibrary.simpleMessage("Remember me"),
     "screen1": MessageLookupByLibrary.simpleMessage("onboarding introduction"),
     "screen10": MessageLookupByLibrary.simpleMessage("otp code"),

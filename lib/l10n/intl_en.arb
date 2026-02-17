@@ -116,7 +116,7 @@
 
     "family":"Family",
     "familydec":"Signs for family and social relationships.",
-    
+
     "screen13":"lessons",
     "lessons.vocab":"Vocabulary",
     "lessons.num":"Lessons",
@@ -124,9 +124,9 @@
     "lessons.viewed":"Viewed",
 
     "screen14":"quiz",
-    "quiz.title":"Check your understanding",
-    "quiz.desc":"Choose a category to begin!",
-    "quiz.btn":"Start now!",
+    "quiz_title":"Check your understanding",
+    "quiz_desc":"Choose a category to begin!",
+    "quiz_btn":"Start now!",
 
     "screen15":"question",
     "question.num":"Question",

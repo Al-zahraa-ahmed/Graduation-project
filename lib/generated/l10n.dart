@@ -746,11 +746,30 @@ class S {
     return Intl.message('quiz', name: 'screen14', desc: '', args: []);
   }
 
-  // skipped getter for the 'quiz.title' key
+  /// `Check your understanding`
+  String get quiz_title {
+    return Intl.message(
+      'Check your understanding',
+      name: 'quiz_title',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'quiz.desc' key
+  /// `Choose a category to begin!`
+  String get quiz_desc {
+    return Intl.message(
+      'Choose a category to begin!',
+      name: 'quiz_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'quiz.btn' key
+  /// `Start now!`
+  String get quiz_btn {
+    return Intl.message('Start now!', name: 'quiz_btn', desc: '', args: []);
+  }
 
   /// `question`
   String get screen15 {
