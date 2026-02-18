@@ -18,4 +18,8 @@ abstract class Textstyles {
   static  TextStyle regular13 = TextStyle(
     fontSize: 13,
   );
+  static  TextStyle bold13 = TextStyle(
+    fontSize: 13,
+    fontWeight: FontWeight.w800
+  );
 }
