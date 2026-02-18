@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 import 'package:graduation_project/presentation/QuizResult/Widgets/AmazingContainer.dart';
 import 'package:graduation_project/presentation/QuizResult/Widgets/ExamResult.dart';
 import 'package:graduation_project/presentation/QuizResult/Widgets/ScoreContainer.dart';
 import 'package:graduation_project/presentation/QuizResult/Widgets/quickReviewButtons.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 
 class QuickResult extends StatelessWidget {
   const QuickResult({super.key});

@@ -733,7 +733,15 @@ class S {
     return Intl.message('lessons', name: 'screen13', desc: '', args: []);
   }
 
-  // skipped getter for the 'lessons.vocab' key
+  /// `Family Vocabulary`
+  String get lessons_vocab {
+    return Intl.message(
+      'Family Vocabulary',
+      name: 'lessons_vocab',
+      desc: '',
+      args: [],
+    );
+  }
 
   // skipped getter for the 'lessons.num' key
 

@@ -72,6 +72,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Because everyone deserves to be understood",
     ),
     "home1_welcome": MessageLookupByLibrary.simpleMessage("Welcome Back!"),
+    "lessons_vocab": MessageLookupByLibrary.simpleMessage("Family Vocabulary"),
     "logout": MessageLookupByLibrary.simpleMessage("Log out"),
     "mode1": MessageLookupByLibrary.simpleMessage("Platform Mode"),
     "mode1_desc": MessageLookupByLibrary.simpleMessage(
