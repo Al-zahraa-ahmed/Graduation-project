@@ -22,4 +22,8 @@ abstract class Textstyles {
     fontSize: 13,
     fontWeight: FontWeight.w800
   );
+  static  TextStyle medium16 = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600
+  );
 }

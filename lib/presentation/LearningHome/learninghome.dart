@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/CategouriesPage/CategouriesPage.dart';
+import 'package:graduation_project/presentation/Dictionary/dictionarypage.dart';
 import 'package:graduation_project/presentation/LearningHome/widgets/HomeService.dart';
 import 'package:graduation_project/presentation/LearningHome/widgets/Homecard.dart';
+import 'package:graduation_project/presentation/Profile/ProfileScreen.dart';
 import 'package:graduation_project/presentation/QuickPractice/quickpractice.dart';
 
 class LearingHome extends StatelessWidget {
@@ -25,7 +27,18 @@ class LearingHome extends StatelessWidget {
                 S.of(context).home1_welcome,
                 style: Textstyles.medium13.copyWith(color: Color(0xff999999)),
               ),
-              trailing: Image.asset("Assets/images/settings.png"),
+              trailing: InkWell(
+                borderRadius: BorderRadius.circular(40),
+                onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (builder) {
+                      return ProfileScreen();
+                    },
+                  ),
+                );
+              },child: Image.asset("Assets/images/settings.png")),
             ),
             SizedBox(height: 16),
             Homecard(),
@@ -59,14 +72,26 @@ class LearingHome extends StatelessWidget {
                       img: "Assets/images/hands.png",
                     ),
                   ),
-                  HomeService(
-                    txt1: S.of(context).home1_service2,
-                    txt2: S.of(context).home1_service2_desc,
-                    img: "Assets/images/dict.png",
+                  GestureDetector(
+                    onTap: () {
+                       Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (buildcontext) {
+                            return DictionaryPage();
+                          },
+                        ),
+                      );
+                    },
+                    child: HomeService(
+                      txt1: S.of(context).home1_service2,
+                      txt2: S.of(context).home1_service2_desc,
+                      img: "Assets/images/dict.png",
+                    ),
                   ),
                   GestureDetector(
                     onTap: () {
-                        Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (buildcontext) {
@@ -95,3 +120,4 @@ class LearingHome extends StatelessWidget {
     );
   }
 }
+

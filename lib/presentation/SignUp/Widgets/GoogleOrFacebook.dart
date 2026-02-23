@@ -9,8 +9,8 @@ class GoogleOrFacebook extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset("Assets/images/Vector.png", height: 35, width: 35),
-        SizedBox(width: 30),
-        Image.asset("Assets/images/Vector (1).png", height: 40, width: 40),
+        // SizedBox(width: 30),
+        // Image.asset("Assets/images/Vector (1).png", height: 40, width: 40),
       ],
     );
   }

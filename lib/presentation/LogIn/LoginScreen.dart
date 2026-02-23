@@ -9,8 +9,8 @@ class Loginscreen extends StatelessWidget {
       backgroundColor: Color(0xffEAEAFA),
       body: Column(
         children: [
-          SizedBox(height: 250),
-          Expanded(child: LoginContainer()),
+          Expanded(child: SizedBox()),
+          LoginContainer(),
         ],
       ),
     );

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.txt, this.onpressed});
+  const CustomButton({super.key, required this.txt, this.onpressed,  this.c=const Color(0xff8484E1)});
   final String txt;
   final void Function()? onpressed;
+  final Color c;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -12,11 +12,11 @@ class CustomButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadiusGeometry.circular(16),
         ),
-        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 55),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 55),
         // backgroundColor: Colors.red,
-        disabledBackgroundColor: Color(0xff8484E1),
+        disabledBackgroundColor: c,
 
-        backgroundColor: Color(0xff8484E1),
+        backgroundColor: c,
       ),
       onPressed: onpressed,
       child: Text(

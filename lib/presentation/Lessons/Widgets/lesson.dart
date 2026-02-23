@@ -33,24 +33,7 @@ class _LessonState extends State<Lesson> {
                   isselected = !isselected;
                 });
               },
-              child: Container(
-                height: 22,
-                width: 22,
-                // padding: EdgeInsets.all(3),
-                decoration: BoxDecoration(
-                  color: isselected ? Color(0xff5B5BD7) : null,
-                  borderRadius: BorderRadius.circular(40),
-                  border: Border.all(width: 2, color: Color(0xff5B5BD7)),
-                ),
-                child: Center(
-                  child: Icon(
-                    fontWeight: FontWeight.w800,
-                    size: 14,
-                    Icons.check,
-                    color: isselected ? Colors.white : Color(0xff5B5BD7),
-                  ),
-                ),
-              ),
+              child: CheckContainer(isselected: isselected),
             ),
           ),
       
@@ -71,6 +54,37 @@ class _LessonState extends State<Lesson> {
       
       
         ],
+      ),
+    );
+  }
+}
+
+class CheckContainer extends StatelessWidget {
+  const CheckContainer({
+    super.key,
+    required this.isselected,
+  });
+
+  final bool isselected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 22,
+      width: 22,
+      // padding: EdgeInsets.all(3),
+      decoration: BoxDecoration(
+        color: isselected ? Color(0xff5B5BD7) : null,
+        borderRadius: BorderRadius.circular(40),
+        border: Border.all(width: 2, color: Color(0xff5B5BD7)),
+      ),
+      child: Center(
+        child: Icon(
+          fontWeight: FontWeight.w800,
+          size: 14,
+          Icons.check,
+          color: isselected ? Colors.white : Color(0xff5B5BD7),
+        ),
       ),
     );
   }

@@ -1,9 +1,19 @@
-
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  const CustomTextField({super.key, required this.hint, required this.label});
+  const CustomTextField({
+    super.key,
+    required this.hint,
+    required this.label,
+    this.onsaved,
+    this.keyboardtype,
+    this.isabvious = false, this.validator,
+  });
   final String hint, label;
+  final void Function(String?)? onsaved;
+  final TextInputType? keyboardtype;
+  final bool isabvious;
+  final String? Function(String?)? validator;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -20,6 +30,10 @@ class CustomTextField extends StatelessWidget {
         ],
       ),
       child: TextFormField(
+        validator: validator,
+        obscureText: isabvious,
+        keyboardType: keyboardtype,
+        onSaved: onsaved,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           label: Text(
@@ -35,11 +49,11 @@ class CustomTextField extends StatelessWidget {
             style: TextStyle(fontSize: 18, color: Color(0xff999999)),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
             borderSide: BorderSide(color: Color(0xffD6D6F5)),
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(16),
             borderSide: BorderSide(color: Color(0xffD6D6F5)),
           ),
         ),

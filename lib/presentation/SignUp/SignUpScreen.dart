@@ -10,8 +10,8 @@ class SignUp extends StatelessWidget {
       backgroundColor: Color(0xffEAEAFA),
       body: Column(
         children: [
-          SizedBox(height: 100),
-          Expanded(child: SignupContainer()),
+          Expanded(child: SizedBox()),
+          SignupContainer(),
         ],
       ),
     );
