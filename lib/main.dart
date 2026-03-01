@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/onboarding/OnboardingScreen.dart';
 import 'package:intl/intl.dart';
 
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await CacheHelper.init();
   runApp(const GraduationProject());
 }
 
