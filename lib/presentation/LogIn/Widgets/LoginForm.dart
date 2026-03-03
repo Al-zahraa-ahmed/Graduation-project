@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
-import 'package:graduation_project/business_logic/LoginCubit/login_cubit.dart';
+import 'package:graduation_project/business_logic/Auth/LoginCubit/login_cubit.dart';
 import 'package:graduation_project/presentation/ForgetPasswordScreens/ForgetPassword.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 

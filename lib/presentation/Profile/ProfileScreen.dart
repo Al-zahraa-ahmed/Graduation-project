@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/presentation/About%20us%20screens/About_Us.dart';
 import 'package:graduation_project/presentation/About%20us%20screens/ContactUs.dart';
@@ -6,6 +7,7 @@ import 'package:graduation_project/presentation/About%20us%20screens/HelpCenter.
 import 'package:graduation_project/presentation/About%20us%20screens/PrivacyPolicy.dart';
 import 'package:graduation_project/presentation/About%20us%20screens/Terms_and_Conditions.dart';
 import 'package:graduation_project/presentation/Lessons/Widgets/lesson.dart';
+import 'package:graduation_project/presentation/LogIn/LoginScreen.dart';
 import 'package:graduation_project/presentation/Profile/Widgets/ProfileContainer.dart';
 import 'package:graduation_project/presentation/Profile/Widgets/SectionContainer.dart';
 import 'package:graduation_project/presentation/Profile/Widgets/SectionTitle.dart';
@@ -190,7 +192,14 @@ class _ProfilePageState extends State<ProfileScreen> {
             ListTile(
               leading: const Icon(Icons.logout),
               title: const Text("LogOut"),
-              onTap: () {},
+              onTap: () async{ await CacheHelper.removeData("token");
+    await CacheHelper.removeData("user");
+
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (_) => Loginscreen()),
+      (route) => false,
+    );},
             ),
 
             ListTile(

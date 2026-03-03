@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:graduation_project/data/Models/UserModel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper {
@@ -29,4 +32,11 @@ class CacheHelper {
   static Future<void> removeData(String key) async {
     await prefs.remove(key);
   }
+}
+UserModel? getSavedUser() {
+  final userString = CacheHelper.getData("user");
+  if (userString == null) return null;
+
+  final userMap = jsonDecode(userString);
+  return UserModel.fromJson(userMap);
 }

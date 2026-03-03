@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/business_logic/LoginCubit/login_cubit.dart';
+import 'package:graduation_project/business_logic/Auth/LoginCubit/login_cubit.dart';
 import 'package:graduation_project/presentation/LogIn/Widgets/LoginContainer.dart';
 
 class Loginscreen extends StatelessWidget {

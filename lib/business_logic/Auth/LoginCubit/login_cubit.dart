@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
+import 'package:graduation_project/data/Models/UserModel.dart';
 import 'package:meta/meta.dart';
 
 part 'login_state.dart';
@@ -30,7 +33,10 @@ class LoginCubit extends Cubit<LoginState> {
       print(Response);
       final String token = r.data["data"]["token"];
       await CacheHelper.saveData(key: "token", value: token);
-      emit(LoginSuccess());
+      final userJson = r.data["data"]["user"]; // Map
+      final user = UserModel.fromJson(userJson);
+      await CacheHelper.saveData(key: "user", value: jsonEncode(user.toJson()));
+      emit(LoginSuccess(token: token));
     }  on DioException catch (e) {
   print("STATUS: ${e.response?.statusCode}");
   print("RESPONSE DATA: ${e.response?.data}");

@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
 import 'package:graduation_project/Core/CustomWidgets/MultiColorText.dart';
-import 'package:graduation_project/business_logic/SignUpCubit/SignUpCubit.dart';
-import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
+import 'package:graduation_project/business_logic/Auth/SignUpCubit/SignUpCubit.dart';
 import 'package:graduation_project/presentation/Otp/OtpPage.dart';
 
 class RegistrationForm extends StatefulWidget {
@@ -28,7 +27,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
             context,
             MaterialPageRoute(
               builder: (BuildContext) {
-                return OtpPage(userId: state.userid, email: email);
+                return OtpPage(userId: state.userid, email: email, isResetPassword: false,);
               },
             ),
           );

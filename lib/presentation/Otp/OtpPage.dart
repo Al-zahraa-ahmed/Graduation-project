@@ -1,20 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/business_logic/OtpCubit/otp_cubit.dart';
+import 'package:graduation_project/business_logic/Auth/OtpCubit/otp_cubit.dart';
 import 'package:graduation_project/presentation/Otp/Widgets/Locpic.dart';
 import 'package:graduation_project/presentation/Otp/Widgets/OtpForm.dart';
 
 
 class OtpPage extends StatelessWidget {
-  const OtpPage({super.key, required this.userId, required this.email});
+  const OtpPage({super.key,required  this.userId, required this.email, required this.isResetPassword});
   final int userId;
   final String email;
+  final bool isResetPassword;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => OtpCubit(),
       child: Scaffold(
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(Icons.chevron_left),
+              ),
+        ),
         backgroundColor: Color(0xffEAEAFA),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -30,7 +40,7 @@ class OtpPage extends StatelessWidget {
                 style: TextStyle(fontSize: 13, color: Color(0xff999999)),
               ),
               SizedBox(height: 20),
-              OtpInputsForm(userid: userId,),
+              OtpInputsForm(userid: userId, isResetPassword: isResetPassword,),
              
             ],
           ),

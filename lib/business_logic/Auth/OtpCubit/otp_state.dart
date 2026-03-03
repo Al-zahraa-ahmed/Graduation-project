@@ -12,6 +12,8 @@ final class OtpSuccess extends OtpState {
 
   OtpSuccess({required this.token});
 }
+final class OtpResentSuccess extends OtpState {
+}
 
 final class OtpFailure extends OtpState {
   final String errmsg;

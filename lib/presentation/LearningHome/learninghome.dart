@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/data/Models/UserModel.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/CategouriesPage/CategouriesPage.dart';
 import 'package:graduation_project/presentation/Dictionary/dictionarypage.dart';
@@ -13,6 +17,9 @@ class LearingHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userString = CacheHelper.getData("user");
+    final userMap = jsonDecode(userString);
+    final user = UserModel.fromJson(userMap);
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -22,7 +29,7 @@ class LearingHome extends StatelessWidget {
             SizedBox(height: 50),
             ListTile(
               contentPadding: EdgeInsets.only(right: 8, left: 20),
-              title: Text("Roaa Shosha!", style: TextStyle(fontSize: 20)),
+              title: Text("${user.username}!", style: TextStyle(fontSize: 20)),
               subtitle: Text(
                 S.of(context).home1_welcome,
                 style: Textstyles.medium13.copyWith(color: Color(0xff999999)),
@@ -30,15 +37,17 @@ class LearingHome extends StatelessWidget {
               trailing: InkWell(
                 borderRadius: BorderRadius.circular(40),
                 onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (builder) {
-                      return ProfileScreen();
-                    },
-                  ),
-                );
-              },child: Image.asset("Assets/images/settings.png")),
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (builder) {
+                        return ProfileScreen();
+                      },
+                    ),
+                  );
+                },
+                child: Image.asset("Assets/images/settings.png"),
+              ),
             ),
             SizedBox(height: 16),
             Homecard(),
@@ -74,7 +83,7 @@ class LearingHome extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                       Navigator.push(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (buildcontext) {
@@ -120,4 +129,3 @@ class LearingHome extends StatelessWidget {
     );
   }
 }
-

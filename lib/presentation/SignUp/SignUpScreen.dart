@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/business_logic/SignUpCubit/SignUpCubit.dart';
+import 'package:graduation_project/business_logic/Auth/SignUpCubit/SignUpCubit.dart';
 import 'package:graduation_project/presentation/SignUp/Widgets/SignUpContainer.dart';
 
 class SignUp extends StatelessWidget {

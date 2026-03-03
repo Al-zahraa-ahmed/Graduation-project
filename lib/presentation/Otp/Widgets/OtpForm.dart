@@ -2,13 +2,19 @@ import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
-import 'package:graduation_project/business_logic/OtpCubit/otp_cubit.dart';
+import 'package:graduation_project/business_logic/Auth/OtpCubit/otp_cubit.dart';
+import 'package:graduation_project/presentation/ForgetPasswordScreens/Setnewpassword.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 import 'package:graduation_project/presentation/Otp/Widgets/Otp_input_fields.dart';
 
 class OtpInputsForm extends StatefulWidget {
-  const OtpInputsForm({super.key, required this.userid});
+  const OtpInputsForm({
+    super.key,
+    required this.userid,
+    required this.isResetPassword,
+  });
   final int userid;
+  final bool isResetPassword;
   @override
   State<OtpInputsForm> createState() => _OtpInputsFormState();
 }
@@ -21,7 +27,6 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
   void initState() {
     super.initState();
     startTimer();
-    
   }
 
   void startTimer() {
@@ -29,9 +34,9 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
 
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (!mounted) {
-      timer.cancel();
-      return;
-    }
+        timer.cancel();
+        return;
+      }
       if (start == 0) {
         timer.cancel();
       } else {
@@ -75,17 +80,23 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
         if (state is OtpSuccess) {
           timer?.cancel();
 
-    if (!context.mounted) return;
+          if (!context.mounted) return;
 
-    // نفّذي التنقل بعد ما يخلص الفريم الحالي
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!context.mounted) return;
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (_) => LearingHome()),
-      );
-    });
+          // نفّذي التنقل بعد ما يخلص الفريم الحالي
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!context.mounted) return;
+            if (widget.isResetPassword) {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => SetNewPassword(reset_token: state.token,)),
+              );
+            } else {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (_) => LearingHome()),
+              );
+            }
+          });
         } else if (state is OtpFailure) {
           ScaffoldMessenger.of(
             context,
@@ -165,10 +176,19 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
                   String otp = c1.text + c2.text + c3.text + c4.text;
 
                   if (otp.length == 4) {
+                    if (widget.isResetPassword) {
+                      context.read<OtpCubit>().verifyForgetPassword(
+                        userid: widget.userid,
+                        otp: otp,
+                      );
+                    }
+                    else{
                     context.read<OtpCubit>().verify_otp(
                       userid: widget.userid,
                       otp: otp,
                     );
+
+                    }
                   }
                 },
                 child: SizedBox(
