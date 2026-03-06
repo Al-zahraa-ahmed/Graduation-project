@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
-import 'package:graduation_project/generated/l10n.dart';
+import 'package:graduation_project/data/Models/CategoryModel.dart';
+import 'package:graduation_project/main.dart';
 import 'package:graduation_project/presentation/CategouriesPage/Widgets/percentage.dart';
-import 'package:graduation_project/presentation/Lessons/lessons.dart';
 
 class LearningCards extends StatelessWidget {
-  const LearningCards({super.key});
-
+  const LearningCards({super.key, required this.c, this.ontap});
+  final CategoryModel c;
+  final void Function()? ontap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (builder) {
-              return LessonsScreen();
-            },
-          ),
-        );
-      },
+      onTap: ontap,
       child: Stack(
         children: [
           AspectRatio(
@@ -38,22 +30,35 @@ class LearningCards extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Image.asset(
-                        "Assets/images/family.png",
-                        height: 36,
-                        width: 36,
+                      CircleAvatar(
+                        backgroundColor: Color(0xffD6D6F5),
+                        child: Image.network(
+                          color: Colors.white,
+                          c.img.trim(),
+                          height: 26,
+                          width: 26,
+                        ),
                       ),
-                      Percentage(),
+                      Percentage(percentage: c.progress.toString()),
                     ],
                   ),
                   Expanded(child: SizedBox()),
                   Text(
-                    S.of(context).family,
-                    style: Textstyles.medium20.copyWith(color: Colors.white),
+                    overflow: TextOverflow.ellipsis,
+                    // softWrap: true,
+                    maxLines: 2,
+                    isArabic() ? c.name.ar : c.name.en,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 18,
+                      color: Colors.white,
+                    ),
                   ),
                   SizedBox(height: 5),
                   Text(
-                    S.of(context).familydec,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    isArabic() ? c.desc.ar : c.desc.en,
                     style: Textstyles.regular13.copyWith(color: Colors.white),
                   ),
                 ],
@@ -81,4 +86,3 @@ class LearningCards extends StatelessWidget {
     );
   }
 }
-

@@ -1,21 +1,23 @@
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/data/Models/LessonsModel.dart';
+import 'package:graduation_project/main.dart';
 
-class Lesson extends StatefulWidget {
-  const Lesson({super.key});
-
-  @override
-  State<Lesson> createState() => _LessonState();
-}
-
-class _LessonState extends State<Lesson> {
-  bool isselected = false;
-
+class Lesson extends StatelessWidget {
+  const Lesson({
+    super.key,
+    required this.l,
+    required this.index,
+     this.ontap, required this.isselected,
+  });
+  final LessonsModel l;
+  final int index;
+  final void Function()? ontap;
+  final bool isselected;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0,right: 8),
+      padding: const EdgeInsets.only(bottom: 20.0, right: 8),
       child: Row(
         children: [
           Container(
@@ -26,33 +28,34 @@ class _LessonState extends State<Lesson> {
               color: Color(0xffD6D6F5),
               borderRadius: BorderRadius.circular(40),
             ),
-      
+
             child: GestureDetector(
-              onTap: () {
-                setState(() {
-                  isselected = !isselected;
-                });
-              },
+              onTap: ontap,
               child: CheckContainer(isselected: isselected),
             ),
           ),
-      
-      // **************************
-          SizedBox(width: 23,),
+
+          // **************************
+          SizedBox(width: 23),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Lesson 1",style: TextStyle(fontSize: 20,color: Color(0xff999999)),),
+              Text(
+                "Lesson ${index}",
+                style: TextStyle(fontSize: 20, color: Color(0xff999999)),
+              ),
               // SizedBox(height: 5,),
-              Text("Father",style: TextStyle(fontSize: 20,),),
+              Text(
+                isArabic() ?l.name.ar : l.name.en,
+                style: TextStyle(fontSize: 20),
+              ),
             ],
           ),
-              Expanded(child: SizedBox()),
-              Text("20.15",style: Textstyles.medium13.copyWith(color: Color(0xff999999)),),
-      
-      
-      
-      
+          Expanded(child: SizedBox()),
+          Text(
+            "20.15",
+            style: Textstyles.medium13.copyWith(color: Color(0xff999999)),
+          ),
         ],
       ),
     );
@@ -60,10 +63,7 @@ class _LessonState extends State<Lesson> {
 }
 
 class CheckContainer extends StatelessWidget {
-  const CheckContainer({
-    super.key,
-    required this.isselected,
-  });
+  const CheckContainer({super.key, required this.isselected});
 
   final bool isselected;
 

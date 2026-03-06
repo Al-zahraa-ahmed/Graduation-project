@@ -11,8 +11,17 @@ class SearchApi {
   final Dio dio=Dio();
   Future<List<dynamic>> search({required String query}) async {
     final res = await dio.get(
-      '/search',
-      queryParameters: {'q': query},
+      'https://signlingo.org/api/categories',
+      queryParameters: {'?name=': query},
+    );
+
+    // افترضي الريسبونس: { "data": [ ... ] }
+    return (res.data['data'] as List);
+  }
+ 
+  Future<List<dynamic>> searchDictionary({required String letter,required String categoryid}) async {
+    final res = await dio.get(
+      'https://signlingo.org/api/dictionary?alphabet=$letter&category=$categoryid&search=',
     );
 
     // افترضي الريسبونس: { "data": [ ... ] }

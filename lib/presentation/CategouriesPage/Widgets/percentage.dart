@@ -1,9 +1,8 @@
-
 import 'package:flutter/material.dart';
 
 class Percentage extends StatelessWidget {
-  const Percentage({super.key});
-
+  const Percentage({super.key, required this.percentage});
+  final String percentage;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -16,7 +15,7 @@ class Percentage extends StatelessWidget {
       ),
       child: Center(
         child: Text(
-          "0%",
+          percentage,
           style: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w900,
