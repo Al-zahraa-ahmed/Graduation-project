@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/data/Models/CategoryModel.dart';
 import 'package:graduation_project/data/Models/LessonsModel.dart';
+import 'package:graduation_project/data/Models/WordModel.dart';
 import 'package:meta/meta.dart';
 
 part 'categories_state.dart';
@@ -26,6 +27,35 @@ class CategoriesApi {
       List data = response.data['data'];
       print(token);
       return data.map((e) => CategoryModel.fromMap(e)).toList();
+    } on DioException catch (e) {
+      print("STATUS: ${e.response?.statusCode}");
+      print("BODY: ${e.response?.data}");
+      print("TOKEN: ${CacheHelper.getData("token")}");
+      rethrow;
+    }
+  }
+
+  Future<Map<String, List<WordModel>>> getDictionary() async {
+    try {
+      final token = CacheHelper.getData("token");
+      final response = await dio.get(
+        "https://signlingo.org/api/dictionary",
+        options: Options(
+          headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+      Map<String, dynamic> data = response.data['data'];
+      print(token);
+      final Map<String, List<WordModel>> wordsByLetter = data.map(
+  (key, value) => MapEntry(
+    key,
+    (value as List).map((e) => WordModel.fromJson(e)).toList(),
+  ),
+);
+      return wordsByLetter;
     } on DioException catch (e) {
       print("STATUS: ${e.response?.statusCode}");
       print("BODY: ${e.response?.data}");
@@ -83,6 +113,7 @@ class CategoriesApi {
   }
 }
 
+
 class CategoriesCubit extends Cubit<CategoriesState> {
   CategoriesCubit() : super(CategoriesLoading());
   final CategoriesApi categoriesApi = CategoriesApi();
@@ -101,7 +132,6 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       emit(CategoriesError('Failed to load categories'));
     }
   }
-
 
   void search(String q, {required bool isArabic}) {
     _debounce?.cancel();

@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/data/Models/WordModel.dart';
 import 'package:graduation_project/presentation/ErrorsScreens/NoConnection.dart';
 
 class ListViewOfWords extends StatelessWidget {
-  const ListViewOfWords({
-    super.key,
-  });
-
+  const ListViewOfWords({super.key, required this.w});
+  final List<WordModel> w;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
-      itemCount: 5,
+      itemCount: w.length,
       itemBuilder: (buildcontext, index) {
-        return WordCard();
+        return WordCard(w: w[index]);
       },
     );
   }
 }
 
-
 class WordCard extends StatelessWidget {
-  const WordCard({super.key});
-
+  const WordCard({super.key, required this.w});
+  final WordModel w;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -50,9 +48,9 @@ class WordCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Apple", style: Textstyles.medium16),
+              Text(w.word, style: Textstyles.medium16),
               Text(
-                "Noun . Food",
+                w.category,
                 style: TextStyle(fontSize: 13, color: Color(0xff999999)),
               ),
             ],
@@ -78,4 +76,3 @@ class WordCard extends StatelessWidget {
     );
   }
 }
-

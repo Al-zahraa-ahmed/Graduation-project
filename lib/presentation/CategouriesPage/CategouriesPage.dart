@@ -5,7 +5,7 @@ import 'package:graduation_project/business_logic/Categories/categories_cubit.da
 import 'package:graduation_project/data/Models/CategoryModel.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/main.dart';
-import 'package:graduation_project/presentation/CategouriesPage/Widgets/SearchBar.dart';
+import 'package:graduation_project/Core/CustomWidgets/SearchBar.dart';
 import 'package:graduation_project/presentation/CategouriesPage/Widgets/gridviewofcards.dart';
 
 class CategoriesPage extends StatelessWidget {

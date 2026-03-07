@@ -19,9 +19,9 @@ class SearchApi {
     return (res.data['data'] as List);
   }
  
-  Future<List<dynamic>> searchDictionary({required String letter,required String categoryid}) async {
+  Future<List<dynamic>> searchDictionary(String word,{required String letter,required int categoryid}) async {
     final res = await dio.get(
-      'https://signlingo.org/api/dictionary?alphabet=$letter&category=$categoryid&search=',
+      'https://signlingo.org/api/dictionary?alphabet=$letter&category=$categoryid&search=$word',
     );
 
     // افترضي الريسبونس: { "data": [ ... ] }

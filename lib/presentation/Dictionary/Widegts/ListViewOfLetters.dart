@@ -1,43 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ListViewOfLetters extends StatefulWidget {
-  ListViewOfLetters({super.key});
-
-  @override
-  State<ListViewOfLetters> createState() => _ListViewOfLettersState();
-}
-
-class _ListViewOfLettersState extends State<ListViewOfLetters> {
-  final List<String> l = [
-    'A',
-    'B',
-    'C',
-    'D',
-    'E',
-    'F',
-    'G',
-    'H',
-    'I',
-    'J',
-    'K',
-    'L',
-    'M',
-    'N',
-    'O',
-    'P',
-    'Q',
-    'R',
-    'S',
-    'T',
-    'U',
-    'W',
-    'X',
-    'Y',
-    'Z',
-  ];
-
+class ListViewOfLetters extends StatelessWidget {
+  ListViewOfLetters({super.key, required this.l, required this.ontap, this.selectedLetter,});
+final String? selectedLetter;
+  final List<String> l;
+  final ValueChanged<String> ontap;
   // bool isSelected = false;
-int selectedIndex = -1;
+  // int selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -45,16 +14,12 @@ int selectedIndex = -1;
       scrollDirection: Axis.horizontal,
       itemCount: l.length,
       itemBuilder: (buildcontext, index) {
+        final letter = l[index];
         return Column(
           children: [
             InkWell(
-              onTap: () {
-                setState(() {
-                selectedIndex = index;
-                  
-                });
-              },
-              child: Letters(txt: l[index], isSelected: index==selectedIndex),
+              onTap:() =>ontap(letter),
+              child: Letters(txt: l[index], isSelected: selectedLetter==letter),
             ),
             SizedBox(height: 26),
           ],
@@ -100,3 +65,32 @@ class Letters extends StatelessWidget {
     );
   }
 }
+
+
+  // final List<String> l = [
+  //   'A',
+  //   'B',
+  //   'C',
+  //   'D',
+  //   'E',
+  //   'F',
+  //   'G',
+  //   'H',
+  //   'I',
+  //   'J',
+  //   'K',
+  //   'L',
+  //   'M',
+  //   'N',
+  //   'O',
+  //   'P',
+  //   'Q',
+  //   'R',
+  //   'S',
+  //   'T',
+  //   'U',
+  //   'W',
+  //   'X',
+  //   'Y',
+  //   'Z',
+  // ];

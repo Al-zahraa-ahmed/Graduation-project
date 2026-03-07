@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
-import 'package:graduation_project/presentation/CategouriesPage/Widgets/SearchBar.dart';
+import 'package:graduation_project/Core/CustomWidgets/SearchBar.dart';
 
 class NotFoundPage extends StatelessWidget {
   const NotFoundPage({super.key});
