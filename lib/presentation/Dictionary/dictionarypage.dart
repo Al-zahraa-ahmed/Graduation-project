@@ -54,21 +54,21 @@ class DictionaryPageBody extends StatelessWidget {
       },
       builder: (context, state) {
         if (state is DictionarySuccess) {
-          final Map<String, List<WordModel>> allWordsByLetters =
-              state.allWordsByLetters;
-          final Map<String, List<WordModel>> FilteredWordsByLetters =
-              state.filteredWordsByLetters;
-          final List<String> letters = allWordsByLetters.keys.toSet().toList();
-          final List<WordModel> words = allWordsByLetters.values
-              .expand((list) => list)
-              .toList();
-          final List<WordModel> Filteredwords = FilteredWordsByLetters.values
-              .expand((list) => list)
-              .toList();
-          final List<String> categouries = words
-              .map((e) => e.category)
-              .toSet()
-              .toList();
+          // final Map<String, List<WordModel>> allWordsByLetters =
+          //     state.allWordsByLetters;
+          // final Map<String, List<WordModel>> FilteredWordsByLetters =
+          //     state.filteredWordsByLetters;
+          // final List<String> letters = allWordsByLetters.keys.toSet().toList();
+          // final List<WordModel> words = allWordsByLetters.values
+          //     .expand((list) => list)
+          //     .toList();
+          // final List<WordModel> Filteredwords = FilteredWordsByLetters.values
+          //     .expand((list) => list)
+          //     .toList();
+          // final List<String> categouries = words
+          //     .map((e) => e.category)
+          //     .toSet()
+          //     .toList();
           return SingleChildScrollView(
             child: Column(
               children: [
@@ -89,29 +89,11 @@ class DictionaryPageBody extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    SizedBox(
-                      height: 80,
-                      child: ListViewOfLetters(
-                        l: letters,
-                        ontap: (String letter) {
-                          context.read<DictionaryCubit>().selectLetter(
-                           state.selectedLetter== letter?null:letter,
-                          );
-                        },
-                        selectedLetter: state.selectedLetter,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 60,
-                      child: ListViewOfDictionarySections(l: categouries, ontap: (String category) { 
-                        context.read<DictionaryCubit>().selectCategory(
-                           state.selectedCategory== category?null:category,
-                          );
-                       },selectedCategory: state.selectedCategory,),
-                    ),
+                    LettersSection(),
+                   DictionarySection(),
                     ShowingResultText(),
                     SizedBox(height: 14),
-                    ListViewOfWords(w: Filteredwords),
+                    DictionaryWordsSection()
                   ],
                 ),
               ],

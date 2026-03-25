@@ -10,10 +10,26 @@ class Loginscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LoginCubit(),
-      child: Scaffold(
-        backgroundColor: Color(0xffEAEAFA),
-        body: SingleChildScrollView(
-          child: Column(children: [SizedBox(height: 210), LoginContainer()]),
+      child: SafeArea(
+        child: Scaffold(
+          backgroundColor: Color(0xffEAEAFA),
+           resizeToAvoidBottomInset: true,
+          body: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return SingleChildScrollView(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
+                ),
+                child: ConstrainedBox(
+                  constraints:BoxConstraints(minHeight: constraints.maxHeight) ,
+                  child: Align(
+                    alignment: AlignmentGeometry.bottomCenter,
+                    child: Column(children: [ LoginContainer()]),
+                  ),
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

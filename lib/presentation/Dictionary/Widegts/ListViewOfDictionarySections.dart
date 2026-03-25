@@ -1,4 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/business_logic/Dictionary/dictionary_cubit.dart';
+import 'package:graduation_project/data/Models/WordModel.dart';
+
+
+
+class DictionarySection extends StatelessWidget {
+  const DictionarySection ({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<DictionaryCubit, DictionaryState>(
+      buildWhen: (previous, current) {
+        if (previous is DictionarySuccess && current is DictionarySuccess) {
+          return previous.selectedCategory != current.selectedCategory ||
+              previous.allWordsByLetters != current.allWordsByLetters;
+        }
+        return true;
+      },
+      builder: (context, state) {
+          if (state is! DictionarySuccess) return const SizedBox();
+
+        final List<WordModel> words = state.allWordsByLetters.values
+            .expand((list) => list)
+            .toList();
+
+        final List<String> categories = words
+            .map((e) => e.category)
+            .toSet()
+            .toList();
+        return SizedBox(
+          height: 60,
+          child: ListViewOfDictionarySections(l: categories, ontap:  (String category) {
+              context.read<DictionaryCubit>().selectCategory(
+                state.selectedCategory == category ? null : category,
+              );
+            },selectedCategory: state.selectedCategory ,),
+        );
+      },
+    );
+  }
+}
 
 class ListViewOfDictionarySections extends StatelessWidget {
  const ListViewOfDictionarySections({super.key, required this.l, this.selectedCategory, required this.ontap});
@@ -16,6 +58,7 @@ class ListViewOfDictionarySections extends StatelessWidget {
         return Column(
           children: [
             InkWell(
+              borderRadius: BorderRadius.circular(40),
               onTap:()=> ontap(category),
               child: DictionarySections(
                 txt: l[index],
@@ -31,12 +74,13 @@ class ListViewOfDictionarySections extends StatelessWidget {
 }
 
 class DictionarySections extends StatelessWidget {
- DictionarySections({super.key, required this.txt, required this.isSelected});
-  bool isSelected = false;
+ const DictionarySections({super.key, required this.txt, required this.isSelected});
+ final bool isSelected ;
   final String txt;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
       margin: EdgeInsets.only(right: 8),
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
 

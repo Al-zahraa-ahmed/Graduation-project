@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+    
     namespace = "com.example.graduation_project"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
@@ -41,4 +42,13 @@ android {
 
 flutter {
     source = "../.."
+}
+dependencies {
+implementation("org.jetbrains.kotlin:kotlin-stdlib:1.9.10")
+    implementation("androidx.camera:camera-core:1.2.3")
+    implementation("androidx.camera:camera-camera2:1.2.3")
+    implementation("androidx.camera:camera-lifecycle:1.2.3")
+    implementation("androidx.camera:camera-view:1.2.3")
+    implementation("com.google.mediapipe:tasks-vision:0.10.14")
+
 }

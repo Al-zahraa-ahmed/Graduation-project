@@ -1,10 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/generated/l10n.dart';
 
 class Homecard extends StatelessWidget {
-  const Homecard({super.key});
-
+  const Homecard({super.key, required this.txt1, required this.txt2, required this.img});
+  final String txt1, txt2, img;
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
@@ -37,21 +36,21 @@ class Homecard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      S.of(context).home1_message,
+                      txt1,
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
                     Text(
-                      S.of(context).home1_submessage,
+                      txt2,
                       style: TextStyle(fontSize: 13, color: Color(0xff999999)),
                     ),
                   ],
                 ),
               ),
               SizedBox(width: 4),
-              Image.asset("Assets/images/books.png"),
+              Image.asset(img),
             ],
           ),
         ),

@@ -33,6 +33,7 @@ class CacheHelper {
     await prefs.remove(key);
   }
 }
+
 UserModel? getSavedUser() {
   final userString = CacheHelper.getData("user");
   if (userString == null) return null;

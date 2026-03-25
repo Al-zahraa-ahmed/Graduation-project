@@ -56,6 +56,7 @@ class LoginContainer extends StatelessWidget {
               txt2: "Sign up",
             ),
           ),
+          SizedBox(height: 30,)
         ],
       ),
     );

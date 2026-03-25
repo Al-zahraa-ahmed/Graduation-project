@@ -1,12 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/business_logic/Dictionary/dictionary_cubit.dart';
+
+class LettersSection extends StatelessWidget {
+  const LettersSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<DictionaryCubit, DictionaryState>(
+      buildWhen: (previous, current) {
+        if (previous is DictionarySuccess && current is DictionarySuccess) {
+          return previous.selectedLetter != current.selectedLetter ||
+              previous.allWordsByLetters != current.allWordsByLetters;
+        }
+        return true;
+      },
+      builder: (context, state) {
+        if (state is! DictionarySuccess) return const SizedBox();
+
+        final List<String> letters = state.allWordsByLetters.keys.toList();
+
+        return SizedBox(
+          height: 80,
+          child: ListViewOfLetters(
+            l: letters,
+            ontap: (String letter) {
+              context.read<DictionaryCubit>().selectLetter(
+                state.selectedLetter == letter ? null : letter,
+              );
+            },
+            selectedLetter: state.selectedLetter,
+          ),
+        );
+      },
+    );
+  }
+}
 
 class ListViewOfLetters extends StatelessWidget {
-  ListViewOfLetters({super.key, required this.l, required this.ontap, this.selectedLetter,});
-final String? selectedLetter;
+  const ListViewOfLetters({
+    super.key,
+    required this.l,
+    required this.ontap,
+    this.selectedLetter,
+  });
+  final String? selectedLetter;
   final List<String> l;
   final ValueChanged<String> ontap;
-  // bool isSelected = false;
-  // int selectedIndex = -1;
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -18,8 +58,13 @@ final String? selectedLetter;
         return Column(
           children: [
             InkWell(
-              onTap:() =>ontap(letter),
-              child: Letters(txt: l[index], isSelected: selectedLetter==letter),
+              radius: 70,
+              borderRadius: BorderRadius.circular(40),
+              onTap: () => ontap(letter),
+              child: Letters(
+                txt: l[index],
+                isSelected: selectedLetter == letter,
+              ),
             ),
             SizedBox(height: 26),
           ],
@@ -30,12 +75,13 @@ final String? selectedLetter;
 }
 
 class Letters extends StatelessWidget {
-  Letters({super.key, required this.txt, required this.isSelected});
-  bool isSelected = false;
+  const Letters({super.key, required this.txt, required this.isSelected});
+  final bool isSelected;
   final String txt;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 180),
       margin: EdgeInsets.only(right: 8),
       // padding: EdgeInsets.all(8),
       width: 40,

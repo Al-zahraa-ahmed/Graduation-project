@@ -5,6 +5,7 @@ import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
 import 'package:graduation_project/business_logic/Auth/LoginCubit/login_cubit.dart';
 import 'package:graduation_project/presentation/ForgetPasswordScreens/ForgetPassword.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
+import 'package:graduation_project/presentation/LearningHome/translationHome.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({super.key});
@@ -54,7 +55,7 @@ class _LoginFormState extends State<LoginForm> {
                   email = value!;
                 },
               ),
-              SizedBox(height: 60),
+              SizedBox(height: 36),
               CustomTextField(
                 isabvious: true,
                 label: "Password",
@@ -137,6 +138,7 @@ class _LoginFormState extends State<LoginForm> {
                   child: CustomButton(txt: "Log In"),
                 ),
               ),
+              
             ],
           ),
         );

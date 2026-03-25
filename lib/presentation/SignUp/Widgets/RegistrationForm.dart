@@ -54,7 +54,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   name = value!;
                 },
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 45),
               CustomTextField(
                 keyboardtype: TextInputType.emailAddress,
                 validator: (value) {
@@ -68,7 +68,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   email = value!;
                 },
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 45),
               CustomTextField(
                 isabvious: true,
                 label: "Password",
@@ -82,7 +82,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   }
                 },
               ),
-              SizedBox(height: 50),
+              SizedBox(height: 45),
               CustomTextField(
                 label: "Confirm Password",
                 hint: "Confirm Your Password",
@@ -143,7 +143,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 child: SizedBox(
                   width: double.infinity,
                   child: state is SignUpLoading
-                      ? CircularProgressIndicator()
+                      ? Center(child: CircularProgressIndicator())
                       : CustomButton(txt: "Sign Up"),
                 ),
               ),

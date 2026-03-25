@@ -17,6 +17,7 @@ class OtpPage extends StatelessWidget {
       create: (context) => OtpCubit(),
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(0xffEAEAFA),
           automaticallyImplyLeading: false,
           title: IconButton(
                 onPressed: () {
@@ -26,23 +27,25 @@ class OtpPage extends StatelessWidget {
               ),
         ),
         backgroundColor: Color(0xffEAEAFA),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: 40),
-              Lockpic(),
-              SizedBox(height: 16),
-              Text(
-                textAlign: TextAlign.center,
-                "For your security, We have sent A One-Time Code to your email $email Enter It to access your account.",
-                style: TextStyle(fontSize: 13, color: Color(0xff999999)),
-              ),
-              SizedBox(height: 20),
-              OtpInputsForm(userid: userId, isResetPassword: isResetPassword,),
-             
-            ],
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: 40),
+                Lockpic(),
+                SizedBox(height: 16),
+                Text(
+                  textAlign: TextAlign.center,
+                  "For your security, We have sent A One-Time Code to your email $email Enter It to access your account.",
+                  style: TextStyle(fontSize: 13, color: Color(0xff999999)),
+                ),
+                SizedBox(height: 20),
+                OtpInputsForm(userid: userId, isResetPassword: isResetPassword,),
+               
+              ],
+            ),
           ),
         ),
       ),

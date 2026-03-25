@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 
 class ProfileContainer extends StatelessWidget {
-  const ProfileContainer({super.key});
-
+  const ProfileContainer({super.key,  this.username, required this.email});
+  final String? username, email;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,10 +25,10 @@ class ProfileContainer extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Zahraaahmed17", style: Textstyles.medium20),
+              Text(username??"usename", style: Textstyles.medium20),
               SizedBox(height: 4),
               Text(
-                "zahraaahmed71@gmail.com",
+                email!,
                 style: Textstyles.regular13.copyWith(color: Color(0xff999999)),
               ),
             ],

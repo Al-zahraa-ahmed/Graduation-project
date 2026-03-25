@@ -16,7 +16,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     print(dio.options.baseUrl);
     emit(SignUpLoading());
     try {
-      final Response = await dio.post(
+      final response = await dio.post(
         "https://signlingo.org/api/register",
         data: {
           "name": name,
@@ -26,15 +26,34 @@ class SignUpCubit extends Cubit<SignUpState> {
           "agreement": agreement,
         },
       );
-      print(Response);
-      final int userid = Response.data['user_id'];
+        print("STATUS: ${response.statusCode}");
+      print("DATA: ${response.data}");
+      final int userid = response.data['user_id'];
       emit(SignUpSuccess(userid: userid));
     } on DioException catch (e) {
+          print("TYPE: ${e.type}");
+      print("MESSAGE: ${e.message}");
       print("STATUS: ${e.response?.statusCode}");
       print("RESPONSE DATA: ${e.response?.data}");
-      emit(SignUpFailure(errormsg: e.response?.data.toString() ?? "errors"));
+       String errorMessage = "Something went wrong";
+
+      if (e.response?.data is Map<String, dynamic>) {
+        final data = e.response!.data as Map<String, dynamic>;
+
+        if (data["message"] != null) {
+          errorMessage = data["message"].toString();
+        }
+
+        if (data["errors"] != null) {
+          errorMessage += "\n${data["errors"]}";
+        }
+      } else if (e.message != null) {
+        errorMessage = e.message!;
+      }
+      emit(SignUpFailure(errormsg: errorMessage));
     } on Exception catch (e) {
-      print(e.toString());
+         print(e.toString());
+      emit(SignUpFailure(errormsg: e.toString()));
       emit(SignUpFailure(errormsg: e.toString()));
     }
   }

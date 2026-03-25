@@ -1,19 +1,24 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/generated/l10n.dart';
+import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 import 'package:graduation_project/presentation/onboarding/OnboardingScreen.dart';
 import 'package:intl/intl.dart';
-
+List<CameraDescription> cameras = [];
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
-  runApp(const GraduationProject());
+  
+  String? token = CacheHelper.getData("token");
+  runApp(Signlingo(token: token,));
 }
 
-class GraduationProject extends StatelessWidget {
-  const GraduationProject({super.key});
-
+class Signlingo extends StatelessWidget {
+  const Signlingo({super.key,required this.token});
+final String? token;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -26,7 +31,7 @@ class GraduationProject extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      home: Onboardingscreen(),
+      home:token==null? Onboardingscreen():LearingHome(),
     );
   }
 }

@@ -30,6 +30,7 @@ class SignupContainer extends StatelessWidget {
         ),
       ),
       child: Column(
+        // mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Head1Text(txt: "Get Started"),
           SizedBox(height: 31),
@@ -55,6 +56,7 @@ class SignupContainer extends StatelessWidget {
               txt2: "Log in",
             ),
           ),
+          // SizedBox(height: 30,),
         ],
       ),
     );

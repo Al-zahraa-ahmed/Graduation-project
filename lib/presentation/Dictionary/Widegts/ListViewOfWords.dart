@@ -1,7 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/business_logic/Dictionary/dictionary_cubit.dart';
 import 'package:graduation_project/data/Models/WordModel.dart';
 import 'package:graduation_project/presentation/ErrorsScreens/NoConnection.dart';
+import 'package:graduation_project/presentation/PlayVideo/VideoScreen.dart';
+
+class DictionaryWordsSection extends StatelessWidget {
+  const DictionaryWordsSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<DictionaryCubit, DictionaryState>(
+      buildWhen: (previous, current) {
+        if (previous is DictionarySuccess && current is DictionarySuccess) {
+          return previous.filteredWordsByLetters !=
+              current.filteredWordsByLetters;
+        }
+        return true;
+      },
+      builder: (context, state) {
+        if (state is! DictionarySuccess) return const SizedBox();
+
+        final List<WordModel> filteredWords = state
+            .filteredWordsByLetters
+            .values
+            .expand((list) => list)
+            .toList();
+
+        return ListViewOfWords(w: filteredWords);
+      },
+    );
+  }
+}
 
 class ListViewOfWords extends StatelessWidget {
   const ListViewOfWords({super.key, required this.w});
@@ -44,16 +75,23 @@ class WordCard extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(w.word, style: Textstyles.medium16),
-              Text(
-                w.category,
-                style: TextStyle(fontSize: 13, color: Color(0xff999999)),
-              ),
-            ],
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  w.word,
+                  style: Textstyles.medium16,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                ),
+                Text(
+                  w.category,
+                  style: TextStyle(fontSize: 13, color: Color(0xff999999)),
+                ),
+              ],
+            ),
           ),
           IconButton(
             padding: EdgeInsets.all(0),
@@ -65,7 +103,7 @@ class WordCard extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (builder) {
-                    return Noconnection();
+                    return LessonVideoScreen();
                   },
                 ),
               );
