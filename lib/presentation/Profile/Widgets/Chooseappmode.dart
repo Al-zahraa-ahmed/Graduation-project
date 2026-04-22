@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
+import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
+import 'package:graduation_project/presentation/LearningHome/translationHome.dart';
 import 'package:graduation_project/presentation/Lessons/Widgets/lesson.dart';
 
 enum AppMode { educationalMode, translationMode }
@@ -59,9 +63,14 @@ class _ChooseModeState extends State<ChooseMode> {
                     Text("Educational Mode", style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          selectedMode = AppMode.educationalMode;
-                        });
+                        if (selectedMode == AppMode.educationalMode) return;
+                        context.read<ProfileCubit>().changeMode(mode: "l");
+                        selectedMode = AppMode.educationalMode;
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => LearingHome()),
+                          (route) => false,
+                        );
                       },
                       child: CheckContainer(
                         isselected: selectedMode == AppMode.educationalMode,
@@ -76,9 +85,14 @@ class _ChooseModeState extends State<ChooseMode> {
                     Text("Translation Mode", style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: () {
-                        setState(() {
-                          selectedMode = AppMode.translationMode;
-                        });
+                        if (selectedMode == AppMode.translationMode) return;
+                        context.read<ProfileCubit>().changeMode(mode: "a");
+                        selectedMode = AppMode.translationMode;
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => Translationhome()),
+                          (route) => false,
+                        );
                       },
                       child: CheckContainer(
                         isselected: selectedMode == AppMode.translationMode,

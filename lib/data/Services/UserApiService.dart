@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
+import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
+import 'package:graduation_project/data/Models/ProfileModel.dart';
 import 'package:graduation_project/data/Models/UserModel.dart';
 // import 'user_model.dart';
 // import 'cache_helper.dart';
@@ -27,14 +29,14 @@ class UserApiService {
     }
   }
 
-  Future<UserModel> getUserMainData() async {
+  Future<ProfileModel> getUserMainData() async {
     try {
       final response = await dio.get(
         "https://signlingo.org/api/user/main-data",
       );
       final data = response.data["data"];
       print(data);
-      return UserModel.fromJson(data);
+      return ProfileModel.fromJson(data);
     } on DioException catch (e) {
       throw Exception(e.response?.data["message"] ?? "Failed to get main data");
     }
@@ -51,19 +53,31 @@ class UserApiService {
   }
 
   Future<void> updateUserData({
-    String? username,
-    String? email,
-    String? phone,
+    required String username,
+    required String name,
+    required String email,
+    String? currentPassword,
+    String? newPassword,
+    String? confirmPassword,
+    String? imgPath,
+    bool removeImage = false,
   }) async {
     try {
-      await dio.post(
-        "update-data",
-        data: {
-          if (username != null) "username": username,
-          if (email != null) "email": email,
-          if (phone != null) "phone": phone,
-        },
-      );
+      final formData = FormData.fromMap({
+        "username": username,
+        "name": name,
+        "email": email,
+        if (currentPassword != null && currentPassword.isNotEmpty)
+          "current_password": currentPassword,
+        if (newPassword != null && newPassword.isNotEmpty)
+          "new_password": newPassword,
+        if (confirmPassword != null && confirmPassword.isNotEmpty)
+          "confirm_password": confirmPassword,
+        if (imgPath != null)
+          "img": await MultipartFile.fromFile(imgPath),
+        if (removeImage) "remove_image": "1",
+      });
+      await dio.post("update-data", data: formData);
     } on DioException catch (e) {
       throw Exception(
         e.response?.data["message"] ?? "Failed to update user data",

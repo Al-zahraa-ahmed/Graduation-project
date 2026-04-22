@@ -7,13 +7,18 @@ class CustomTextField extends StatelessWidget {
     required this.label,
     this.onsaved,
     this.keyboardtype,
-    this.isabvious = false, this.validator,
+    this.isabvious = false,
+    this.validator,
+    this.controller,
+    this.readOnly = false,
   });
   final String hint, label;
   final void Function(String?)? onsaved;
   final TextInputType? keyboardtype;
   final bool isabvious;
   final String? Function(String?)? validator;
+  final TextEditingController? controller;
+  final bool readOnly;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,10 +35,12 @@ class CustomTextField extends StatelessWidget {
         ],
       ),
       child: TextFormField(
+        controller: controller,
         validator: validator,
         obscureText: isabvious,
         keyboardType: keyboardtype,
         onSaved: onsaved,
+        readOnly: readOnly,
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           label: Text(

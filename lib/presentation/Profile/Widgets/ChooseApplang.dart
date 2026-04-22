@@ -61,10 +61,10 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                     Text("Arabic", style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: () async {
-                        setState(() {
+                        // setState(() {
+                        // });
+                        context.read<ProfileCubit>().changelang(lang: "ar");
                           selectedLang = AppLanguage.arabic;
-                        });
-                        await userapi.changeLanguage(language: "ar");
                       },
                       child: CheckContainer(
                         isselected: selectedLang == AppLanguage.arabic,
@@ -79,10 +79,10 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                     Text("English", style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: ()async {
-                        setState(() {
+                        // setState(() {
+                        // });
+                       context.read<ProfileCubit>().changelang(lang: "en");
                           selectedLang = AppLanguage.english;
-                        });
-                        await userapi.changeLanguage(language: "en");
                         
                       },
                       child: CheckContainer(

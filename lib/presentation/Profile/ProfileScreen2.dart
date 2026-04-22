@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
-import 'package:graduation_project/data/Models/UserModel.dart';
+import 'package:graduation_project/data/Models/ProfileModel.dart';
+// import 'package:graduation_project/data/Models/UserModel.dart';
 import 'package:graduation_project/presentation/About%20us%20screens/About_Us.dart';
 import 'package:graduation_project/presentation/About%20us%20screens/ContactUs.dart';
 import 'package:graduation_project/presentation/About%20us%20screens/HelpCenter.dart';
@@ -57,14 +58,23 @@ class ProfileScreenBlocBuilder extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        if (state is ProfileSucces ) {
-          final UserModel user = state.user;
+        if (state is ProfileLoading) {
+    return const Center(child: CircularProgressIndicator());
+  }
+        if (state is ProfileSucces) {
+          final ProfileModel user = state.user;
+          print("kkkkkkkkkkkkkkkk");
           print(user.toJson().toString());
-          return ProfileScreenBody(user: user);
-        } else {
+          return ProfileScreenBody(user: state.user);
+        } 
+        if (state is ProfileFailure) {
           return ProfileScreenBody();
-        }
-        
+    // return Center(child: Text(state.errmsg));
+
+  }
+
+  return const SizedBox.shrink();
+
       },
     );
   }
@@ -72,7 +82,197 @@ class ProfileScreenBlocBuilder extends StatelessWidget {
 
 class ProfileScreenBody extends StatelessWidget {
   const ProfileScreenBody({super.key, this.user});
-  final UserModel? user;
+  final ProfileModel? user;
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Confirm Logout",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 12),
+                Text(
+                  "Are you sure you want to logout?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+                SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xff7C7CD5),
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () async {
+                      await CacheHelper.removeData("token");
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(builder: (_) => Loginscreen()),
+                        (route) => false,
+                      );
+                    },
+                    child: Text(
+                      "Logout",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffD9D9D9),
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      elevation: 0,
+                    ),
+                    onPressed: () => Navigator.pop(dialogContext),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Confirm Account Deletion",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: 12),
+                Text(
+                  "Are you sure you want to delete your account?",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.grey,
+                  ),
+                ),
+                SizedBox(height: 24),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    onPressed: () async {
+                      try {
+                        final cubit = context.read<ProfileCubit>();
+                        await cubit.deleteAccount();
+                        await CacheHelper.removeData("token");
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (_) => Loginscreen()),
+                          (route) => false,
+                        );
+                      } catch (e) {
+                        Navigator.pop(dialogContext);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("Failed to delete account")),
+                        );
+                      }
+                    },
+                    child: Text(
+                      "Delete Account",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffD9D9D9),
+                      padding: EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      elevation: 0,
+                    ),
+                    onPressed: () => Navigator.pop(dialogContext),
+                    child: Text(
+                      "Cancel",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -124,13 +324,8 @@ class ProfileScreenBody extends StatelessWidget {
             LogoutAndDelete(
               img: "Assets/images/logout.png",
               title: 'Logout',
-              ontap: () async {
-                await CacheHelper.removeData("token");
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (_) => Loginscreen()),
-                  (route) => false,
-                );
+              ontap: () {
+                _showLogoutDialog(context);
               },
             ),
 
@@ -138,6 +333,9 @@ class ProfileScreenBody extends StatelessWidget {
               img: "Assets/images/delete.png",
               title: "Delete Account",
               c: Colors.red,
+              ontap: () {
+                _showDeleteDialog(context);
+              },
             ),
           ],
         ),
