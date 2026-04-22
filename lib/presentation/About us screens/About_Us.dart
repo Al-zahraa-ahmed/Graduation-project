@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 class AboutUsScreen extends StatelessWidget {
   const AboutUsScreen({super.key});
@@ -17,8 +18,8 @@ class AboutUsScreen extends StatelessWidget {
         elevation: 0,
         backgroundColor: Color(0xffD6D6F5),
         foregroundColor: Colors.black,
-        title: const Text(
-          "About Us",
+        title: Text(
+          S.of(context).about_about,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -26,12 +27,12 @@ class AboutUsScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
+          children: [
 
             // SizedBox(height: 10),
 
             Text(
-              "SignLingo",
+              S.of(context).about_us_name,
               style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold,
@@ -41,7 +42,7 @@ class AboutUsScreen extends StatelessWidget {
             SizedBox(height: 8),
 
             Text(
-              "SignLingo is an accessible educational application designed to support deaf and mute individuals in learning and practicing sign language through interactive and user-friendly features.",
+              S.of(context).about_us_desc,
               style: TextStyle(
                 fontSize: 15,
                 height: 1.7,

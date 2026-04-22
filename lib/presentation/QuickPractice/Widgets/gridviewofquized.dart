@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/business_logic/Quiz/quiz_cubit.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/QuickPractice/Widgets/quizcard.dart';
 
 class GridviewOfQuiz extends StatelessWidget {
@@ -19,7 +20,7 @@ class GridviewOfQuiz extends StatelessWidget {
         if (state is QuizzesLoaded) {
           final quizzes = state.quizzes;
           if (quizzes.isEmpty) {
-            return const Center(child: Text("No quizzes available"));
+            return Center(child: Text(S.of(context).quiz_no_quizzes));
           }
           return GridView.builder(
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),

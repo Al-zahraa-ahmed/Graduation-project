@@ -35,15 +35,12 @@ class Signlingo extends StatelessWidget {
         // TODO: implement listener
       },
       builder: (context, state) {
-        String currentLang = 'en';
-        String currentmode = 'l';
-        // ThemeMode currentTheme = ThemeMode.light;
+        String currentLang = CacheHelper.getData('lang') ?? 'en';
+        String currentmode = CacheHelper.getData('mode') ?? 'l';
 
         if (state is ProfileSucces) {
-          currentLang = state.user.language ?? 'en';
-          currentmode = state.user.mode ?? "l";
-          // لو عندك لوجيك للثيم:
-          // currentTheme = state.user.theme == 'dark' ? ThemeMode.dark : ThemeMode.light;
+          currentLang = state.user.language ?? currentLang;
+          currentmode = state.user.mode ?? currentmode;
         }
         S.load(Locale(currentLang));
         return MaterialApp(

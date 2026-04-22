@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 import 'package:graduation_project/presentation/LearningHome/translationHome.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/Lessons/Widgets/lesson.dart';
 
 enum AppMode { educationalMode, translationMode }
@@ -43,7 +44,7 @@ class _ChooseModeState extends State<ChooseMode> {
           height: 28,
           width: 28,
         ),
-        title: Text("App Mode", style: TextStyle(fontSize: 16)),
+        title: Text(S.of(context).account_mode, style: TextStyle(fontSize: 16)),
         trailing: isExpanded
             ? Icon(Icons.keyboard_arrow_down)
             : Icon(Icons.chevron_right, size: 28),
@@ -60,7 +61,7 @@ class _ChooseModeState extends State<ChooseMode> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Educational Mode", style: TextStyle(fontSize: 16)),
+                    Text(S.of(context).mode_learn, style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: () {
                         if (selectedMode == AppMode.educationalMode) return;
@@ -82,7 +83,7 @@ class _ChooseModeState extends State<ChooseMode> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Translation Mode", style: TextStyle(fontSize: 16)),
+                    Text(S.of(context).mode_ass, style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: () {
                         if (selectedMode == AppMode.translationMode) return;

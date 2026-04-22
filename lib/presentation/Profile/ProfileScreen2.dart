@@ -10,6 +10,7 @@ import 'package:graduation_project/presentation/About%20us%20screens/ContactUs.d
 import 'package:graduation_project/presentation/About%20us%20screens/HelpCenter.dart';
 import 'package:graduation_project/presentation/About%20us%20screens/PrivacyPolicy.dart';
 import 'package:graduation_project/presentation/About%20us%20screens/Terms_and_Conditions.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/LogIn/LoginScreen.dart';
 import 'package:graduation_project/presentation/Profile/Widgets/ChooseApplang.dart';
 import 'package:graduation_project/presentation/Profile/Widgets/Chooseappmode.dart';
@@ -21,29 +22,31 @@ import 'package:graduation_project/presentation/Profile/Widgets/buildListTile.da
 import 'package:graduation_project/presentation/Profile/Widgets/builddivider.dart';
 import 'package:graduation_project/presentation/Profile_information/Profile_information.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ProfileCubit()..getMainData(),
-      child: Scaffold(
-        backgroundColor: const Color(0xffEAEAFA),
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0,
-          leading: IconButton(
-            icon: Icon(Icons.chevron_left),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          centerTitle: true,
-          title: Text("Profile", style: Textstyles.medium25),
+    return Scaffold(
+      backgroundColor: const Color(0xffEAEAFA),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.chevron_left),
+          onPressed: () {
+            Navigator.pop(context);
+          },
         ),
-        body: ProfileScreenBlocBuilder(),
+        centerTitle: true,
+        title: Text(S.of(context).profile_title, style: Textstyles.medium25),
       ),
+      body: ProfileScreenBlocBuilder(),
     );
   }
 }
@@ -99,7 +102,7 @@ class ProfileScreenBody extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Confirm Logout",
+                  S.of(context).logout_title,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -107,7 +110,7 @@ class ProfileScreenBody extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  "Are you sure you want to logout?",
+                  S.of(context).logout_desc,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -134,7 +137,7 @@ class ProfileScreenBody extends StatelessWidget {
                       );
                     },
                     child: Text(
-                      "Logout",
+                      S.of(context).logout,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -157,7 +160,7 @@ class ProfileScreenBody extends StatelessWidget {
                     ),
                     onPressed: () => Navigator.pop(dialogContext),
                     child: Text(
-                      "Cancel",
+                      S.of(context).delete_btn2,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -189,7 +192,7 @@ class ProfileScreenBody extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Confirm Account Deletion",
+                  S.of(context).delete_title,
                   style: TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
@@ -197,7 +200,7 @@ class ProfileScreenBody extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  "Are you sure you want to delete your account?",
+                  S.of(context).delete_desc,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16,
@@ -228,12 +231,12 @@ class ProfileScreenBody extends StatelessWidget {
                       } catch (e) {
                         Navigator.pop(dialogContext);
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Failed to delete account")),
+                          SnackBar(content: Text(S.of(context).profile_load_error)),
                         );
                       }
                     },
                     child: Text(
-                      "Delete Account",
+                      S.of(context).delete_btn1,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -256,7 +259,7 @@ class ProfileScreenBody extends StatelessWidget {
                     ),
                     onPressed: () => Navigator.pop(dialogContext),
                     child: Text(
-                      "Cancel",
+                      S.of(context).delete_btn2,
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -285,12 +288,12 @@ class ProfileScreenBody extends StatelessWidget {
               email: user?.email ?? "email",
               username: user?.username,
             ),
-            const SectionTitle(title: "Account"),
+            SectionTitle(title: S.of(context).account_title),
             SectionContainer(
               children: [
                 buildListTile(
                   img: "Assets/images/settingsicon.png",
-                  title: "Profile information",
+                  title: S.of(context).account_info,
                   ontap: () {
                     Navigator.push(
                       context,
@@ -316,14 +319,14 @@ class ProfileScreenBody extends StatelessWidget {
                 ),
               ],
             ),
-            const SectionTitle(title: "About"),
+            SectionTitle(title: S.of(context).about_title),
             const AboutContainer(),
-            const SectionTitle(title: "Support"),
+            SectionTitle(title: S.of(context).support_title),
             const SupportContainer(),
             SizedBox(height: 8),
             LogoutAndDelete(
               img: "Assets/images/logout.png",
-              title: 'Logout',
+              title: S.of(context).logout,
               ontap: () {
                 _showLogoutDialog(context);
               },
@@ -331,7 +334,7 @@ class ProfileScreenBody extends StatelessWidget {
 
             LogoutAndDelete(
               img: "Assets/images/delete.png",
-              title: "Delete Account",
+              title: S.of(context).account_delete,
               c: Colors.red,
               ontap: () {
                 _showDeleteDialog(context);
@@ -353,7 +356,7 @@ class SupportContainer extends StatelessWidget {
       children: [
         buildListTile(
           img: "Assets/images/contact.png",
-          title: "Contact us",
+          title: S.of(context).support_contact,
           ontap: () {
             Navigator.push(
               context,
@@ -368,7 +371,7 @@ class SupportContainer extends StatelessWidget {
         BuildDivider(),
         buildListTile(
           img: "Assets/images/helpcenter.png",
-          title: "Help Center",
+          title: S.of(context).support_help,
           ontap: () {
             Navigator.push(
               context,
@@ -394,7 +397,7 @@ class AboutContainer extends StatelessWidget {
       children: [
         buildListTile(
           img: "Assets/images/about.png",
-          title: "About Us",
+          title: S.of(context).about_about,
           ontap: () {
             Navigator.push(
               context,
@@ -409,7 +412,7 @@ class AboutContainer extends StatelessWidget {
         BuildDivider(),
         buildListTile(
           img: "Assets/images/trerms.png",
-          title: "Terms & conditions",
+          title: S.of(context).about_terms,
           ontap: () {
             Navigator.push(
               context,
@@ -424,7 +427,7 @@ class AboutContainer extends StatelessWidget {
         BuildDivider(),
         buildListTile(
           img: "Assets/images/privacy.png",
-          title: "Privacy policy",
+          title: S.of(context).about_privacy,
           ontap: () {
             Navigator.push(
               context,
@@ -439,7 +442,7 @@ class AboutContainer extends StatelessWidget {
         BuildDivider(),
         buildListTile(
           img: "Assets/images/appversion.png",
-          title: "App version",
+          title: S.of(context).about_version,
         ),
       ],
     );

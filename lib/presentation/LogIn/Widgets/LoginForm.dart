@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
 import 'package:graduation_project/business_logic/Auth/LoginCubit/login_cubit.dart';
@@ -46,10 +47,10 @@ class _LoginFormState extends State<LoginForm> {
                 keyboardtype: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Email is required";
+                    return S.of(context).email_required;
                   }
                 },
-                label: "Email",
+                label: S.of(context).email,
                 hint: "Enter Your Email",
                 onsaved: (value) {
                   email = value!;
@@ -58,14 +59,14 @@ class _LoginFormState extends State<LoginForm> {
               SizedBox(height: 36),
               CustomTextField(
                 isabvious: true,
-                label: "Password",
+                label: S.of(context).password,
                 hint: "Enter Your Password",
                 onsaved: (value) {
                   pass = value!;
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Password is required";
+                    return S.of(context).password_required;
                   }
                 },
               ),
@@ -93,7 +94,7 @@ class _LoginFormState extends State<LoginForm> {
                       },
                     ),
                     Text(
-                      "Remember me",
+                      S.of(context).remember,
                       style: TextStyle(fontSize: 13, color: Color(0xff999999)),
                     ),
                     Spacer(),

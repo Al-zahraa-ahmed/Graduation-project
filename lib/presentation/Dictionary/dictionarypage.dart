@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/business_logic/Dictionary/dictionary_cubit.dart';
 import 'package:graduation_project/data/Models/WordModel.dart';
@@ -35,7 +36,7 @@ class DictionaryPage extends StatelessWidget {
               ),
             ],
           ),
-          title: Text("Dictionary", style: Textstyles.medium25),
+          title: Text(S.of(context).dictionary_title, style: Textstyles.medium25),
         ),
         body: DictionaryPageBody(),
       ),

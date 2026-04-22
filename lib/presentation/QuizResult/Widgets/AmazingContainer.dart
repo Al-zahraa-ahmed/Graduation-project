@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 class Amazingcontainer extends StatelessWidget {
   const Amazingcontainer({super.key, required this.feedback});
@@ -23,7 +24,7 @@ class Amazingcontainer extends StatelessWidget {
       child: Center(
         child: Column(
           children: [
-            Text("Amazing!", style: Textstyles.medium20),
+            Text(S.of(context).result_amazing, style: Textstyles.medium20),
             SizedBox(height: 8),
             Text(
               displayText,

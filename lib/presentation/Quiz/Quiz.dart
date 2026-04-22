@@ -8,6 +8,7 @@ import 'package:graduation_project/presentation/Quiz/Widgets/AnswerButton.dart';
 import 'package:graduation_project/presentation/Quiz/Widgets/CircularNumberProgress.dart';
 import 'package:graduation_project/presentation/Quiz/Widgets/QuestionCard.dart';
 import 'package:graduation_project/presentation/Quiz/Widgets/arrowbackandnext.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/QuizResult/QuizResult.dart';
 
 class QuizScreen extends StatefulWidget {
@@ -230,7 +231,7 @@ class _QuizScreenState extends State<QuizScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "Leave Quiz?",
+                  S.of(context).quiz_leave_title,
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -239,7 +240,7 @@ class _QuizScreenState extends State<QuizScreen> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  "You will lose all your progress\nif you leave now.",
+                  S.of(context).quiz_leave_desc,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 14,
@@ -265,7 +266,7 @@ class _QuizScreenState extends State<QuizScreen> {
                           Navigator.pop(context);
                         },
                         child: Text(
-                          "Leave",
+                          S.of(context).quiz_leave_btn,
                           style: TextStyle(
                             color: Colors.red,
                             fontWeight: FontWeight.w600,
@@ -285,7 +286,7 @@ class _QuizScreenState extends State<QuizScreen> {
                         ),
                         onPressed: () => Navigator.pop(dialogContext),
                         child: Text(
-                          "Stay",
+                          S.of(context).quiz_stay_btn,
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
@@ -421,14 +422,14 @@ class _QuizScreenState extends State<QuizScreen> {
               children: [
                 SizedBox(height: 10),
                 Text(
-                  "Quiz Completed!",
+                  S.of(context).quiz_completed_title,
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 10),
                 Text(
                   state.allAnswered
-                      ? "You've answered all ${state.totalQuestions} questions."
-                      : "You've answered ${state.selectedAnswers.length} of ${state.totalQuestions} questions.\nPlease answer all questions before submitting.",
+                      ? S.of(context).quiz_answered_all(state.totalQuestions)
+                      : S.of(context).quiz_answered_partial(state.selectedAnswers.length, state.totalQuestions),
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.grey, fontSize: 16),
                 ),
@@ -450,14 +451,14 @@ class _QuizScreenState extends State<QuizScreen> {
                         }
                       : null,
                   child: Text(
-                    "Submit",
+                    S.of(context).submit_btn1,
                     style: Textstyles.medium20.copyWith(color: Colors.white),
                   ),
                 ),
                 SizedBox(height: 10),
                 TextButton(
                   onPressed: () => Navigator.pop(dialogContext),
-                  child: const Text("Cancel"),
+                  child: Text(S.of(context).submit_btn2),
                 ),
               ],
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 class ScoreContainer extends StatelessWidget {
   const ScoreContainer({
@@ -36,7 +37,7 @@ class ScoreContainer extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Score", style: Textstyles.medium20),
+              Text(S.of(context).result_score1, style: Textstyles.medium20),
               Text(
                 "$score",
                 style: TextStyle(
@@ -46,7 +47,7 @@ class ScoreContainer extends StatelessWidget {
                 ),
               ),
               Text(
-                "Out Of $totalQuestions",
+                "${S.of(context).result_score2} $totalQuestions",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
@@ -61,7 +62,7 @@ class ScoreContainer extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Time", style: Textstyles.medium20),
+              Text(S.of(context).result_time, style: Textstyles.medium20),
               Text(
                 timeMins.toStringAsFixed(1),
                 style: TextStyle(
@@ -71,7 +72,7 @@ class ScoreContainer extends StatelessWidget {
                 ),
               ),
               Text(
-                "Minutes",
+                S.of(context).result_minutes,
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,

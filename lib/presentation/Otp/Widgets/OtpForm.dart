@@ -1,5 +1,6 @@
 import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/business_logic/Auth/OtpCubit/otp_cubit.dart';
@@ -138,7 +139,7 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
                     ),
                   ),
                   Text(
-                    "  Remaining",
+                    "  ${S.of(context).remaining}",
                     style: TextStyle(fontSize: 13, color: Color(0xff999999)),
                   ),
                   Spacer(),
@@ -155,7 +156,7 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
                       }
                     },
                     child: Text(
-                      "Resend Code?",
+                      S.of(context).resend_code,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w500,
@@ -193,7 +194,7 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
                 },
                 child: SizedBox(
                   width: double.infinity,
-                  child: CustomButton(txt: "Verify"),
+                  child: CustomButton(txt: S.of(context).verify),
                 ),
               ),
             ],

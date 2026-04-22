@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 class VideoContainer extends StatelessWidget {
   const VideoContainer({super.key, this.mediaUrl});
@@ -18,12 +19,12 @@ class VideoContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           color: Color(0xffEAEAFA),
         ),
-        child: _buildContent(),
+        child: _buildContent(context),
       ),
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildContent(BuildContext context) {
     if (mediaUrl != null && mediaUrl!.isNotEmpty) {
       return ClipRRect(
         borderRadius: BorderRadius.circular(12),
@@ -42,20 +43,20 @@ class VideoContainer extends StatelessWidget {
               ),
             );
           },
-          errorBuilder: (_, __, ___) => _placeholder(),
+          errorBuilder: (_, __, ___) => _placeholder(context),
         ),
       );
     }
-    return _placeholder();
+    return _placeholder(context);
   }
 
-  Widget _placeholder() {
+  Widget _placeholder(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Icon(size: 42, Icons.image_outlined, color: Color(0xffADADEB)),
         SizedBox(height: 10),
-        Text("No media", style: Textstyles.bold13),
+        Text(S.of(context).video_no_media, style: Textstyles.bold13),
       ],
     );
   }

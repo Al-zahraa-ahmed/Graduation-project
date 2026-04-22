@@ -69,7 +69,7 @@ class ForgetPassForm extends StatelessWidget {
         if (state is ForgetPasswordSuccess) {
                     if (user == null) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('User data is missing')),
+              SnackBar(content: Text(S.of(context).user_data_missing)),
             );
             return;
           }
@@ -95,7 +95,7 @@ class ForgetPassForm extends StatelessWidget {
             children: [
               CustomTextField(
                 hint: "Enter Your Email",
-                label: "Email",
+                label: S.of(context).email,
                 onsaved: (value) {
                   email = value!;
                 },
@@ -112,7 +112,7 @@ class ForgetPassForm extends StatelessWidget {
                 },
                 child: SizedBox(
                   width: double.infinity,
-                  child: CustomButton(txt: "Confirm mail"),
+                  child: CustomButton(txt: S.of(context).confirm_mail),
                 ),
               ),
             ],

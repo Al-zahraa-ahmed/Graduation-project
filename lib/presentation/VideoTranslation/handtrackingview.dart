@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:flutter/services.dart';
 // Import the plugin's main class.
 import 'package:hand_landmarker/hand_landmarker.dart';
@@ -155,7 +156,7 @@ if (frameSkip % 3 != 0) return;
     final previewAspectRatio = previewSize.height / previewSize.width;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Live Hand Tracking')),
+      appBar: AppBar(title: Text(S.of(context).live_tracking)),
       body: Center(
         child: AspectRatio(
           aspectRatio: previewAspectRatio,

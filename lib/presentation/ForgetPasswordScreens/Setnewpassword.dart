@@ -98,7 +98,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
             children: [
               CustomTextField(
                 hint: "Enter Your Password",
-                label: "Password",
+                label: S.of(context).password,
                 onsaved: (value) {
                   pass1 = value!;
                 },
@@ -117,7 +117,7 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               SizedBox(height: 34),
               CustomTextField(
                 hint: "Enter Your Password",
-                label: "Confirmed Password ",
+                label: S.of(context).profile_confirm_pass,
                 onsaved: (value) {
                   pass2 = value!;
                 },

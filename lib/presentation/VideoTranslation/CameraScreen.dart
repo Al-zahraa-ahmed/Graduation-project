@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/data/Services/HandLandmarker.dart';
 // import 'HandChannel.dart';
 
@@ -27,7 +28,7 @@ class _CameraScreenState extends State<CameraScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Hand Landmarks Realtime")),
+      appBar: AppBar(title: Text(S.of(context).hand_landmarks)),
       body: Center(
         child: Text("Landmarks count: ${currentLandmarks.length}"),
       ),

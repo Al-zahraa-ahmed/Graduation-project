@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
 import 'package:graduation_project/data/Services/UserApiService.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/Lessons/Widgets/lesson.dart';
 
 enum AppLanguage { arabic, english }
@@ -41,7 +42,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
           });
         },
         leading: Image.asset("Assets/images/lang.png", height: 28, width: 28),
-        title: Text("Language", style: TextStyle(fontSize: 16)),
+        title: Text(S.of(context).account_lang, style: TextStyle(fontSize: 16)),
         trailing: isExpanded
             ? Icon(Icons.keyboard_arrow_down)
             : Icon(Icons.chevron_right, size: 28),
@@ -58,7 +59,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Arabic", style: TextStyle(fontSize: 16)),
+                    Text(S.of(context).lang_ar, style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: () async {
                         // setState(() {
@@ -76,7 +77,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("English", style: TextStyle(fontSize: 16)),
+                    Text(S.of(context).lang_en, style: TextStyle(fontSize: 16)),
                     InkWell(
                       onTap: ()async {
                         // setState(() {

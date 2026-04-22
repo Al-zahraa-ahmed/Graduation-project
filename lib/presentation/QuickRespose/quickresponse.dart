@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 class QuickResponseScreen extends StatelessWidget {
   const QuickResponseScreen({super.key});
@@ -38,10 +39,10 @@ class QuickResponseScreen extends StatelessWidget {
                 ),
               ],
             ),
-            title: Text("Quick Response", style: Textstyles.medium25),
+            title: Text(S.of(context).quick_response, style: Textstyles.medium25),
           ),
       ),
-     
+
       ],
     );
   }
@@ -58,17 +59,21 @@ class QuickResponsePage extends StatefulWidget {
 
 class _QuickResponsePageState extends State<QuickResponsePage> {
 
-  List<String> responses = [
-    "I need medical help",
-    "Where is the bus station?",
-    "How much does this cost?",
-    "Can you help me?",
-    "Nice to meet you",
-    "I am deaf.",
-    "I feel uncomfortable",
-    "I appreciate your help",
-    "Call the police",
-  ];
+  List<String>? _responses;
+  List<String> _getResponses(BuildContext context) {
+    _responses ??= [
+      S.of(context).qr_need_help,
+      S.of(context).qr_bus,
+      S.of(context).qr_cost,
+      S.of(context).qr_help,
+      S.of(context).qr_meet,
+      S.of(context).qr_deaf,
+      S.of(context).qr_uncomfortable,
+      S.of(context).qr_appreciate,
+      S.of(context).qr_police,
+    ];
+    return _responses!;
+  }
 
   List<int> selectedItems = [];
   bool selectionMode = false;
@@ -100,28 +105,28 @@ class _QuickResponsePageState extends State<QuickResponsePage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: const Text("Add Phrase"),
+          title: Text(S.of(context).add_phrase),
           content: TextField(
             controller: controller,
-            decoration: const InputDecoration(
-              hintText: "Enter phrase",
+            decoration: InputDecoration(
+              hintText: S.of(context).enter_phrase,
             ),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text("Cancel"),
+              child: Text(S.of(context).cancel),
             ),
             ElevatedButton(
               onPressed: () {
                 if (controller.text.isNotEmpty) {
                   setState(() {
-                    responses.add(controller.text);
+                    _getResponses(context).add(controller.text);
                   });
                 }
                 Navigator.pop(context);
               },
-              child: const Text("Add"),
+              child: Text(S.of(context).add),
             ),
           ],
         );
@@ -173,7 +178,7 @@ Container(
            title: Text(
              selectionMode
                  ? "${selectedItems.length} Selected"
-                 : "Quick Response",
+                 : S.of(context).quick_response,
            ),
               
            actions: selectionMode
@@ -182,11 +187,11 @@ Container(
                      onPressed: () {
                        setState(() {
                          selectedItems =
-                             List.generate(responses.length, (index) => index);
+                             List.generate(_getResponses(context).length, (index) => index);
                        });
                      },
-                     child: const Text(
-                       "Select All",
+                     child: Text(
+                       S.of(context).select_all,
                        style: TextStyle(color: Colors.black),
                      ),
                    )
@@ -197,7 +202,7 @@ Container(
          body: ListView.builder(
            
            padding: const EdgeInsets.all(16),
-           itemCount: responses.length,
+           itemCount: _getResponses(context).length,
            itemBuilder: (context, index) {
               
              bool isSelected = selectedItems.contains(index);
@@ -207,7 +212,7 @@ Container(
                  if (selectionMode) {
                    toggleSelection(index);
                  } else {
-                   print("Clicked ${responses[index]}");
+                   print("Clicked ${_getResponses(context)[index]}");
                  }
                },
               
@@ -254,7 +259,7 @@ Container(
               
                      Expanded(
                        child: Text(
-                         responses[index],
+                         _getResponses(context)[index],
                          style: const TextStyle(
                            color: Color(0xff5B5BD7),
                            fontSize: 20,
@@ -290,28 +295,28 @@ Container(
               
                      Column(
                        mainAxisAlignment: MainAxisAlignment.center,
-                       children: const [
+                       children: [
                          Icon(Icons.delete, color: Colors.deepPurple),
                          SizedBox(height: 4),
-                         Text("Delete")
+                         Text(S.of(context).delete)
                        ],
                      ),
-              
+
                      Column(
                        mainAxisAlignment: MainAxisAlignment.center,
-                       children: const [
+                       children: [
                          Icon(Icons.edit, color: Colors.deepPurple),
                          SizedBox(height: 4),
-                         Text("Edit")
+                         Text(S.of(context).edit)
                        ],
                      ),
-              
+
                      Column(
                        mainAxisAlignment: MainAxisAlignment.center,
-                       children: const [
+                       children: [
                          Icon(Icons.push_pin, color: Colors.deepPurple),
                          SizedBox(height: 4),
-                         Text("Pin")
+                         Text(S.of(context).pin)
                        ],
                      ),
                    ],

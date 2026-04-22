@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 class Contactus extends StatelessWidget {
   const Contactus({super.key});
@@ -17,8 +18,8 @@ class Contactus extends StatelessWidget {
         elevation: 0,
         backgroundColor: Color(0xffD6D6F5),
         foregroundColor: Colors.black,
-        title: const Text(
-          "Contact us",
+        title: Text(
+          S.of(context).contact_us,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -27,7 +28,7 @@ class Contactus extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 40,),
-            Text("We welcome your inquiries",style: Textstyles.medium20,),
+            Text(S.of(context).contact_welcome,style: Textstyles.medium20,),
             Image.asset("Assets/images/Chat dialog with support service.png"),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0),

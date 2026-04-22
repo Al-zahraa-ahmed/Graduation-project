@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
 import 'package:graduation_project/data/Services/UserApiService.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Profile_information extends StatefulWidget {
@@ -53,7 +54,7 @@ class _Profile_informationState extends State<Profile_information> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to load profile data")),
+          SnackBar(content: Text(S.of(context).profile_load_error)),
         );
       }
     }
@@ -99,7 +100,7 @@ class _Profile_informationState extends State<Profile_information> {
               children: [
                 ListTile(
                   leading: Icon(Icons.photo_library, color: Color(0xff7C7CD5)),
-                  title: Text("Choose from Gallery"),
+                  title: Text(S.of(context).profile_gallery),
                   onTap: () async {
                     Navigator.pop(ctx);
                     final picked = await _picker.pickImage(
@@ -112,7 +113,7 @@ class _Profile_informationState extends State<Profile_information> {
                 ),
                 ListTile(
                   leading: Icon(Icons.camera_alt, color: Color(0xff7C7CD5)),
-                  title: Text("Take a Photo"),
+                  title: Text(S.of(context).profile_camera),
                   onTap: () async {
                     Navigator.pop(ctx);
                     final picked = await _picker.pickImage(
@@ -126,7 +127,7 @@ class _Profile_informationState extends State<Profile_information> {
                 if (_imgUrl != null || _pickedImage != null)
                   ListTile(
                     leading: Icon(Icons.delete, color: Colors.red),
-                    title: Text("Remove Photo"),
+                    title: Text(S.of(context).profile_remove_photo),
                     onTap: () {
                       Navigator.pop(ctx);
                       setState(() {
@@ -154,7 +155,7 @@ class _Profile_informationState extends State<Profile_information> {
     // Validation
     if (username.isEmpty || name.isEmpty || email.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Username, name and email are required")),
+        SnackBar(content: Text(S.of(context).profile_validation_required)),
       );
       return;
     }
@@ -167,7 +168,7 @@ class _Profile_informationState extends State<Profile_information> {
     if (hasAnyPassword && !hasAllPasswords) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("All password fields must be filled or left empty"),
+          content: Text(S.of(context).profile_validation_passwords),
         ),
       );
       return;
@@ -188,7 +189,7 @@ class _Profile_informationState extends State<Profile_information> {
       );
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Profile updated successfully")),
+          SnackBar(content: Text(S.of(context).profile_update_success)),
         );
         Navigator.pop(context);
       }
@@ -279,48 +280,48 @@ class _Profile_informationState extends State<Profile_information> {
                       children: [
                         CustomTextField(
                           controller: _usernameController,
-                          hint: "Username",
-                          label: "User Name",
+                          hint: S.of(context).profile_username,
+                          label: S.of(context).profile_username,
                         ),
                         SizedBox(height: 24),
                         CustomTextField(
                           controller: _nameController,
-                          hint: "Name",
-                          label: "Name",
+                          hint: S.of(context).profile_name,
+                          label: S.of(context).profile_name,
                         ),
                         SizedBox(height: 24),
                         CustomTextField(
                           controller: _emailController,
-                          hint: "Email",
-                          label: "Email",
+                          hint: S.of(context).profile_email,
+                          label: S.of(context).profile_email,
                           readOnly: true,
                         ),
                         SizedBox(height: 24),
                         CustomTextField(
                           controller: _currentPasswordController,
                           hint: "*****************",
-                          label: "Current Password",
+                          label: S.of(context).profile_current_pass,
                           isabvious: true,
                         ),
                         SizedBox(height: 24),
                         CustomTextField(
                           controller: _newPasswordController,
                           hint: "*****************",
-                          label: "New Password",
+                          label: S.of(context).profile_new_pass,
                           isabvious: true,
                         ),
                         SizedBox(height: 24),
                         CustomTextField(
                           controller: _confirmPasswordController,
                           hint: "*****************",
-                          label: "Confirm Password",
+                          label: S.of(context).profile_confirm_pass,
                           isabvious: true,
                         ),
                         SizedBox(height: 20),
                         SizedBox(
                           width: double.infinity,
                           child: CustomButton(
-                            txt: _isSaving ? "Saving..." : "Save Changes",
+                            txt: _isSaving ? S.of(context).profile_saving : S.of(context).profile_btn1,
                             onpressed: _isSaving ? null : _saveChanges,
                           ),
                         ),
@@ -328,7 +329,7 @@ class _Profile_informationState extends State<Profile_information> {
                         SizedBox(
                           width: double.infinity,
                           child: CustomButton(
-                            txt: "Cancel",
+                            txt: S.of(context).profile_btn2,
                             c: Color(0xffCCCCCC),
                             onpressed: () => Navigator.pop(context),
                           ),

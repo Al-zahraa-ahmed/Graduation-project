@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/Core/CustomWidgets/SearchBar.dart';
 
 class NotFoundPage extends StatelessWidget {
@@ -18,8 +19,8 @@ class NotFoundPage extends StatelessWidget {
         elevation: 0,
         backgroundColor: Color(0xffD6D6F5),
         foregroundColor: Colors.black,
-        title: const Text(
-          "Not found",
+        title: Text(
+          S.of(context).not_found,
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
@@ -30,8 +31,8 @@ class NotFoundPage extends StatelessWidget {
           SizedBox(height: 40,),
           Image.asset("Assets/images/speech bubble with question.png"),
           SizedBox(height: 21,),
-          Text("Oops! we couldn’t found that video .",style: Textstyles.medium20,),
-          Text("maybe try different keyword!",style: TextStyle(fontSize: 16,color: Color(0xff999999)),),
+          Text(S.of(context).not_found_desc,style: Textstyles.medium20,),
+          Text(S.of(context).not_found_hint,style: TextStyle(fontSize: 16,color: Color(0xff999999)),),
         ],
       ),
     );

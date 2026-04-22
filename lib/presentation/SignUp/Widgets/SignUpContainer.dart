@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/Core/CustomWidgets/Head1Text.dart';
 import 'package:graduation_project/Core/CustomWidgets/MultiColorText.dart';
 import 'package:graduation_project/presentation/LogIn/LoginScreen.dart';
@@ -36,7 +37,7 @@ class SignupContainer extends StatelessWidget {
           SizedBox(height: 31),
           RegistrationForm(),
           SizedBox(height: 35),
-          SeparatorLine(txt: "Or sign up with"),
+          SeparatorLine(txt: S.of(context).or_signup_with),
           SizedBox(height: 25),
           GoogleOrFacebook(),
           SizedBox(height: 20),
@@ -53,7 +54,7 @@ class SignupContainer extends StatelessWidget {
             },
             child: MultiColorText(
               txt1: "Already have an account?",
-              txt2: "Log in",
+              txt2: S.of(context).login,
             ),
           ),
           // SizedBox(height: 30,),

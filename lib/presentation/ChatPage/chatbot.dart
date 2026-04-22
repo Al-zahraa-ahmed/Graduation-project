@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 class ChatPage extends StatelessWidget {
   const ChatPage({super.key});
@@ -98,7 +99,7 @@ class ChatPage extends StatelessWidget {
                               )
                             ],
                           ),
-                          child: const Text("Chat Text"),
+                          child: Text(S.of(context).chat_text),
                         ),
                       ],
                     ),
@@ -124,7 +125,7 @@ class ChatPage extends StatelessWidget {
                               )
                             ],
                           ),
-                          child: const Text("User Text"),
+                          child: Text(S.of(context).user_text),
                         ),
                       ],
                     ),
@@ -144,9 +145,9 @@ class ChatPage extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(30),
                         ),
-                        child: const TextField(
+                        child: TextField(
                           decoration: InputDecoration(
-                            hintText: "Type a message",
+                            hintText: S.of(context).type_message,
                             border: InputBorder.none,
                           ),
                         ),

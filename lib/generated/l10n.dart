@@ -324,14 +324,30 @@ class S {
     return Intl.message('Get Started', name: 'welcome_btn', desc: '', args: []);
   }
 
-  // skipped getter for the 'welcome.desc' key
+  /// `Already have an account?Log in`
+  String get welcome_desc {
+    return Intl.message(
+      'Already have an account?Log in',
+      name: 'welcome_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Sign up`
   String get screen8 {
     return Intl.message('Sign up', name: 'screen8', desc: '', args: []);
   }
 
-  // skipped getter for the 'register.title' key
+  /// `Get Started`
+  String get register_title {
+    return Intl.message(
+      'Get Started',
+      name: 'register_title',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `username`
   String get username {
@@ -348,11 +364,35 @@ class S {
     return Intl.message('Password', name: 'password', desc: '', args: []);
   }
 
-  // skipped getter for the 'password.confirmation' key
+  /// `Password Confirmation`
+  String get password_confirmation {
+    return Intl.message(
+      'Password Confirmation',
+      name: 'password_confirmation',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'register.alternative' key
+  /// `Or sign up with`
+  String get register_alternative {
+    return Intl.message(
+      'Or sign up with',
+      name: 'register_alternative',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'register.already' key
+  /// `Already have an account?Log in`
+  String get register_already {
+    return Intl.message(
+      'Already have an account?Log in',
+      name: 'register_already',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `I agree to the processing of personal data`
   String get agreement {
@@ -364,48 +404,135 @@ class S {
     );
   }
 
-  // skipped getter for the 'register.btn' key
+  /// `Sign Up`
+  String get register_btn {
+    return Intl.message('Sign Up', name: 'register_btn', desc: '', args: []);
+  }
 
   /// `login`
   String get screen9 {
     return Intl.message('login', name: 'screen9', desc: '', args: []);
   }
 
-  // skipped getter for the 'login.title' key
+  /// `Welcome Back!`
+  String get login_title {
+    return Intl.message(
+      'Welcome Back!',
+      name: 'login_title',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Remember me`
   String get remember {
     return Intl.message('Remember me', name: 'remember', desc: '', args: []);
   }
 
-  // skipped getter for the 'forget.hyper' key
+  /// `Forgot Password?`
+  String get forget_hyper {
+    return Intl.message(
+      'Forgot Password?',
+      name: 'forget_hyper',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'login.btn' key
+  /// `Log In`
+  String get login_btn {
+    return Intl.message('Log In', name: 'login_btn', desc: '', args: []);
+  }
 
-  // skipped getter for the 'login.alternative' key
+  /// `Or log in with`
+  String get login_alternative {
+    return Intl.message(
+      'Or log in with',
+      name: 'login_alternative',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'enter.username' key
+  /// `Enter your username`
+  String get enter_username {
+    return Intl.message(
+      'Enter your username',
+      name: 'enter_username',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'enter.email' key
+  /// `Enter you email`
+  String get enter_email {
+    return Intl.message(
+      'Enter you email',
+      name: 'enter_email',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'enter.pass' key
+  /// `Enter your password`
+  String get enter_pass {
+    return Intl.message(
+      'Enter your password',
+      name: 'enter_pass',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'enter.pass.conf' key
+  /// `Enter your password`
+  String get enter_pass_conf {
+    return Intl.message(
+      'Enter your password',
+      name: 'enter_pass_conf',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `otp code`
   String get screen10 {
     return Intl.message('otp code', name: 'screen10', desc: '', args: []);
   }
 
-  // skipped getter for the 'otp.title' key
+  /// `Enter your OTP`
+  String get otp_title {
+    return Intl.message(
+      'Enter your OTP',
+      name: 'otp_title',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'otp.desc' key
+  /// `For you security, We have sent a One-Time code to your e-mail user@gmail.com.Enter it to access your account.`
+  String get otp_desc {
+    return Intl.message(
+      'For you security, We have sent a One-Time code to your e-mail user@gmail.com.Enter it to access your account.',
+      name: 'otp_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'otp.resent' key
+  /// `Resend code?`
+  String get otp_resent {
+    return Intl.message('Resend code?', name: 'otp_resent', desc: '', args: []);
+  }
 
-  // skipped getter for the 'otp.btn' key
+  /// `Verify`
+  String get otp_btn {
+    return Intl.message('Verify', name: 'otp_btn', desc: '', args: []);
+  }
 
-  // skipped getter for the 'otp.sec' key
+  /// `Remaining`
+  String get otp_sec {
+    return Intl.message('Remaining', name: 'otp_sec', desc: '', args: []);
+  }
 
   /// `Forget Password`
   String get screen20 {
@@ -447,11 +574,25 @@ class S {
     );
   }
 
-  // skipped getter for the 'forget.email' key
+  /// `Email`
+  String get forget_email {
+    return Intl.message('Email', name: 'forget_email', desc: '', args: []);
+  }
 
-  // skipped getter for the 'forget.field' key
+  /// `Enter your email`
+  String get forget_field {
+    return Intl.message(
+      'Enter your email',
+      name: 'forget_field',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'forget.btn' key
+  /// `Confirm mail`
+  String get forget_btn {
+    return Intl.message('Confirm mail', name: 'forget_btn', desc: '', args: []);
+  }
 
   /// `New Password`
   String get screen21 {
@@ -483,9 +624,20 @@ class S {
     return Intl.message('old password', name: 'new_desc2', desc: '', args: []);
   }
 
-  // skipped getter for the 'new.password' key
+  /// `Password`
+  String get new_password {
+    return Intl.message('Password', name: 'new_password', desc: '', args: []);
+  }
 
-  // skipped getter for the 'new.field1' key
+  /// `Enter your password`
+  String get new_field1 {
+    return Intl.message(
+      'Enter your password',
+      name: 'new_field1',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Must be at least 8 characters`
   String get new_warning1 {
@@ -497,9 +649,25 @@ class S {
     );
   }
 
-  // skipped getter for the 'new.confirm' key
+  /// `Confirmed Password`
+  String get new_confirm {
+    return Intl.message(
+      'Confirmed Password',
+      name: 'new_confirm',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'new.field2' key
+  /// `Enter your password`
+  String get new_field2 {
+    return Intl.message(
+      'Enter your password',
+      name: 'new_field2',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Both passwords must match`
   String get new_warning2 {
@@ -511,7 +679,10 @@ class S {
     );
   }
 
-  // skipped getter for the 'new.btn' key
+  /// `Reset Password`
+  String get new_btn {
+    return Intl.message('Reset Password', name: 'new_btn', desc: '', args: []);
+  }
 
   /// `Password Changed `
   String get passwordchanged {
@@ -743,11 +914,20 @@ class S {
     );
   }
 
-  // skipped getter for the 'lessons.num' key
+  /// `Lessons`
+  String get lessons_num {
+    return Intl.message('Lessons', name: 'lessons_num', desc: '', args: []);
+  }
 
-  // skipped getter for the 'lessons.all' key
+  /// `All Lessons`
+  String get lessons_all {
+    return Intl.message('All Lessons', name: 'lessons_all', desc: '', args: []);
+  }
 
-  // skipped getter for the 'lessons.viewed' key
+  /// `Viewed`
+  String get lessons_viewed {
+    return Intl.message('Viewed', name: 'lessons_viewed', desc: '', args: []);
+  }
 
   /// `quiz`
   String get screen14 {
@@ -784,41 +964,110 @@ class S {
     return Intl.message('question', name: 'screen15', desc: '', args: []);
   }
 
-  // skipped getter for the 'question.num' key
+  /// `Question`
+  String get question_num {
+    return Intl.message('Question', name: 'question_num', desc: '', args: []);
+  }
 
   /// `quizSubmit`
   String get screen16 {
     return Intl.message('quizSubmit', name: 'screen16', desc: '', args: []);
   }
 
-  // skipped getter for the 'submit.title' key
+  /// `Quiz Completed!`
+  String get submit_title {
+    return Intl.message(
+      'Quiz Completed!',
+      name: 'submit_title',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'submit.desc' key
+  /// `You've reached the end of the quiz`
+  String get submit_desc {
+    return Intl.message(
+      'You\'ve reached the end of the quiz',
+      name: 'submit_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'submit.btn1' key
+  /// `Submit`
+  String get submit_btn1 {
+    return Intl.message('Submit', name: 'submit_btn1', desc: '', args: []);
+  }
 
-  // skipped getter for the 'submit.btn2' key
+  /// `Cancel`
+  String get submit_btn2 {
+    return Intl.message('Cancel', name: 'submit_btn2', desc: '', args: []);
+  }
 
   /// `results`
   String get screen17 {
     return Intl.message('results', name: 'screen17', desc: '', args: []);
   }
 
-  // skipped getter for the 'result.score1' key
+  /// `Score`
+  String get result_score1 {
+    return Intl.message('Score', name: 'result_score1', desc: '', args: []);
+  }
 
-  // skipped getter for the 'result.score2' key
+  /// `Out Of`
+  String get result_score2 {
+    return Intl.message('Out Of', name: 'result_score2', desc: '', args: []);
+  }
 
-  // skipped getter for the 'result.time' key
+  /// `Time`
+  String get result_time {
+    return Intl.message('Time', name: 'result_time', desc: '', args: []);
+  }
 
-  // skipped getter for the 'result.sec' key
+  /// `Seconds`
+  String get result_sec {
+    return Intl.message('Seconds', name: 'result_sec', desc: '', args: []);
+  }
 
-  // skipped getter for the 'result.play' key
+  /// `Minutes`
+  String get result_minutes {
+    return Intl.message('Minutes', name: 'result_minutes', desc: '', args: []);
+  }
 
-  // skipped getter for the 'result.review' key
+  /// `Play Again`
+  String get result_play {
+    return Intl.message('Play Again', name: 'result_play', desc: '', args: []);
+  }
 
-  // skipped getter for the 'result.share' key
+  /// `Review Answers`
+  String get result_review {
+    return Intl.message(
+      'Review Answers',
+      name: 'result_review',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'result.home' key
+  /// `Share Score`
+  String get result_share {
+    return Intl.message(
+      'Share Score',
+      name: 'result_share',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Return Home`
+  String get result_home {
+    return Intl.message('Return Home', name: 'result_home', desc: '', args: []);
+  }
+
+  /// `Amazing!`
+  String get result_amazing {
+    return Intl.message('Amazing!', name: 'result_amazing', desc: '', args: []);
+  }
 
   /// `Profile information`
   String get screen18 {
@@ -830,73 +1079,980 @@ class S {
     );
   }
 
-  // skipped getter for the 'profile.username' key
+  /// `Username`
+  String get profile_username {
+    return Intl.message(
+      'Username',
+      name: 'profile_username',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'profile.name' key
+  /// `Name`
+  String get profile_name {
+    return Intl.message('Name', name: 'profile_name', desc: '', args: []);
+  }
 
-  // skipped getter for the 'profile.email' key
+  /// `Email`
+  String get profile_email {
+    return Intl.message('Email', name: 'profile_email', desc: '', args: []);
+  }
 
-  // skipped getter for the 'profile.current.pass' key
+  /// `Current Password`
+  String get profile_current_pass {
+    return Intl.message(
+      'Current Password',
+      name: 'profile_current_pass',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'profile.new.pass' key
+  /// `New Password`
+  String get profile_new_pass {
+    return Intl.message(
+      'New Password',
+      name: 'profile_new_pass',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'profile.confirm.pass' key
+  /// `Confirm Password`
+  String get profile_confirm_pass {
+    return Intl.message(
+      'Confirm Password',
+      name: 'profile_confirm_pass',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'profile.btn1' key
+  /// `Save Changes`
+  String get profile_btn1 {
+    return Intl.message(
+      'Save Changes',
+      name: 'profile_btn1',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'profile.btn2' key
+  /// `Cancel`
+  String get profile_btn2 {
+    return Intl.message('Cancel', name: 'profile_btn2', desc: '', args: []);
+  }
+
+  /// `Profile`
+  String get profile_title {
+    return Intl.message('Profile', name: 'profile_title', desc: '', args: []);
+  }
+
+  /// `Failed to load profile data`
+  String get profile_load_error {
+    return Intl.message(
+      'Failed to load profile data',
+      name: 'profile_load_error',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Choose from Gallery`
+  String get profile_gallery {
+    return Intl.message(
+      'Choose from Gallery',
+      name: 'profile_gallery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Take a Photo`
+  String get profile_camera {
+    return Intl.message(
+      'Take a Photo',
+      name: 'profile_camera',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove Photo`
+  String get profile_remove_photo {
+    return Intl.message(
+      'Remove Photo',
+      name: 'profile_remove_photo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Username, name and email are required`
+  String get profile_validation_required {
+    return Intl.message(
+      'Username, name and email are required',
+      name: 'profile_validation_required',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `All password fields must be filled or left empty`
+  String get profile_validation_passwords {
+    return Intl.message(
+      'All password fields must be filled or left empty',
+      name: 'profile_validation_passwords',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profile updated successfully`
+  String get profile_update_success {
+    return Intl.message(
+      'Profile updated successfully',
+      name: 'profile_update_success',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Saving...`
+  String get profile_saving {
+    return Intl.message(
+      'Saving...',
+      name: 'profile_saving',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `profile`
   String get screen19 {
     return Intl.message('profile', name: 'screen19', desc: '', args: []);
   }
 
-  // skipped getter for the 'account.title' key
+  /// `Account`
+  String get account_title {
+    return Intl.message('Account', name: 'account_title', desc: '', args: []);
+  }
 
-  // skipped getter for the 'account.info' key
+  /// `Profile information`
+  String get account_info {
+    return Intl.message(
+      'Profile information',
+      name: 'account_info',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'account.lang' key
+  /// `Language`
+  String get account_lang {
+    return Intl.message('Language', name: 'account_lang', desc: '', args: []);
+  }
 
-  // skipped getter for the 'lang.ar' key
+  /// `Arabic`
+  String get lang_ar {
+    return Intl.message('Arabic', name: 'lang_ar', desc: '', args: []);
+  }
 
-  // skipped getter for the 'lang.en' key
+  /// `English`
+  String get lang_en {
+    return Intl.message('English', name: 'lang_en', desc: '', args: []);
+  }
 
-  // skipped getter for the 'account.mode' key
+  /// `App mode`
+  String get account_mode {
+    return Intl.message('App mode', name: 'account_mode', desc: '', args: []);
+  }
 
-  // skipped getter for the 'mode.ass' key
+  /// `Translation Mode`
+  String get mode_ass {
+    return Intl.message(
+      'Translation Mode',
+      name: 'mode_ass',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'mode.learn' key
+  /// `Educational Mode`
+  String get mode_learn {
+    return Intl.message(
+      'Educational Mode',
+      name: 'mode_learn',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'about.title' key
+  /// `About`
+  String get about_title {
+    return Intl.message('About', name: 'about_title', desc: '', args: []);
+  }
 
-  // skipped getter for the 'about.about' key
+  /// `About us`
+  String get about_about {
+    return Intl.message('About us', name: 'about_about', desc: '', args: []);
+  }
 
-  // skipped getter for the 'about.terms' key
+  /// `Terms & Conditions`
+  String get about_terms {
+    return Intl.message(
+      'Terms & Conditions',
+      name: 'about_terms',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'about.privacy' key
+  /// `Privacy Policy`
+  String get about_privacy {
+    return Intl.message(
+      'Privacy Policy',
+      name: 'about_privacy',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'about.version' key
+  /// `App version`
+  String get about_version {
+    return Intl.message(
+      'App version',
+      name: 'about_version',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'support.title' key
+  /// `Support`
+  String get support_title {
+    return Intl.message('Support', name: 'support_title', desc: '', args: []);
+  }
 
-  // skipped getter for the 'support.contact' key
+  /// `Contact Us`
+  String get support_contact {
+    return Intl.message(
+      'Contact Us',
+      name: 'support_contact',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'support.help' key
+  /// `Help Center`
+  String get support_help {
+    return Intl.message(
+      'Help Center',
+      name: 'support_help',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Log out`
   String get logout {
     return Intl.message('Log out', name: 'logout', desc: '', args: []);
   }
 
-  // skipped getter for the 'account.delete' key
+  /// `Delete Account`
+  String get account_delete {
+    return Intl.message(
+      'Delete Account',
+      name: 'account_delete',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'delete.title' key
+  /// `Confirm Account Deletion`
+  String get delete_title {
+    return Intl.message(
+      'Confirm Account Deletion',
+      name: 'delete_title',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'delete.desc' key
+  /// `Are you sure you want to delete your account?`
+  String get delete_desc {
+    return Intl.message(
+      'Are you sure you want to delete your account?',
+      name: 'delete_desc',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'delete.btn1' key
+  /// `Delete Account`
+  String get delete_btn1 {
+    return Intl.message(
+      'Delete Account',
+      name: 'delete_btn1',
+      desc: '',
+      args: [],
+    );
+  }
 
-  // skipped getter for the 'delete.btn2' key
+  /// `Cancel`
+  String get delete_btn2 {
+    return Intl.message('Cancel', name: 'delete_btn2', desc: '', args: []);
+  }
+
+  /// `Confirm Logout`
+  String get logout_title {
+    return Intl.message(
+      'Confirm Logout',
+      name: 'logout_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure you want to logout?`
+  String get logout_desc {
+    return Intl.message(
+      'Are you sure you want to logout?',
+      name: 'logout_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave Quiz?`
+  String get quiz_leave_title {
+    return Intl.message(
+      'Leave Quiz?',
+      name: 'quiz_leave_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You will lose all your progress\nif you leave now.`
+  String get quiz_leave_desc {
+    return Intl.message(
+      'You will lose all your progress\nif you leave now.',
+      name: 'quiz_leave_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Leave`
+  String get quiz_leave_btn {
+    return Intl.message('Leave', name: 'quiz_leave_btn', desc: '', args: []);
+  }
+
+  /// `Stay`
+  String get quiz_stay_btn {
+    return Intl.message('Stay', name: 'quiz_stay_btn', desc: '', args: []);
+  }
+
+  /// `Quiz Completed!`
+  String get quiz_completed_title {
+    return Intl.message(
+      'Quiz Completed!',
+      name: 'quiz_completed_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You've answered all {count} questions.`
+  String quiz_answered_all(Object count) {
+    return Intl.message(
+      'You\'ve answered all $count questions.',
+      name: 'quiz_answered_all',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `You've answered {answered} of {total} questions.\nPlease answer all questions before submitting.`
+  String quiz_answered_partial(Object answered, Object total) {
+    return Intl.message(
+      'You\'ve answered $answered of $total questions.\nPlease answer all questions before submitting.',
+      name: 'quiz_answered_partial',
+      desc: '',
+      args: [answered, total],
+    );
+  }
+
+  /// `No quizzes available`
+  String get quiz_no_quizzes {
+    return Intl.message(
+      'No quizzes available',
+      name: 'quiz_no_quizzes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No media`
+  String get video_no_media {
+    return Intl.message('No media', name: 'video_no_media', desc: '', args: []);
+  }
+
+  /// `Review Answers`
+  String get review_answers {
+    return Intl.message(
+      'Review Answers',
+      name: 'review_answers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dictionary`
+  String get dictionary_title {
+    return Intl.message(
+      'Dictionary',
+      name: 'dictionary_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Lessons`
+  String get lessons_title {
+    return Intl.message('Lessons', name: 'lessons_title', desc: '', args: []);
+  }
+
+  /// `All Lessons`
+  String get all_lessons {
+    return Intl.message('All Lessons', name: 'all_lessons', desc: '', args: []);
+  }
+
+  /// `Viewed`
+  String get viewed {
+    return Intl.message('Viewed', name: 'viewed', desc: '', args: []);
+  }
+
+  /// `Email is required`
+  String get email_required {
+    return Intl.message(
+      'Email is required',
+      name: 'email_required',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Password is required`
+  String get password_required {
+    return Intl.message(
+      'Password is required',
+      name: 'password_required',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Name is required`
+  String get name_required {
+    return Intl.message(
+      'Name is required',
+      name: 'name_required',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Both passwords must match`
+  String get passwords_must_match {
+    return Intl.message(
+      'Both passwords must match',
+      name: 'passwords_must_match',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Or log in with`
+  String get or_login_with {
+    return Intl.message(
+      'Or log in with',
+      name: 'or_login_with',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Or sign up with`
+  String get or_signup_with {
+    return Intl.message(
+      'Or sign up with',
+      name: 'or_signup_with',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I agree to the processing of`
+  String get agree_processing {
+    return Intl.message(
+      'I agree to the processing of',
+      name: 'agree_processing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Personal data`
+  String get personal_data {
+    return Intl.message(
+      'Personal data',
+      name: 'personal_data',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `User data is missing`
+  String get user_data_missing {
+    return Intl.message(
+      'User data is missing',
+      name: 'user_data_missing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm mail`
+  String get confirm_mail {
+    return Intl.message(
+      'Confirm mail',
+      name: 'confirm_mail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining`
+  String get remaining {
+    return Intl.message('Remaining', name: 'remaining', desc: '', args: []);
+  }
+
+  /// `Resend Code?`
+  String get resend_code {
+    return Intl.message(
+      'Resend Code?',
+      name: 'resend_code',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Verify`
+  String get verify {
+    return Intl.message('Verify', name: 'verify', desc: '', args: []);
+  }
+
+  /// `Enter your name`
+  String get enter_name {
+    return Intl.message(
+      'Enter your name',
+      name: 'enter_name',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Your Email`
+  String get enter_your_email {
+    return Intl.message(
+      'Enter Your Email',
+      name: 'enter_your_email',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter Your Password`
+  String get enter_your_password {
+    return Intl.message(
+      'Enter Your Password',
+      name: 'enter_your_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm Your Password`
+  String get confirm_your_password {
+    return Intl.message(
+      'Confirm Your Password',
+      name: 'confirm_your_password',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sign up`
+  String get signup {
+    return Intl.message('Sign up', name: 'signup', desc: '', args: []);
+  }
+
+  /// `Log in`
+  String get login {
+    return Intl.message('Log in', name: 'login', desc: '', args: []);
+  }
+
+  /// `Not found`
+  String get not_found {
+    return Intl.message('Not found', name: 'not_found', desc: '', args: []);
+  }
+
+  /// `Oops! we couldn't found that video.`
+  String get not_found_desc {
+    return Intl.message(
+      'Oops! we couldn\'t found that video.',
+      name: 'not_found_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maybe try different keyword!`
+  String get not_found_hint {
+    return Intl.message(
+      'Maybe try different keyword!',
+      name: 'not_found_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No connection!`
+  String get no_connection {
+    return Intl.message(
+      'No connection!',
+      name: 'no_connection',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `It seems you're offline. Please check your connection and try again.`
+  String get no_connection_desc {
+    return Intl.message(
+      'It seems you\'re offline. Please check your connection and try again.',
+      name: 'no_connection_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Retry`
+  String get retry {
+    return Intl.message('Retry', name: 'retry', desc: '', args: []);
+  }
+
+  /// `Contact us`
+  String get contact_us {
+    return Intl.message('Contact us', name: 'contact_us', desc: '', args: []);
+  }
+
+  /// `We welcome your inquiries`
+  String get contact_welcome {
+    return Intl.message(
+      'We welcome your inquiries',
+      name: 'contact_welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `About Us`
+  String get about_us_title {
+    return Intl.message('About Us', name: 'about_us_title', desc: '', args: []);
+  }
+
+  /// `SignLingo`
+  String get about_us_name {
+    return Intl.message('SignLingo', name: 'about_us_name', desc: '', args: []);
+  }
+
+  /// `SignLingo is an accessible educational application designed to support deaf and mute individuals in learning and practicing sign language through interactive and user-friendly features.`
+  String get about_us_desc {
+    return Intl.message(
+      'SignLingo is an accessible educational application designed to support deaf and mute individuals in learning and practicing sign language through interactive and user-friendly features.',
+      name: 'about_us_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Allow Camera Access?`
+  String get camera_allow_title {
+    return Intl.message(
+      'Allow Camera Access?',
+      name: 'camera_allow_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Allowing camera access is important for real-time translation so we can recognize your gestures`
+  String get camera_allow_desc {
+    return Intl.message(
+      'Allowing camera access is important for real-time translation so we can recognize your gestures',
+      name: 'camera_allow_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Grant Permission`
+  String get camera_grant {
+    return Intl.message(
+      'Grant Permission',
+      name: 'camera_grant',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Maybe Later`
+  String get camera_later {
+    return Intl.message(
+      'Maybe Later',
+      name: 'camera_later',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your privacy is protected`
+  String get camera_privacy {
+    return Intl.message(
+      'Your privacy is protected',
+      name: 'camera_privacy',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Low Visibility detected`
+  String get low_visibility {
+    return Intl.message(
+      'Low Visibility detected',
+      name: 'low_visibility',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please improve lighting for better accuracy. Dark environment may reduce translation speed and precision`
+  String get low_visibility_desc {
+    return Intl.message(
+      'Please improve lighting for better accuracy. Dark environment may reduce translation speed and precision',
+      name: 'low_visibility_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Turn on the flash`
+  String get turn_flash {
+    return Intl.message(
+      'Turn on the flash',
+      name: 'turn_flash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try Anyway`
+  String get try_anyway {
+    return Intl.message('Try Anyway', name: 'try_anyway', desc: '', args: []);
+  }
+
+  /// `Live Hand Tracking`
+  String get live_tracking {
+    return Intl.message(
+      'Live Hand Tracking',
+      name: 'live_tracking',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hand Landmarks Realtime`
+  String get hand_landmarks {
+    return Intl.message(
+      'Hand Landmarks Realtime',
+      name: 'hand_landmarks',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Response`
+  String get quick_response {
+    return Intl.message(
+      'Quick Response',
+      name: 'quick_response',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Phrase`
+  String get add_phrase {
+    return Intl.message('Add Phrase', name: 'add_phrase', desc: '', args: []);
+  }
+
+  /// `Enter phrase`
+  String get enter_phrase {
+    return Intl.message(
+      'Enter phrase',
+      name: 'enter_phrase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add`
+  String get add {
+    return Intl.message('Add', name: 'add', desc: '', args: []);
+  }
+
+  /// `Cancel`
+  String get cancel {
+    return Intl.message('Cancel', name: 'cancel', desc: '', args: []);
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message('Delete', name: 'delete', desc: '', args: []);
+  }
+
+  /// `Edit`
+  String get edit {
+    return Intl.message('Edit', name: 'edit', desc: '', args: []);
+  }
+
+  /// `Pin`
+  String get pin {
+    return Intl.message('Pin', name: 'pin', desc: '', args: []);
+  }
+
+  /// `Select All`
+  String get select_all {
+    return Intl.message('Select All', name: 'select_all', desc: '', args: []);
+  }
+
+  /// `Type a message`
+  String get type_message {
+    return Intl.message(
+      'Type a message',
+      name: 'type_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chat Text`
+  String get chat_text {
+    return Intl.message('Chat Text', name: 'chat_text', desc: '', args: []);
+  }
+
+  /// `User Text`
+  String get user_text {
+    return Intl.message('User Text', name: 'user_text', desc: '', args: []);
+  }
+
+  /// `I need medical help`
+  String get qr_need_help {
+    return Intl.message(
+      'I need medical help',
+      name: 'qr_need_help',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Where is the bus station?`
+  String get qr_bus {
+    return Intl.message(
+      'Where is the bus station?',
+      name: 'qr_bus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `How much does this cost?`
+  String get qr_cost {
+    return Intl.message(
+      'How much does this cost?',
+      name: 'qr_cost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Can you help me?`
+  String get qr_help {
+    return Intl.message(
+      'Can you help me?',
+      name: 'qr_help',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Nice to meet you`
+  String get qr_meet {
+    return Intl.message(
+      'Nice to meet you',
+      name: 'qr_meet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I am deaf.`
+  String get qr_deaf {
+    return Intl.message('I am deaf.', name: 'qr_deaf', desc: '', args: []);
+  }
+
+  /// `I feel uncomfortable`
+  String get qr_uncomfortable {
+    return Intl.message(
+      'I feel uncomfortable',
+      name: 'qr_uncomfortable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `I appreciate your help`
+  String get qr_appreciate {
+    return Intl.message(
+      'I appreciate your help',
+      name: 'qr_appreciate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Call the police`
+  String get qr_police {
+    return Intl.message(
+      'Call the police',
+      name: 'qr_police',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Terms & Conditions`
   String get screen22 {
@@ -908,7 +2064,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'term.desc' key
+  /// `Welcome to SignLingo.\nBy downloading, accessing, or using this application, you agree to these Terms & Conditions.\nIf you do not agree, please do not use the app.\n\n1. About SignLingo\nSignLingo is an educational and communication support application designed to help deaf and mute users learn, understand, and practice sign language.\nThe app is not a medical, legal, or professional service and should not be used as a substitute for professional advice.\n\n2. Eligibility\nYou must be at least 13 years old to use SignLingo.\nIf you are under 13, a parent or legal guardian must approve your use of the app.\nBy using the app, you confirm that the information you provide is accurate.\n\n3. User Accounts\nYou are responsible for keeping your account information secure.\nYou are responsible for all activities that occur under your account.\nCreating fake accounts or misusing the app is not allowed.\n\n4. Acceptable Use\nYou agree to use SignLingo:\nIn a respectful and lawful manner\nOnly for its intended educational and communication purposes\nYou agree not to:\nMisuse or abuse the app\nAttempt to hack, copy, or modify the app\nUpload harmful, offensive, or inappropriate content\nUse the app in a way that may harm other users\n\n5. Camera, Video & Media Use\nSignLingo may request access to your device's camera or media features to:\nPractice or recognize sign language\nImprove learning and interaction\nWe do not record, store, or share videos or images unless:\nIt is clearly stated\nYou give explicit permission\nYou can manage permissions through your device settings at any time.\n\n6. Content Accuracy & Limitations\nSign language may vary by region, culture, and context.\nWhile we aim to provide accurate content, SignLingo does not guarantee 100% accuracy in translations or learning materials.\nThe app should be used as a learning aid, not a certified translation tool.\n\n7. Intellectual Property\nAll content in SignLingo, including:\nText\nVideos\nImages\nIcons\nDesign and branding\nis owned by SignLingo and protected by intellectual property laws.\nYou may not copy, distribute, or reuse any content without written permission.\n\n8. Privacy\nYour privacy matters to us. Any personal information collected is handled according to our Privacy Policy.\nPlease review the Privacy Policy to understand how your data is collected, used, and protected.\n\n9. Limitation of Liability\nSignLingo is provided "as is" and "as available."\nWe are not responsible for:\nMisinterpretations or misunderstandings\nErrors in translation or learning content\nAny direct or indirect damages resulting from using the app\nUse of the app is at your own responsibility.\n\n10. Account Suspension or Termination\nWe reserve the right to:\nSuspend or terminate accounts\nRestrict access\nif a user violates these Terms & Conditions or misuses the app.\n\n11. Changes to Terms\nWe may update these Terms & Conditions from time to time.\nContinued use of SignLingo after updates means you accept the revised terms.\n\n12. Contact Us\nIf you have questions, feedback, or need support, please contact us:\nsupport@signlingo.com\n\nAccessibility Commitment\nSignLingo is built with accessibility in mind.\nWe aim to provide:\nClear language\nInclusive design\nSupportive user experience for deaf and mute users`
+  String get term_desc {
+    return Intl.message(
+      'Welcome to SignLingo.\nBy downloading, accessing, or using this application, you agree to these Terms & Conditions.\nIf you do not agree, please do not use the app.\n\n1. About SignLingo\nSignLingo is an educational and communication support application designed to help deaf and mute users learn, understand, and practice sign language.\nThe app is not a medical, legal, or professional service and should not be used as a substitute for professional advice.\n\n2. Eligibility\nYou must be at least 13 years old to use SignLingo.\nIf you are under 13, a parent or legal guardian must approve your use of the app.\nBy using the app, you confirm that the information you provide is accurate.\n\n3. User Accounts\nYou are responsible for keeping your account information secure.\nYou are responsible for all activities that occur under your account.\nCreating fake accounts or misusing the app is not allowed.\n\n4. Acceptable Use\nYou agree to use SignLingo:\nIn a respectful and lawful manner\nOnly for its intended educational and communication purposes\nYou agree not to:\nMisuse or abuse the app\nAttempt to hack, copy, or modify the app\nUpload harmful, offensive, or inappropriate content\nUse the app in a way that may harm other users\n\n5. Camera, Video & Media Use\nSignLingo may request access to your device\'s camera or media features to:\nPractice or recognize sign language\nImprove learning and interaction\nWe do not record, store, or share videos or images unless:\nIt is clearly stated\nYou give explicit permission\nYou can manage permissions through your device settings at any time.\n\n6. Content Accuracy & Limitations\nSign language may vary by region, culture, and context.\nWhile we aim to provide accurate content, SignLingo does not guarantee 100% accuracy in translations or learning materials.\nThe app should be used as a learning aid, not a certified translation tool.\n\n7. Intellectual Property\nAll content in SignLingo, including:\nText\nVideos\nImages\nIcons\nDesign and branding\nis owned by SignLingo and protected by intellectual property laws.\nYou may not copy, distribute, or reuse any content without written permission.\n\n8. Privacy\nYour privacy matters to us. Any personal information collected is handled according to our Privacy Policy.\nPlease review the Privacy Policy to understand how your data is collected, used, and protected.\n\n9. Limitation of Liability\nSignLingo is provided "as is" and "as available."\nWe are not responsible for:\nMisinterpretations or misunderstandings\nErrors in translation or learning content\nAny direct or indirect damages resulting from using the app\nUse of the app is at your own responsibility.\n\n10. Account Suspension or Termination\nWe reserve the right to:\nSuspend or terminate accounts\nRestrict access\nif a user violates these Terms & Conditions or misuses the app.\n\n11. Changes to Terms\nWe may update these Terms & Conditions from time to time.\nContinued use of SignLingo after updates means you accept the revised terms.\n\n12. Contact Us\nIf you have questions, feedback, or need support, please contact us:\nsupport@signlingo.com\n\nAccessibility Commitment\nSignLingo is built with accessibility in mind.\nWe aim to provide:\nClear language\nInclusive design\nSupportive user experience for deaf and mute users',
+      name: 'term_desc',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

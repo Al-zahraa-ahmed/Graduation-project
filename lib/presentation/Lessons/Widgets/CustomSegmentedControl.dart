@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 class CustomSegmentedControl extends StatefulWidget {
   const CustomSegmentedControl({super.key, required this.onChanged});
@@ -55,7 +56,7 @@ class _CustomSegmentedControlState extends State<CustomSegmentedControl> {
                       },
                       child: Center(
                         child: Text(
-                          "All Lessons",
+                          S.of(context).all_lessons,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
@@ -76,7 +77,7 @@ class _CustomSegmentedControlState extends State<CustomSegmentedControl> {
                       },
                       child: Center(
                         child: Text(
-                          "Viewed",
+                          S.of(context).viewed,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/Quiz/Widgets/VideoContainer.dart';
 
 class QuistionCard extends StatelessWidget {
@@ -40,7 +41,7 @@ class QuistionCard extends StatelessWidget {
           children: [
             SizedBox(height: 50),
             Text(
-              "Question $questionNumber /$totalQuestions",
+              "${S.of(context).question_num} $questionNumber /$totalQuestions",
               style: Textstyles.medium20,
             ),
             SizedBox(height: 16),

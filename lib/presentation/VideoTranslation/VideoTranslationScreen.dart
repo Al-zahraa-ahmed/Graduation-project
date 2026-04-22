@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
 ///
 /// Background Gradient
@@ -217,18 +218,18 @@ class LowLightCard extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Row(
-            children: const [
+            children: [
               Icon(Icons.lightbulb_outline),
               SizedBox(width: 10),
               Text(
-                "Low Visibility detected",
+                S.of(context).low_visibility,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
             ],
           ),
           const SizedBox(height: 10),
-          const Text(
-            "please improve lighting for better accuracy. Dark environment may reduce translation speed and precision",
+          Text(
+            S.of(context).low_visibility_desc,
             style: TextStyle(fontSize: 13),
           ),
           const SizedBox(height: 20),
@@ -238,14 +239,14 @@ class LowLightCard extends StatelessWidget {
               color: Colors.black,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Center(
+            child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(Icons.flash_on, color: Colors.white),
                   SizedBox(width: 5),
                   Text(
-                    "Turn on the flash",
+                    S.of(context).turn_flash,
                     style: TextStyle(color: Colors.white),
                   ),
                 ],
@@ -253,7 +254,7 @@ class LowLightCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 15),
-          const Text("Try Anyway", style: TextStyle(color: Colors.white)),
+          Text(S.of(context).try_anyway, style: TextStyle(color: Colors.white)),
         ],
       ),
     );
@@ -294,13 +295,13 @@ class CameraPermissionScreen extends StatelessWidget {
                     color: Color(0xff6C63FF),
                   ),
                   const SizedBox(height: 15),
-                  const Text(
-                    "Allow Camera Access?",
+                  Text(
+                    S.of(context).camera_allow_title,
                     style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
-                  const Text(
-                    "Allowing camera access is important for real-time translation so we can recognize your gestures",
+                  Text(
+                    S.of(context).camera_allow_desc,
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 13),
                   ),
@@ -314,9 +315,9 @@ class CameraPermissionScreen extends StatelessWidget {
                       color: const Color(0xff6C63FF),
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
-                        "Grant Permission",
+                        S.of(context).camera_grant,
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -324,20 +325,20 @@ class CameraPermissionScreen extends StatelessWidget {
 
                   const SizedBox(height: 15),
 
-                  const Text(
-                    "Maybe Later",
+                  Text(
+                    S.of(context).camera_later,
                     style: TextStyle(color: Colors.blue),
                   ),
 
                   const SizedBox(height: 10),
 
-                  const Row(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(Icons.lock, size: 14),
                       SizedBox(width: 5),
                       Text(
-                        "Your privacy is protected",
+                        S.of(context).camera_privacy,
                         style: TextStyle(fontSize: 11),
                       ),
                     ],

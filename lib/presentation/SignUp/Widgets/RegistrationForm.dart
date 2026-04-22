@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
 import 'package:graduation_project/Core/CustomWidgets/MultiColorText.dart';
@@ -45,11 +46,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
               CustomTextField(
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Name is required";
+                    return S.of(context).name_required;
                   }
                 },
-                label: "Name",
-                hint: "Enter your name",
+                label: S.of(context).profile_name,
+                hint: S.of(context).enter_name,
                 onsaved: (value) {
                   name = value!;
                 },
@@ -59,11 +60,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 keyboardtype: TextInputType.emailAddress,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Email is required";
+                    return S.of(context).email_required;
                   }
                 },
-                label: "Email",
-                hint: "Enter Your Email",
+                label: S.of(context).email,
+                hint: S.of(context).enter_your_email,
                 onsaved: (value) {
                   email = value!;
                 },
@@ -71,27 +72,27 @@ class _RegistrationFormState extends State<RegistrationForm> {
               SizedBox(height: 45),
               CustomTextField(
                 isabvious: true,
-                label: "Password",
-                hint: "Enter Your Password",
+                label: S.of(context).password,
+                hint: S.of(context).enter_your_password,
                 onsaved: (value) {
                   pass = value!;
                 },
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return "Password is required";
+                    return S.of(context).password_required;
                   }
                 },
               ),
               SizedBox(height: 45),
               CustomTextField(
-                label: "Confirm Password",
-                hint: "Confirm Your Password",
+                label: S.of(context).profile_confirm_pass,
+                hint: S.of(context).confirm_your_password,
                 onsaved: (value) {
                   pass2 = value!;
                 },
                 validator: (value) {
                   if ((value == null || value.isEmpty)&& value==pass) {
-                    return "Both passwords must match";
+                    return S.of(context).passwords_must_match;
                   }
                 },
               ),
@@ -118,8 +119,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       },
                     ),
                     MultiColorText(
-                      txt1: "I agree to the processing of",
-                      txt2: "Personal data",
+                      txt1: S.of(context).agree_processing,
+                      txt2: S.of(context).personal_data,
                     ),
                   ],
                 ),

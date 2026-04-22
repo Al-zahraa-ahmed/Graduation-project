@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/business_logic/Quiz/quiz_cubit.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/data/Models/QuizModel.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 import 'package:graduation_project/presentation/Quiz/Quiz.dart';
@@ -71,7 +72,7 @@ class QuickResult extends StatelessWidget {
                         children: [
                           QuickReviewButtons(
                             img: "Assets/images/replay.png",
-                            txt: "Play Again",
+                            txt: S.of(context).result_play,
                             onpressed: () {
                               Navigator.pushReplacement(
                                 context,
@@ -87,7 +88,7 @@ class QuickResult extends StatelessWidget {
                           ),
                           QuickReviewButtons(
                             img: "Assets/images/eye.png",
-                            txt: "Review Answers",
+                            txt: S.of(context).result_review,
                             onpressed: () {
                               Navigator.push(
                                 context,
@@ -106,7 +107,7 @@ class QuickResult extends StatelessWidget {
                           ),
                           QuickReviewButtons(
                             img: "Assets/images/share.png",
-                            txt: "Share Score",
+                            txt: S.of(context).result_share,
                             onpressed: () async {
                               final cubit = QuizCubit();
                               final link = await cubit.generateShareLink(
@@ -142,7 +143,7 @@ class QuickResult extends StatelessWidget {
                             );
                           },
                           img: "Assets/images/home.png",
-                          txt: "Return Home",
+                          txt: S.of(context).result_home,
                         ),
                         SizedBox(width: 20),
                         Image.asset(
