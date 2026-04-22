@@ -1,13 +1,12 @@
-
 import 'package:flutter/material.dart';
 
 class CircularNumberProgress extends StatelessWidget {
-  final int number;
-  final double progress; // من 0 لـ 1
+  final String text;
+  final double progress;
 
   const CircularNumberProgress({
     super.key,
-    required this.number,
+    required this.text,
     required this.progress,
   });
 
@@ -19,8 +18,6 @@ class CircularNumberProgress extends StatelessWidget {
       child: Stack(
         alignment: Alignment.center,
         children: [
-
-          // 🔹 الدائرة الخارجية (الموف)
           SizedBox(
             width: 55,
             height: 55,
@@ -33,8 +30,6 @@ class CircularNumberProgress extends StatelessWidget {
               ),
             ),
           ),
-
-          // 🔹 الدائرة الداخلية (الصفراء)
           SizedBox(
             width: 45,
             height: 45,
@@ -43,17 +38,14 @@ class CircularNumberProgress extends StatelessWidget {
               strokeWidth: 7,
               backgroundColor: Color(0xffF2C94C),
               valueColor: const AlwaysStoppedAnimation(
-                // Color(0xffF2C94C),
                 Colors.white,
               ),
             ),
           ),
-
-          // 🔹 الرقم في النص
           Text(
-            "$number",
+            text,
             style: const TextStyle(
-              fontSize: 20,
+              fontSize: 12,
               fontWeight: FontWeight.bold,
               color: Colors.black,
             ),
@@ -63,4 +55,3 @@ class CircularNumberProgress extends StatelessWidget {
     );
   }
 }
-

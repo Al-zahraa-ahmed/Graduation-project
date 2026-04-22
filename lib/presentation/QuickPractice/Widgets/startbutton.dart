@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/generated/l10n.dart';
-import 'package:graduation_project/presentation/Quiz/Quiz.dart';
-import 'package:graduation_project/presentation/Quiz/quiz_chat.dart';
 
 class StartButton extends StatelessWidget {
   const StartButton({super.key});
@@ -17,14 +15,7 @@ class StartButton extends StatelessWidget {
         backgroundColor: Color(0xffD6D6F5),
       ),
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (vuildcontext) {
-              return QuizScreen();
-            },
-          ),
-        );
+        // Quizzes are now launched from QuizCard by tapping a specific quiz
       },
       child: Text(
         S.of(context).quiz_btn,

@@ -1,9 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 
 class ScoreContainer extends StatelessWidget {
-  const ScoreContainer({super.key});
+  const ScoreContainer({
+    super.key,
+    required this.score,
+    required this.totalQuestions,
+    required this.timeMins,
+  });
+
+  final int score;
+  final int totalQuestions;
+  final double timeMins;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +38,7 @@ class ScoreContainer extends StatelessWidget {
             children: [
               Text("Score", style: Textstyles.medium20),
               Text(
-                "9",
+                "$score",
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 39,
@@ -38,7 +46,7 @@ class ScoreContainer extends StatelessWidget {
                 ),
               ),
               Text(
-                "Out Of 10",
+                "Out Of $totalQuestions",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
@@ -55,7 +63,7 @@ class ScoreContainer extends StatelessWidget {
             children: [
               Text("Time", style: Textstyles.medium20),
               Text(
-                "170",
+                timeMins.toStringAsFixed(1),
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 39,
@@ -63,7 +71,7 @@ class ScoreContainer extends StatelessWidget {
                 ),
               ),
               Text(
-                "Seconds",
+                "Minutes",
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 16,
