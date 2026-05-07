@@ -12,46 +12,49 @@ class screen1 extends StatelessWidget {
   final String img, txt1, txt2;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(height: 50),
-        SkipWord(),
-        Padding(
-          padding: const EdgeInsets.only(left: 16, right: 10.0),
-          child: Stack(
-            alignment: AlignmentGeometry.center,
-            clipBehavior: Clip.none,
-            children: [
-              Image.asset("Assets/images/Rectangle 6.png"),
-              Positioned(child: Image.asset(img)),
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          SizedBox(height: 50),
+          SkipWord(),
+          Padding(
+            padding: const EdgeInsets.only(left: 16, right: 10.0),
+            child: Stack(
+              alignment: AlignmentGeometry.center,
+              clipBehavior: Clip.none,
+              children: [
+                Image.asset("Assets/images/Rectangle 6.png"),
+                Positioned(child: Image.asset(img)),
+              ],
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                txt1,
-                style: TextStyle(
-                  color: Color(0xff1E1E7B),
-                  fontSize: 25,
-                  fontWeight: FontWeight.w600,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 50.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  txt1,
+                  style: TextStyle(
+                    color: Color(0xff1E1E7B),
+                    fontSize: 25,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-              ),
-              Text(
-                txt2,
-                style: TextStyle(
-                  color: Color(0xff999999),
-                  fontWeight: FontWeight.w600,
-                  fontSize: 13,
+                Text(
+                  txt2,
+                  style: TextStyle(
+                    color: Color(0xff999999),
+                    fontWeight: FontWeight.w600,
+                    fontSize: 13,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

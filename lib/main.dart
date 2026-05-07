@@ -1,10 +1,13 @@
 import 'package:camera/camera.dart';
+import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
+import 'package:graduation_project/data/Services/sign_language_classifier.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 import 'package:graduation_project/presentation/LearningHome/translationHome.dart';
@@ -16,11 +19,17 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
 
+  // Initialize sign language model (loads ONNX in background, doesn't block UI)
+  SignLanguageClassifier.instance.initialize();
+
   String? token = CacheHelper.getData("token");
   runApp(
-    BlocProvider(
-      create: (context) => ProfileCubit()..getMainData(),
-      child: Signlingo(token: token),
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => BlocProvider(
+        create: (context) => ProfileCubit()..getMainData(),
+        child: Signlingo(token: token),
+      ),
     ),
   );
 }
@@ -45,7 +54,7 @@ class Signlingo extends StatelessWidget {
         S.load(Locale(currentLang));
         return MaterialApp(
           key: ValueKey(currentLang),
-          
+          builder: DevicePreview.appBuilder,
           theme: ThemeData(
             appBarTheme: AppBarTheme(backgroundColor: Colors.white),
             scaffoldBackgroundColor: Colors.white,

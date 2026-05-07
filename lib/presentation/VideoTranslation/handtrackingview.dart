@@ -1,14 +1,17 @@
-import 'dart:async';
-import 'dart:math' as math;
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:graduation_project/generated/l10n.dart';
 import 'package:flutter/services.dart';
-// Import the plugin's main class.
-import 'package:hand_landmarker/hand_landmarker.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/business_logic/SendFrames/send_frames_cubit.dart';
+import 'package:graduation_project/data/Services/mediapipe_hand_service.dart';
+import 'package:graduation_project/generated/l10n.dart';
 
-late List<CameraDescription> cameras;
-
+/// Real-time sign-language inference view.
+///
+/// Pipeline mirrors `final.py`:
+///   front camera → mirror (cv2.flip) → MediaPipe HandLandmarker (VIDEO mode) →
+///   per-frame [126]-vector keyed by MediaPipe handedness ("Left"/"Right") →
+///   on first empty frame after ≥10 collected → predict.
 class HandTrackerView extends StatefulWidget {
   const HandTrackerView({super.key});
 
@@ -18,131 +21,159 @@ class HandTrackerView extends StatefulWidget {
 
 class _HandTrackerViewState extends State<HandTrackerView> {
   CameraController? _controller;
-  HandLandmarkerPlugin? _plugin;
-
-  List<Hand> _landmarks = [];
+  final _detector = MediapipeHandService.instance;
 
   bool _isInitialized = false;
-  bool _isDetecting = false;
+  bool _isProcessing = false;
+  bool _disposed = false;
 
-  // 🔴 لتجميع 30 frame
-  List<List<double>> framesLandmarks = [];
-  int frameCount = 0;
-  final int maxFrames = 30;
+  /// Python: `timestamp_ms += 33` per frame (VIDEO mode requires monotonic ts).
+  int _timestampMs = 0;
+
+  /// Python: `sequence` — list of per-frame [126] vectors.
+  final List<List<double>> _sequence = [];
+
+  /// Python: `hands_were_detected` — true after at least one frame had hands.
+  bool _handsWereDetected = false;
+
+  /// Python: `if hands_were_detected and len(sequence) > 10` → predict.
+  static const int _minFramesForPrediction = 10;
+
+  /// Latest hand count, just for UI overlay.
+  int _latestHandCount = 0;
 
   @override
-  void initState()  {
+  void initState() {
     super.initState();
-    Setup();
+    _setup();
   }
 
-  Future<void> Setup() async {
+  Future<void> _setup() async {
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-    cameras = await availableCameras();
-    _initialize();
-   
-  }
-  Future<void> _initialize()async{
- final camera = cameras.firstWhere(
+
+    if (!_detector.isInitialized) {
+      await _detector.initialize();
+    }
+    if (_disposed) return;
+
+    final cameras = await availableCameras();
+    final camera = cameras.firstWhere(
       (cam) => cam.lensDirection == CameraLensDirection.front,
       orElse: () => cameras.first,
-    ); 
+    );
 
     _controller = CameraController(
       camera,
       ResolutionPreset.medium,
       enableAudio: false,
-    );
-
-    _plugin = HandLandmarkerPlugin.create(
-      numHands: 2,
-      minHandDetectionConfidence: 0.7,
-      delegate: HandLandmarkerDelegate.gpu,
+      imageFormatGroup: ImageFormatGroup.yuv420,
     );
 
     await _controller!.initialize();
+    if (_disposed) return;
 
-    await _controller!.startImageStream(_processCameraImage);
+    await _controller!.startImageStream(_onCameraImage);
+    if (mounted) setState(() => _isInitialized = true);
+  }
 
-    if (mounted) {
-      setState(() {
-        _isInitialized = true;
-      });
+  Future<void> _onCameraImage(CameraImage image) async {
+    if (_isProcessing || !_isInitialized || _disposed) return;
+    _isProcessing = true;
+
+    // VIDEO mode requires monotonically increasing timestamps.
+    _timestampMs += 33;
+
+    try {
+      final controller = _controller!;
+      final isFront =
+          controller.description.lensDirection == CameraLensDirection.front;
+
+      final hands = await _detector.detect(
+        image: image,
+        rotationDegrees: controller.description.sensorOrientation,
+        mirror: isFront, // matches `cv2.flip(frame, 1)`
+        timestampMs: _timestampMs,
+      );
+
+      if (_disposed) return;
+
+      final detected = hands.isNotEmpty;
+
+      if (detected) {
+        _sequence.add(_buildFrameVector(hands));
+        _handsWereDetected = true;
+      } else {
+        // Python: as soon as a frame has no hands AND we'd previously seen
+        // hands AND collected >10 frames → predict. Otherwise discard.
+        if (_handsWereDetected) {
+          if (_sequence.length > _minFramesForPrediction) {
+            _triggerPrediction();
+          } else {
+            _sequence.clear();
+          }
+          _handsWereDetected = false;
+        }
+      }
+
+      if (mounted) setState(() => _latestHandCount = hands.length);
+    } catch (e) {
+      debugPrint('Hand detection error: $e');
+    } finally {
+      _isProcessing = false;
     }
+  }
+
+  /// Build a 126-element vector with handedness-correct slot assignment:
+  ///   - landmarks 0..62  : user's LEFT hand (handedness == "Left")
+  ///   - landmarks 63..125: user's RIGHT hand (handedness == "Right")
+  /// Mirrors Python: `if handedness == "Left": lh = coords; else: rh = coords`.
+  List<double> _buildFrameVector(List<DetectedHand> hands) {
+    final lh = List<double>.filled(63, 0.0);
+    final rh = List<double>.filled(63, 0.0);
+
+    for (final hand in hands) {
+      final coords = List<double>.filled(63, 0.0);
+      var k = 0;
+      for (final lm in hand.landmarks) {
+        if (k + 2 >= 63) break;
+        coords[k++] = lm.x;
+        coords[k++] = lm.y;
+        coords[k++] = lm.z;
+      }
+      if (hand.handedness == 'Left') {
+        for (var i = 0; i < 63; i++) {
+          lh[i] = coords[i];
+        }
+      } else {
+        // "Right" or "Unknown" → right slot (matches Python `else: rh = coords`)
+        for (var i = 0; i < 63; i++) {
+          rh[i] = coords[i];
+        }
+      }
+    }
+
+    return [...lh, ...rh];
+  }
+
+  void _triggerPrediction() {
+    final frames = List<List<double>>.from(_sequence);
+    _sequence.clear();
+    context.read<SignPredictionCubit>().predictSign(frames);
+  }
+
+  void _resetPrediction() {
+    _sequence.clear();
+    _handsWereDetected = false;
+    context.read<SignPredictionCubit>().reset();
   }
 
   @override
   void dispose() {
+    _disposed = true;
     _controller?.stopImageStream();
     _controller?.dispose();
-    _plugin?.dispose();
+    SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     super.dispose();
-  }
-
-  // 🔴 تحويل landmarks إلى vector 126
-  List<double> extractLandmarks(List<Hand> hands) {
-    List<double> vector = [];
-
-    for (var hand in hands) {
-      for (var lm in hand.landmarks) {
-        vector.add(lm.x);
-        vector.add(lm.y);
-        vector.add(lm.z);
-      }
-    }
-
-    // لو فيه يد واحدة نكمل zeros
-    while (vector.length < 126) {
-      vector.add(0.0);
-    }
-
-    return vector;
-  }
-
-  Future<void> _processCameraImage(CameraImage image) async {
-    int frameSkip = 0;
-    frameSkip++;
-
-if (frameSkip % 3 != 0) return;
-
-    if (_isDetecting || !_isInitialized || _plugin == null) return;
-
-    _isDetecting = true;
-
-    try {
-      final hands = _plugin!.detect(
-        image,
-        _controller!.description.sensorOrientation,
-      );
-
-      // 🔴 استخراج vector
-      List<double> vector = extractLandmarks(hands);
-
-      // 🔴 تخزين frame
-      framesLandmarks.add(vector);
-      frameCount++;
-
-      if (frameCount == maxFrames) {
-        print("Collected 30 frames:");
-        print(framesLandmarks); // هنا عندك List<List<double>>
-
-        // مثال الحجم
-        // 30 × 126
-
-        frameCount = 0;
-        framesLandmarks.clear();
-      }
-
-      if (mounted) {
-        setState(() {
-          _landmarks = hands;
-        });
-      }
-    } catch (e) {
-      debugPrint('Error detecting landmarks: $e');
-    }
-
-    _isDetecting = false;
   }
 
   @override
@@ -157,126 +188,119 @@ if (frameSkip % 3 != 0) return;
 
     return Scaffold(
       appBar: AppBar(title: Text(S.of(context).live_tracking)),
-      body: Center(
-        child: AspectRatio(
-          aspectRatio: previewAspectRatio,
-          child: Stack(
-            children: [
-              CameraPreview(controller),
-              CustomPaint(
-                size: Size.infinite,
-                painter: LandmarkPainter(
-                  hands: _landmarks,
-                  previewSize: previewSize,
-                  lensDirection: controller.description.lensDirection,
-                  sensorOrientation: controller.description.sensorOrientation,
+      body: Column(
+        children: [
+          Expanded(
+            child: Center(
+              child: AspectRatio(
+                aspectRatio: previewAspectRatio,
+                child: Stack(
+                  children: [
+                    CameraPreview(controller),
+                    Positioned(
+                      top: 16,
+                      right: 16,
+                      child: _StatusChip(
+                        active: _latestHandCount > 0,
+                        text: _latestHandCount > 0
+                            ? '${_sequence.length} frames'
+                            : S.of(context).live_tracking,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+          BlocBuilder<SignPredictionCubit, SignPredictionState>(
+            builder: (context, state) {
+              return Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: Colors.grey[100],
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(20)),
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (state is SignPredictionLoading)
+                      const CircularProgressIndicator()
+                    else if (state is SignPredictionSuccess) ...[
+                      Text(
+                        state.label,
+                        style: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        '${state.confidence.toStringAsFixed(1)}%',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: state.confidence > 70
+                              ? Colors.green
+                              : Colors.orange,
+                        ),
+                      ),
+                    ] else if (state is SignPredictionFailure)
+                      Text(
+                        state.errmsg,
+                        style:
+                            const TextStyle(color: Colors.red, fontSize: 14),
+                      )
+                    else
+                      Text(
+                        S.of(context).live_tracking,
+                        style: TextStyle(fontSize: 18, color: Colors.grey[600]),
+                      ),
+                    const SizedBox(height: 12),
+                    TextButton.icon(
+                      onPressed: _resetPrediction,
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Reset'),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }
 }
 
-class LandmarkPainter extends CustomPainter {
-  LandmarkPainter({
-    required this.hands,
-    required this.previewSize,
-    required this.lensDirection,
-    required this.sensorOrientation,
-  });
-
-  final List<Hand> hands;
-  final Size previewSize;
-  final CameraLensDirection lensDirection;
-  final int sensorOrientation;
+class _StatusChip extends StatelessWidget {
+  const _StatusChip({required this.active, required this.text});
+  final bool active;
+  final String text;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final scale = size.width / previewSize.height;
-
-    final paint = Paint()
-      ..color = Colors.red
-      ..strokeWidth = 8 / scale
-      ..strokeCap = StrokeCap.round;
-
-    final linePaint = Paint()
-      ..color = Colors.lightBlueAccent
-      ..strokeWidth = 4 / scale;
-
-    canvas.save();
-
-    final center = Offset(size.width / 2, size.height / 2);
-    canvas.translate(center.dx, center.dy);
-    canvas.rotate(sensorOrientation * math.pi / 180);
-
-    if (lensDirection == CameraLensDirection.front) {
-      canvas.scale(-1, 1);
-      canvas.rotate(math.pi);
-    }
-
-    canvas.scale(scale);
-
-    final logicalWidth = previewSize.width;
-    final logicalHeight = previewSize.height;
-
-    for (final hand in hands) {
-      for (final landmark in hand.landmarks) {
-        final dx = (landmark.x - 0.5) * logicalWidth;
-        final dy = (landmark.y - 0.5) * logicalHeight;
-
-        canvas.drawCircle(Offset(dx, dy), 8 / scale, paint);
-      }
-
-      for (final connection in HandLandmarkConnections.connections) {
-        final start = hand.landmarks[connection[0]];
-        final end = hand.landmarks[connection[1]];
-
-        final startDx = (start.x - 0.5) * logicalWidth;
-        final startDy = (start.y - 0.5) * logicalHeight;
-
-        final endDx = (end.x - 0.5) * logicalWidth;
-        final endDy = (end.y - 0.5) * logicalHeight;
-
-        canvas.drawLine(
-          Offset(startDx, startDy),
-          Offset(endDx, endDy),
-          linePaint,
-        );
-      }
-    }
-
-    canvas.restore();
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: (active ? Colors.green : Colors.red).withValues(alpha: 0.8),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            active ? Icons.back_hand : Icons.back_hand_outlined,
+            color: Colors.white,
+            size: 16,
+          ),
+          const SizedBox(width: 6),
+          Text(
+            text,
+            style: const TextStyle(color: Colors.white, fontSize: 12),
+          ),
+        ],
+      ),
+    );
   }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-}
-
-class HandLandmarkConnections {
-  static const List<List<int>> connections = [
-    [0, 1],
-    [1, 2],
-    [2, 3],
-    [3, 4],
-    [0, 5],
-    [5, 6],
-    [6, 7],
-    [7, 8],
-    [5, 9],
-    [9, 10],
-    [10, 11],
-    [11, 12],
-    [9, 13],
-    [13, 14],
-    [14, 15],
-    [15, 16],
-    [13, 17],
-    [0, 17],
-    [17, 18],
-    [18, 19],
-    [19, 20],
-  ];
 }

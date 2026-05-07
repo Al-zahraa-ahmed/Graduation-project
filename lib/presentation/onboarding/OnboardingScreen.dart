@@ -102,4 +102,3 @@ class _OnboardingscreenState extends State<Onboardingscreen> {
     );
   }
 }
-

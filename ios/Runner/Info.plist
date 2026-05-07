@@ -49,7 +49,11 @@
     <array>
     <string>en</string>
     <string>ar</string>
-    
+
     </array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>SignLingo needs microphone access to convert your speech into text.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>SignLingo uses speech recognition to transcribe your voice instantly.</string>
 </dict>
 </plist>

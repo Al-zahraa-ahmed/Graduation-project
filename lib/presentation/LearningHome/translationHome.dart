@@ -7,8 +7,8 @@ import 'package:graduation_project/data/Models/UserModel.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/CategouriesPage/CategouriesPage.dart';
 import 'package:graduation_project/presentation/ChatPage/chatbot.dart';
-import 'package:graduation_project/presentation/Dictionary/dictionarypage.dart';
 import 'package:graduation_project/presentation/LearningHome/widgets/HomeService.dart';
+import 'package:graduation_project/presentation/VoiceTranslation/voice_translation_page.dart';
 import 'package:graduation_project/presentation/LearningHome/widgets/Homecard.dart';
 import 'package:graduation_project/presentation/Profile/ProfileScreen2.dart';
 import 'package:graduation_project/presentation/QuickPractice/quickpractice.dart';
@@ -18,6 +18,8 @@ import 'package:graduation_project/presentation/VideoTranslation/HandTrackingScr
 import 'package:graduation_project/presentation/VideoTranslation/VideoTranslationScreen.dart';
 import 'package:graduation_project/presentation/VideoTranslation/cameraboxScreen.dart';
 import 'package:graduation_project/presentation/VideoTranslation/handtrackingview.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_project/business_logic/SendFrames/send_frames_cubit.dart';
 
 class Translationhome extends StatelessWidget {
   const Translationhome({super.key});
@@ -58,7 +60,10 @@ class Translationhome extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (buildcontext) {
-                                return HandTrackerView();
+                                return BlocProvider(
+                                  create: (_) => SignPredictionCubit()..initModel(),
+                                  child: const HandTrackerView(),
+                                );
                               },
                             ),
                           );
@@ -75,7 +80,7 @@ class Translationhome extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (buildcontext) {
-                                return DictionaryPage();
+                                return const VoiceTranslationPage();
                               },
                             ),
                           );

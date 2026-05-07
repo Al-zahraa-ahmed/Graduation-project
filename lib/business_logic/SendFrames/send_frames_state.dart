@@ -1,16 +1,21 @@
 part of 'send_frames_cubit.dart';
 
 @immutable
-sealed class SendFramesState {}
+sealed class SignPredictionState {}
 
-final class SendFramesInitial extends SendFramesState {}
+final class SignPredictionInitial extends SignPredictionState {}
 
-final class SendFramesSucess extends SendFramesState {
-  
+final class SignPredictionLoading extends SignPredictionState {}
+
+final class SignPredictionSuccess extends SignPredictionState {
+  final String label;
+  final double confidence;
+
+  SignPredictionSuccess({required this.label, required this.confidence});
 }
 
-final class SendFramesFailure extends SendFramesState {
+final class SignPredictionFailure extends SignPredictionState {
   final String errmsg;
 
-  SendFramesFailure({required this.errmsg});
+  SignPredictionFailure({required this.errmsg});
 }
