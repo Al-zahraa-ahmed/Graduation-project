@@ -207,7 +207,8 @@ class _StatusBanner extends StatelessWidget {
               ),
             ),
             child: Text(
-              isAr ? t.langArShort : t.langEnShort,
+              // Speech recognition is Arabic-only regardless of UI language.
+              t.langArShort,
               style: const TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.w700,

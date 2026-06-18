@@ -1,9 +1,11 @@
 import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Core/CustomWidgets/AppSnackBar.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/business_logic/Auth/OtpCubit/otp_cubit.dart';
+import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
 import 'package:graduation_project/presentation/ForgetPasswordScreens/Setnewpassword.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
 import 'package:graduation_project/presentation/Otp/Widgets/Otp_input_fields.dart';
@@ -63,7 +65,6 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
     super.dispose();
   }
 
-  //  String n1, n2='', n3='', n4='';
   final c1 = TextEditingController();
   final c2 = TextEditingController();
   final c3 = TextEditingController();
@@ -74,37 +75,60 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
   final f3 = FocusNode();
   final f4 = FocusNode();
 
+  void _submit() {
+    final otp = c1.text + c2.text + c3.text + c4.text;
+    if (otp.length != 4) {
+      AppSnackBar.error(context, S.of(context).otp_incomplete);
+      return;
+    }
+    if (widget.isResetPassword) {
+      context.read<OtpCubit>().verifyForgetPassword(
+        userid: widget.userid,
+        otp: otp,
+      );
+    } else {
+      context.read<OtpCubit>().verify_otp(
+        userid: widget.userid,
+        otp: otp,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<OtpCubit, OtpState>(
       listener: (context, state) {
-        if (state is OtpSuccess) {
+        if (state is OtpVerifySuccess) {
           timer?.cancel();
-
           if (!context.mounted) return;
-
-          // نفّذي التنقل بعد ما يخلص الفريم الحالي
+          // Token is now cached; pull fresh profile so app-wide lang/mode
+          // reflect what the server says. Fire-and-forget.
+          context.read<ProfileCubit>().getMainData();
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!context.mounted) return;
-            if (widget.isResetPassword) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => SetNewPassword(reset_token: state.token,)),
-              );
-            } else {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (_) => LearingHome()),
-              );
-            }
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => LearingHome()),
+            );
+          });
+        } else if (state is OtpForgetVerifySuccess) {
+          timer?.cancel();
+          if (!context.mounted) return;
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (!context.mounted) return;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (_) => SetNewPassword(reset_token: state.resetToken),
+              ),
+            );
           });
         } else if (state is OtpFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errmsg)));
+          AppSnackBar.error(context, state.errmsg);
         }
       },
       builder: (context, state) {
+        final isLoading = state is OtpLoading;
         return Form(
           child: Column(
             children: [
@@ -168,33 +192,12 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
                 ],
               ),
               SizedBox(height: 20),
-              InkWell(
-                onTap: () {
-                  //              if (code.length != 4) {
-                  //   _showSnack("اكتبي كود OTP كامل (4 أرقام)");
-                  //   return;
-                  // }
-                  String otp = c1.text + c2.text + c3.text + c4.text;
-
-                  if (otp.length == 4) {
-                    if (widget.isResetPassword) {
-                      context.read<OtpCubit>().verifyForgetPassword(
-                        userid: widget.userid,
-                        otp: otp,
-                      );
-                    }
-                    else{
-                    context.read<OtpCubit>().verify_otp(
-                      userid: widget.userid,
-                      otp: otp,
-                    );
-
-                    }
-                  }
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(txt: S.of(context).verify),
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  txt: S.of(context).verify,
+                  isLoading: isLoading,
+                  onpressed: _submit,
                 ),
               ),
             ],

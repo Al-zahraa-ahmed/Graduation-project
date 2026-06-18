@@ -1,89 +1,117 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
-import 'package:meta/meta.dart';
-// import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
+import 'package:graduation_project/Core/Errors/ApiExceptions.dart';
 import 'package:graduation_project/data/Models/UserModel.dart';
-import 'dart:convert';
+import 'package:meta/meta.dart';
+
 part 'otp_state.dart';
 
 class OtpCubit extends Cubit<OtpState> {
   OtpCubit() : super(OtpInitial());
-  final Dio dio = Dio(BaseOptions(baseUrl: "https://signlingo.org/api/"));
-////////////////////////////////////////////////////////////////////////////////////
-  resend_otp({required int userid}) async {
-    try {
-      emit(OtpLoading());
-      final Response r = await dio.post(
-        "https://signlingo.org/api/resend-otp",
-        data: {"user_id": userid},
-      );
-      print(r);
-      // final String token = r.data["data"]["token"];
-      // await CacheHelper.saveData(key: "token", value: token);
 
-      emit(OtpResentSuccess());
-    } on DioException catch (e) {
-      print("STATUS: ${e.response?.statusCode}");
-      print("RESPONSE DATA: ${e.response?.data}");
-      emit(OtpFailure(errmsg: e.response?.data.toString() ?? "errors"));
-    } on Exception catch (e) {
-      print(e.toString());
-      emit(OtpFailure(errmsg: e.toString()));
-    }
-  }
-///////////////////////////////////////////////////////////////////////////////////////////
-  verify_otp({required int userid, required String otp}) async {
+  final Dio dio = Dio(
+    BaseOptions(
+      baseUrl: "https://signlingo.org/api/",
+      connectTimeout: const Duration(seconds: 15),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
+    ),
+  );
+
+  Future<void> resend_otp({required int userid}) async {
+    if (isClosed || state is OtpLoading) return;
     emit(OtpLoading());
     try {
-      final Response r = await dio.post(
-        "https://signlingo.org/api/verify-otp",
-        data: {"user_id": userid, "otp": otp},
-      );
-
-      print(r);
-      final String token = r.data["data"]["token"];
-      await CacheHelper.saveData(key: "token", value: token);
-      final userJson = r.data["data"]["user"]; // Map
-      final user = UserModel.fromJson(userJson);
-
-      await CacheHelper.saveData(key: "user", value: jsonEncode(user.toJson()));
-
-      print(user.username);
-      print(user.email);
-      emit(OtpSuccess(token: token));
+      await dio.post("resend-otp", data: {"user_id": userid});
+      if (isClosed) return;
+      emit(OtpResentSuccess());
     } on DioException catch (e) {
-      print("STATUS: ${e.response?.statusCode}");
-      print("RESPONSE DATA: ${e.response?.data}");
-      emit(OtpFailure(errmsg: e.response?.data.toString() ?? "errors"));
-    } on Exception catch (e) {
-      print(e.toString());
-      emit(OtpFailure(errmsg: e.toString()));
+      if (isClosed) return;
+      emit(OtpFailure(errmsg: ApiException.fromDio(e).message));
+    } catch (_) {
+      if (isClosed) return;
+      emit(OtpFailure(errmsg: 'Something went wrong. Please try again.'));
     }
   }
 
-
-  /////////////////////////////////////////////////////////////
-    
-verifyForgetPassword({required int userid,required String otp})async{
-emit(OtpLoading());
+  Future<void> verify_otp({required int userid, required String otp}) async {
+    if (isClosed || state is OtpLoading) return;
+    emit(OtpLoading());
     try {
-      final Response r = await dio.post(
-        "https://signlingo.org/api/verify-forget-otp",
+      final response = await dio.post(
+        "verify-otp",
         data: {"user_id": userid, "otp": otp},
       );
 
-      print(r);
-      final String reset_token = r.data["data"]["reset_token"];
-      emit(OtpSuccess(token: reset_token));
+      // Expected shape: {"data": {"token": "<jwt>", "user": {...}}, ...}
+      final body = response.data;
+      final data = (body is Map) ? body['data'] : null;
+      final token = (data is Map) ? data['token'] : null;
+      final userJson = (data is Map) ? data['user'] : null;
+      if (token is! String || userJson is! Map) {
+        if (isClosed) return;
+        emit(OtpFailure(
+          errmsg: 'Unexpected server response. Please try again.',
+        ));
+        return;
+      }
+
+      final user = UserModel.fromJson(Map<String, dynamic>.from(userJson));
+      await CacheHelper.saveData(key: "token", value: token);
+      await CacheHelper.saveData(key: "user", value: jsonEncode(user.toJson()));
+
+      if (isClosed) return;
+      emit(OtpVerifySuccess(token: token, user: user));
     } on DioException catch (e) {
-      print("STATUS: ${e.response?.statusCode}");
-      print("RESPONSE DATA: ${e.response?.data}");
-      emit(OtpFailure(errmsg: e.response?.data.toString() ?? "errors"));
-    } on Exception catch (e) {
-      print(e.toString());
-      emit(OtpFailure(errmsg: e.toString()));
+      if (isClosed) return;
+      emit(OtpFailure(errmsg: ApiException.fromDio(e).message));
+    } catch (_) {
+      if (isClosed) return;
+      emit(OtpFailure(errmsg: 'Something went wrong. Please try again.'));
     }
-  
-}
+  }
+
+  Future<void> verifyForgetPassword({
+    required int userid,
+    required String otp,
+  }) async {
+    if (isClosed || state is OtpLoading) return;
+    emit(OtpLoading());
+    try {
+      final response = await dio.post(
+        "verify-forget-otp",
+        data: {"user_id": userid, "otp": otp},
+      );
+
+      // Expected shape: {"data": {"reset_token": "..."}, ...}
+      final body = response.data;
+      final data = (body is Map) ? body['data'] : null;
+      final resetToken = (data is Map) ? data['reset_token'] : null;
+      if (resetToken is! String) {
+        if (isClosed) return;
+        emit(OtpFailure(
+          errmsg: 'Unexpected server response. Please try again.',
+        ));
+        return;
+      }
+
+      if (isClosed) return;
+      emit(OtpForgetVerifySuccess(resetToken: resetToken));
+    } on DioException catch (e) {
+      if (isClosed) return;
+      emit(OtpFailure(errmsg: ApiException.fromDio(e).message));
+    } catch (_) {
+      if (isClosed) return;
+      emit(OtpFailure(errmsg: 'Something went wrong. Please try again.'));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    dio.close(force: true);
+    return super.close();
+  }
 }

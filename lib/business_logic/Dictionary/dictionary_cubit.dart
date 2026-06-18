@@ -26,8 +26,12 @@ part 'dictionary_state.dart';
 //   }
 // }
 class DictionaryCubit extends Cubit<DictionaryState> {
-  DictionaryCubit() : super(DictionaryInitial());
+  DictionaryCubit({this.initialQuery}) : super(DictionaryInitial());
 
+  /// Optional query to apply immediately after the dictionary loads — used
+  /// when the user lands on Dictionary from elsewhere (e.g. typing in the
+  /// search bar on NotFound) so the filter is already in place.
+  final String? initialQuery;
   final CategoriesApi categoriesApi = CategoriesApi();
   Timer? _debounce;
 
@@ -36,12 +40,19 @@ class DictionaryCubit extends Cubit<DictionaryState> {
     try {
       final response = await categoriesApi.getDictionary();
 
-      emit(
-        DictionarySuccess(
-          allWordsByLetters: response,
-          filteredWordsByLetters: response,
-        ),
+      final loaded = DictionarySuccess(
+        allWordsByLetters: response,
+        filteredWordsByLetters: response,
+        searchQuery: initialQuery ?? '',
       );
+
+      if (initialQuery != null && initialQuery!.trim().isNotEmpty) {
+        // Apply the filter synchronously so the user lands on a pre-filtered
+        // list — skips the debounce that onSearchChanged would otherwise add.
+        _applyFilters(loaded);
+      } else {
+        emit(loaded);
+      }
     } on DioException catch (e) {
       emit(
         DictionaryFailure(

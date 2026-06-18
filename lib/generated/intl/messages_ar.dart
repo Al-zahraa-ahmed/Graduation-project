@@ -20,10 +20,22 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(count) => "لقد أجبت على جميع الأسئلة (${count}).";
+  static String m0(q) => "نتائج البحث عن ‘${q}’";
 
-  static String m1(answered, total) =>
+  static String m1(count) => "${count} درس";
+
+  static String m2(n) => "الدرس ${n}";
+
+  static String m3(count) => "حذف ${count} عبارة؟";
+
+  static String m4(count) => "${count} محددة";
+
+  static String m5(count) => "لقد أجبت على جميع الأسئلة (${count}).";
+
+  static String m6(answered, total) =>
       "لقد أجبت على ${answered} من ${total} سؤال.\nيرجى الإجابة على جميع الأسئلة قبل الإرسال.";
+
+  static String m7(count) => "${count} لقطة";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -63,6 +75,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "camera_later": MessageLookupByLibrary.simpleMessage("ربما لاحقاً"),
     "camera_privacy": MessageLookupByLibrary.simpleMessage("خصوصيتك محمية"),
     "cancel": MessageLookupByLibrary.simpleMessage("إلغاء"),
+    "categories_load_failed": MessageLookupByLibrary.simpleMessage(
+      "فشل تحميل الفئات",
+    ),
+    "categories_no_results": MessageLookupByLibrary.simpleMessage(
+      "لا توجد نتائج",
+    ),
     "categories_search": MessageLookupByLibrary.simpleMessage("بحث"),
     "categories_title": MessageLookupByLibrary.simpleMessage("الفئات"),
     "chat_text": MessageLookupByLibrary.simpleMessage("نص المحادثة"),
@@ -88,6 +106,13 @@ class MessageLookup extends MessageLookupByLibrary {
       "هل أنت متأكد أنك تريد حذف حسابك؟",
     ),
     "delete_title": MessageLookupByLibrary.simpleMessage("تأكيد حذف الحساب"),
+    "dictionary_load_failed": MessageLookupByLibrary.simpleMessage(
+      "فشل تحميل القاموس",
+    ),
+    "dictionary_no_results": MessageLookupByLibrary.simpleMessage(
+      "لا توجد كلمات مطابقة",
+    ),
+    "dictionary_results_for": m0,
     "dictionary_title": MessageLookupByLibrary.simpleMessage("القاموس"),
     "edit": MessageLookupByLibrary.simpleMessage("تعديل"),
     "email": MessageLookupByLibrary.simpleMessage("البريد الإلكتروني"),
@@ -128,10 +153,10 @@ class MessageLookup extends MessageLookupByLibrary {
     "hand_landmarks": MessageLookupByLibrary.simpleMessage(
       "معالم اليد اللحظية",
     ),
-    "home1_message": MessageLookupByLibrary.simpleMessage("!واصل دروسك"),
+    "home1_message": MessageLookupByLibrary.simpleMessage("واصل دروسك !"),
     "home1_service1": MessageLookupByLibrary.simpleMessage("تعلم لغة الإشارة"),
     "home1_service1_desc": MessageLookupByLibrary.simpleMessage(
-      "!ابدأ من الأساسيات وطور مهاراتك خطوة بخطوة",
+      "ابدأ من الأساسيات وطور مهاراتك خطوة بخطوة !",
     ),
     "home1_service2": MessageLookupByLibrary.simpleMessage("القاموس"),
     "home1_service2_desc": MessageLookupByLibrary.simpleMessage(
@@ -149,12 +174,42 @@ class MessageLookup extends MessageLookupByLibrary {
     "home1_submessage": MessageLookupByLibrary.simpleMessage(
       "لأن الجميع يستحق أن يُفهم",
     ),
-    "home1_welcome": MessageLookupByLibrary.simpleMessage("مرحبًا بعودتك!"),
+    "home1_welcome": MessageLookupByLibrary.simpleMessage("مرحبًا بعودتك !"),
+    "home2_message": MessageLookupByLibrary.simpleMessage("ترجم أفكارك"),
+    "home2_service1": MessageLookupByLibrary.simpleMessage("ترجمة الفيديو"),
+    "home2_service1_desc": MessageLookupByLibrary.simpleMessage(
+      "التقط فيديو وحوّله إلى نص مترجم.",
+    ),
+    "home2_service2": MessageLookupByLibrary.simpleMessage("ترجمة الصوت"),
+    "home2_service2_desc": MessageLookupByLibrary.simpleMessage(
+      "حوّل اللغة المنطوقة إلى نص دقيق فوريًا.",
+    ),
+    "home2_service3": MessageLookupByLibrary.simpleMessage("الردود السريعة"),
+    "home2_service3_desc": MessageLookupByLibrary.simpleMessage(
+      "ردود سريعة للمواقف اليومية الشائعة.",
+    ),
+    "home2_submessage": MessageLookupByLibrary.simpleMessage(
+      "لأن الجميع يستحق أن يُفهم",
+    ),
     "lang_ar": MessageLookupByLibrary.simpleMessage("العربية"),
     "lang_en": MessageLookupByLibrary.simpleMessage("الإنجليزية"),
     "lessons_all": MessageLookupByLibrary.simpleMessage("جميع الدروس"),
+    "lessons_count_label": m1,
+    "lessons_empty_viewed": MessageLookupByLibrary.simpleMessage(
+      "لا توجد دروس مشاهدة بعد",
+    ),
+    "lessons_empty_viewed_hint": MessageLookupByLibrary.simpleMessage(
+      "حدّد درساً كـ \"تمت المشاهدة\" لتراه هنا.",
+    ),
+    "lessons_lesson_n": m2,
+    "lessons_load_failed": MessageLookupByLibrary.simpleMessage(
+      "فشل تحميل الدروس",
+    ),
     "lessons_num": MessageLookupByLibrary.simpleMessage("الدروس"),
     "lessons_title": MessageLookupByLibrary.simpleMessage("الدروس"),
+    "lessons_toggle_failed": MessageLookupByLibrary.simpleMessage(
+      "تعذّر تحديث الدرس، حاول مرة أخرى.",
+    ),
     "lessons_viewed": MessageLookupByLibrary.simpleMessage("تمت المشاهدة"),
     "lessons_vocab": MessageLookupByLibrary.simpleMessage("المفردات"),
     "live_tracking": MessageLookupByLibrary.simpleMessage("تتبع اليد المباشر"),
@@ -163,7 +218,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "أو تسجيل الدخول باستخدام",
     ),
     "login_btn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
-    "login_title": MessageLookupByLibrary.simpleMessage("!مرحبًا بعودتك"),
+    "login_title": MessageLookupByLibrary.simpleMessage("! مرحبًا بعودتك"),
     "logout": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
     "logout_desc": MessageLookupByLibrary.simpleMessage(
       "هل أنت متأكد أنك تريد تسجيل الخروج؟",
@@ -224,6 +279,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "otp_desc": MessageLookupByLibrary.simpleMessage(
       "لأمانك، قمنا بإرسال رمز مرة واحدة إلى بريدك الإلكتروني.ادخله للوصول الي حسابك",
     ),
+    "otp_incomplete": MessageLookupByLibrary.simpleMessage(
+      "أدخل الرمز كاملاً (4 أرقام)",
+    ),
     "otp_resent": MessageLookupByLibrary.simpleMessage("إعادة إرسال الرمز؟"),
     "otp_sec": MessageLookupByLibrary.simpleMessage("المتبقي"),
     "otp_title": MessageLookupByLibrary.simpleMessage("أدخل رمز التحقق"),
@@ -275,21 +333,42 @@ class MessageLookup extends MessageLookupByLibrary {
     "profile_validation_required": MessageLookupByLibrary.simpleMessage(
       "اسم المستخدم والاسم والبريد الإلكتروني مطلوبة",
     ),
+    "qr_all_phrases": MessageLookupByLibrary.simpleMessage("الكل"),
     "qr_appreciate": MessageLookupByLibrary.simpleMessage("أقدر مساعدتك"),
     "qr_bus": MessageLookupByLibrary.simpleMessage("أين محطة الحافلات؟"),
     "qr_cost": MessageLookupByLibrary.simpleMessage("كم يكلف هذا؟"),
     "qr_deaf": MessageLookupByLibrary.simpleMessage("أنا أصم."),
+    "qr_delete_confirm_desc": MessageLookupByLibrary.simpleMessage(
+      "لا يمكن التراجع عن هذا الإجراء.",
+    ),
+    "qr_delete_confirm_multi": m3,
+    "qr_delete_confirm_title": MessageLookupByLibrary.simpleMessage(
+      "حذف العبارة؟",
+    ),
+    "qr_edit_phrase": MessageLookupByLibrary.simpleMessage("تعديل العبارة"),
+    "qr_empty_hint": MessageLookupByLibrary.simpleMessage(
+      "اضغط + لإضافة عبارتك الأولى",
+    ),
+    "qr_empty_title": MessageLookupByLibrary.simpleMessage(
+      "لا توجد عبارات بعد",
+    ),
     "qr_help": MessageLookupByLibrary.simpleMessage("هل يمكنك مساعدتي؟"),
     "qr_meet": MessageLookupByLibrary.simpleMessage("سعدت بلقائك"),
+    "qr_n_selected": m4,
     "qr_need_help": MessageLookupByLibrary.simpleMessage("أحتاج مساعدة طبية"),
+    "qr_pinned": MessageLookupByLibrary.simpleMessage("المثبتة"),
     "qr_police": MessageLookupByLibrary.simpleMessage("اتصل بالشرطة"),
+    "qr_save": MessageLookupByLibrary.simpleMessage("حفظ"),
+    "qr_tts_unavailable": MessageLookupByLibrary.simpleMessage(
+      "خدمة النطق غير متاحة لهذه اللغة على جهازك.",
+    ),
     "qr_uncomfortable": MessageLookupByLibrary.simpleMessage(
       "أشعر بعدم الراحة",
     ),
     "question_num": MessageLookupByLibrary.simpleMessage("السؤال"),
     "quick_response": MessageLookupByLibrary.simpleMessage("الردود السريعة"),
-    "quiz_answered_all": m0,
-    "quiz_answered_partial": m1,
+    "quiz_answered_all": m5,
+    "quiz_answered_partial": m6,
     "quiz_btn": MessageLookupByLibrary.simpleMessage("!ابدأ الآن"),
     "quiz_completed_title": MessageLookupByLibrary.simpleMessage(
       "تم إكمال الاختبار!",
@@ -302,8 +381,14 @@ class MessageLookup extends MessageLookupByLibrary {
     "quiz_leave_title": MessageLookupByLibrary.simpleMessage(
       "مغادرة الاختبار؟",
     ),
+    "quiz_load_failed": MessageLookupByLibrary.simpleMessage(
+      "فشل تحميل الاختبارات",
+    ),
     "quiz_no_quizzes": MessageLookupByLibrary.simpleMessage(
       "لا توجد اختبارات متاحة",
+    ),
+    "quiz_share_failed": MessageLookupByLibrary.simpleMessage(
+      "تعذّر إنشاء رابط المشاركة، حاول مرة أخرى.",
     ),
     "quiz_stay_btn": MessageLookupByLibrary.simpleMessage("البقاء"),
     "quiz_title": MessageLookupByLibrary.simpleMessage("اختبر فهمك"),
@@ -398,6 +483,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "select_all": MessageLookupByLibrary.simpleMessage("تحديد الكل"),
     "signup": MessageLookupByLibrary.simpleMessage("إنشاء حساب"),
     "skip_btn": MessageLookupByLibrary.simpleMessage("تخطي"),
+    "something_went_wrong": MessageLookupByLibrary.simpleMessage("حدث خطأ ما"),
     "submit_btn1": MessageLookupByLibrary.simpleMessage("إرسال"),
     "submit_btn2": MessageLookupByLibrary.simpleMessage("إلغاء"),
     "submit_desc": MessageLookupByLibrary.simpleMessage(
@@ -420,8 +506,20 @@ class MessageLookup extends MessageLookupByLibrary {
     "user_text": MessageLookupByLibrary.simpleMessage("نص المستخدم"),
     "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
     "verify": MessageLookupByLibrary.simpleMessage("تحقق"),
+    "video_hand_description": MessageLookupByLibrary.simpleMessage("وصف اليد"),
     "video_no_media": MessageLookupByLibrary.simpleMessage("لا توجد وسائط"),
+    "video_unavailable": MessageLookupByLibrary.simpleMessage(
+      "الفيديو غير متاح",
+    ),
     "viewed": MessageLookupByLibrary.simpleMessage("تمت المشاهدة"),
+    "vt_frames_collected": m7,
+    "vt_processing": MessageLookupByLibrary.simpleMessage("جارٍ المعالجة..."),
+    "vt_recent": MessageLookupByLibrary.simpleMessage("الأخيرة"),
+    "vt_reset": MessageLookupByLibrary.simpleMessage("إعادة تعيين"),
+    "vt_show_hands": MessageLookupByLibrary.simpleMessage(
+      "أظهر يديك أمام الكاميرا",
+    ),
+    "vt_try_again": MessageLookupByLibrary.simpleMessage("حاول مرة أخرى"),
     "welcome_btn": MessageLookupByLibrary.simpleMessage("ابدأ الآن"),
     "welcome_desc": MessageLookupByLibrary.simpleMessage(
       "هل لديك حساب بالفعل؟ تسجيل الدخول",

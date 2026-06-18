@@ -1,37 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/generated/l10n.dart';
 
-class CustomSegmentedControl extends StatefulWidget {
-  const CustomSegmentedControl({super.key, required this.onChanged});
-  final Function(bool) onChanged;
-  @override
-  State<CustomSegmentedControl> createState() => _CustomSegmentedControlState();
-}
+/// Controlled two-tab segmented control. The parent owns the selected state
+/// (we read it from the cubit) and the control is a pure render of it.
+class CustomSegmentedControl extends StatelessWidget {
+  const CustomSegmentedControl({
+    super.key,
+    required this.isAllSelected,
+    required this.onChanged,
+  });
 
-class _CustomSegmentedControlState extends State<CustomSegmentedControl> {
-  bool isAllSelected = true;
+  final bool isAllSelected;
+  final ValueChanged<bool> onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
       height: 40,
-      // padding: const EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: const Color(0xffEAEAFA),
         borderRadius: BorderRadius.circular(40),
       ),
       child: LayoutBuilder(
-        builder: (BuildContext context, BoxConstraints constraints) {
+        builder: (context, constraints) {
           return Stack(
             children: [
-              /// 🔵 الخلفية المتحركة
+              // Animated thumb — uses Directional alignment so it tracks the
+              // first/second tab correctly in RTL.
               AnimatedAlign(
                 duration: const Duration(milliseconds: 250),
                 curve: Curves.easeInOut,
                 alignment: isAllSelected
-                    ? Alignment.centerLeft
-                    : Alignment.centerRight,
+                    ? AlignmentDirectional.centerStart
+                    : AlignmentDirectional.centerEnd,
                 child: Container(
                   width: constraints.maxWidth / 2,
                   height: 40,
@@ -41,50 +43,20 @@ class _CustomSegmentedControlState extends State<CustomSegmentedControl> {
                   ),
                 ),
               ),
-
-              /// 🟢 النصوص
               Row(
                 children: [
                   Expanded(
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        setState(() {
-                          isAllSelected = true;
-                          widget.onChanged(true);
-                        });
-                      },
-                      child: Center(
-                        child: Text(
-                          S.of(context).all_lessons,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: isAllSelected ? Colors.white : Colors.grey,
-                          ),
-                        ),
-                      ),
+                    child: _TabButton(
+                      label: S.of(context).all_lessons,
+                      selected: isAllSelected,
+                      onTap: () => onChanged(true),
                     ),
                   ),
                   Expanded(
-                    child: GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        setState(() {
-                          isAllSelected = false;
-                          widget.onChanged(false);
-                        });
-                      },
-                      child: Center(
-                        child: Text(
-                          S.of(context).viewed,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500,
-                            color: isAllSelected ? Colors.grey : Colors.white,
-                          ),
-                        ),
-                      ),
+                    child: _TabButton(
+                      label: S.of(context).viewed,
+                      selected: !isAllSelected,
+                      onTap: () => onChanged(false),
                     ),
                   ),
                 ],
@@ -92,6 +64,36 @@ class _CustomSegmentedControlState extends State<CustomSegmentedControl> {
             ],
           );
         },
+      ),
+    );
+  }
+}
+
+class _TabButton extends StatelessWidget {
+  const _TabButton({
+    required this.label,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: onTap,
+      child: Center(
+        child: Text(
+          label,
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+            color: selected ? Colors.white : Colors.grey,
+          ),
+        ),
       ),
     );
   }

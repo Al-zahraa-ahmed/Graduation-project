@@ -13,6 +13,16 @@ final class ProfileSucces extends ProfileState {
   ProfileSucces({required this.user});
 }
 
+/// Emitted when a pref update (changeLang / changeMode) failed and the
+/// optimistic state has been rolled back to [user]. UI should keep showing
+/// [user] (preserves profile data) and surface [errmsg] via a snackbar.
+final class ProfilePrefUpdateFailed extends ProfileState {
+  final ProfileModel user;
+  final String errmsg;
+
+  ProfilePrefUpdateFailed({required this.user, required this.errmsg});
+}
+
 final class ProfileFailure extends ProfileState {
   final String errmsg;
 

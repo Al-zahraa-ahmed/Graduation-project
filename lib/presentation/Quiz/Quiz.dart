@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/business_logic/Quiz/quiz_cubit.dart';
+import 'package:graduation_project/main.dart';
 import 'package:graduation_project/presentation/Quiz/Widgets/AnswerButton.dart';
 import 'package:graduation_project/presentation/Quiz/Widgets/CircularNumberProgress.dart';
 import 'package:graduation_project/presentation/Quiz/Widgets/QuestionCard.dart';
@@ -21,36 +21,40 @@ class QuizScreen extends StatefulWidget {
 
 class _QuizScreenState extends State<QuizScreen> {
   Timer? _timer;
-  int _remainingSeconds = 0;
+  int _totalSeconds = 0;
   bool _timerStarted = false;
+
+  // Kept in a notifier so the per-second tick repaints ONLY the countdown
+  // ring, not the whole quiz body (question card, image, answer buttons).
+  final ValueNotifier<int> _remaining = ValueNotifier<int>(0);
 
   void _startTimer(int durationMins) {
     if (_timerStarted) return;
     _timerStarted = true;
-    _remainingSeconds = durationMins * 60;
+    _totalSeconds = durationMins * 60;
+    _remaining.value = _totalSeconds;
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (_remainingSeconds <= 0) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (_remaining.value <= 0) {
         timer.cancel();
         // Time's up — auto submit
         context.read<QuizCubit>().submitQuiz(timeUp: true);
       } else {
-        setState(() {
-          _remainingSeconds--;
-        });
+        _remaining.value--;
       }
     });
   }
 
-  String get _formattedTime {
-    final mins = _remainingSeconds ~/ 60;
-    final secs = _remainingSeconds % 60;
+  static String _formatTime(int seconds) {
+    final mins = seconds ~/ 60;
+    final secs = seconds % 60;
     return "${mins.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}";
   }
 
   @override
   void dispose() {
     _timer?.cancel();
+    _remaining.dispose();
     super.dispose();
   }
 
@@ -87,10 +91,45 @@ class _QuizScreenState extends State<QuizScreen> {
             appBar: AppBar(
               leading: IconButton(
                 onPressed: () => Navigator.pop(context),
-                icon: Icon(Icons.chevron_left),
+                icon: const Icon(Icons.chevron_left),
               ),
             ),
-            body: Center(child: Text(state.message)),
+            body: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.error_outline_rounded,
+                    size: 56,
+                    color: Colors.red.shade300,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    S.of(context).something_went_wrong,
+                    style: TextStyle(
+                      fontSize: 15,
+                      color: Colors.grey.shade700,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton.icon(
+                    onPressed: () => context.read<QuizCubit>().retry(),
+                    icon: const Icon(Icons.refresh_rounded, size: 18),
+                    label: Text(S.of(context).retry),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff8484E1),
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 24, vertical: 12),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         }
         if (state is QuizInProgress) {
@@ -111,9 +150,9 @@ class _QuizScreenState extends State<QuizScreen> {
     final question = state.currentQuestion;
     final selectedOption = state.selectedAnswers[question.id];
     final isLastQuestion = state.currentIndex == state.totalQuestions - 1;
-    final lang = CacheHelper.getData("lang") ?? "en";
-    final totalSeconds = state.durationMins * 60;
-    final timerProgress = totalSeconds > 0 ? _remainingSeconds / totalSeconds : 0.0;
+    final ar = isArabic();
+    final prevIcon = ar ? Icons.chevron_right : Icons.chevron_left;
+    final nextIcon = ar ? Icons.chevron_left : Icons.chevron_right;
 
     return PopScope(
       canPop: false,
@@ -127,9 +166,9 @@ class _QuizScreenState extends State<QuizScreen> {
               Stack(
                 children: [
                   Image.asset("Assets/images/Group 1.png"),
-                  Positioned(
+                  PositionedDirectional(
                     top: 30,
-                    left: 20,
+                    start: 20,
                     child: IconButton(
                       style: IconButton.styleFrom(
                         backgroundColor: Color(0xffD6D6F5),
@@ -145,54 +184,56 @@ class _QuizScreenState extends State<QuizScreen> {
               Stack(
                 children: [
                   Stack(
-                    alignment: AlignmentGeometry.centerLeft,
+                    alignment: AlignmentDirectional.centerStart,
                     clipBehavior: Clip.none,
                     children: [
                       QuistionCard(
                       questionNumber: state.currentIndex + 1,
                       totalQuestions: state.totalQuestions,
-                      questionText: lang == "ar"
+                      questionText: ar
                           ? question.title.ar
                           : question.title.en,
                       mediaUrl: question.media,
                     ),
-                    Positioned(
-                      left: 10,
+                    PositionedDirectional(
+                      start: 10,
                       child: Arrowbackandnext(
-                        icon: Icon(Icons.chevron_left),
+                        icon: Icon(prevIcon),
                         onpressed: () => cubit.previousQuestion(),
                       ),
                     ),
-                    Positioned(
-                      right: 10,
-                      child: Align(
-                        alignment: AlignmentGeometry.centerRight,
-                        child: Arrowbackandnext(
-                          icon: Icon(Icons.chevron_right),
-                          onpressed: () {
-                            if (isLastQuestion) {
-                              _showFinishDialog(context, state);
-                            } else {
-                              cubit.nextQuestion();
-                            }
-                          },
-                        ),
+                    PositionedDirectional(
+                      end: 10,
+                      child: Arrowbackandnext(
+                        icon: Icon(nextIcon),
+                        onpressed: () {
+                          if (isLastQuestion) {
+                            _showFinishDialog(context, state);
+                          } else {
+                            cubit.nextQuestion();
+                          }
+                        },
                       ),
                     ),
                   ],
                 ),
                 Align(
                   alignment: Alignment.topCenter,
-                  child: CircularNumberProgress(
-                    text: _formattedTime,
-                    progress: timerProgress,
+                  child: ValueListenableBuilder<int>(
+                    valueListenable: _remaining,
+                    builder: (context, remaining, _) => CircularNumberProgress(
+                      text: _formatTime(remaining),
+                      progress: _totalSeconds > 0
+                          ? remaining / _totalSeconds
+                          : 0.0,
+                    ),
                   ),
                 ),
               ],
             ),
             for (int i = 1; i <= 4; i++) ...[
               AnswerButton(
-                text: lang == "ar"
+                text: ar
                     ? question.getOption(i).ar
                     : question.getOption(i).en,
                 answerState: selectedOption == i
@@ -309,7 +350,9 @@ class _QuizScreenState extends State<QuizScreen> {
   Widget _buildReviewBody(BuildContext context, QuizReviewInProgress state) {
     final cubit = context.read<QuizCubit>();
     final review = state.currentQuestion;
-    final lang = CacheHelper.getData("lang") ?? "en";
+    final ar = isArabic();
+    final prevIcon = ar ? Icons.chevron_right : Icons.chevron_left;
+    final nextIcon = ar ? Icons.chevron_left : Icons.chevron_right;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -318,9 +361,9 @@ class _QuizScreenState extends State<QuizScreen> {
             Stack(
               children: [
                 Image.asset("Assets/images/Group 1.png"),
-                Positioned(
+                PositionedDirectional(
                   top: 30,
-                  left: 20,
+                  start: 20,
                   child: IconButton(
                     style: IconButton.styleFrom(
                       backgroundColor: Color(0xffD6D6F5),
@@ -336,31 +379,29 @@ class _QuizScreenState extends State<QuizScreen> {
             Stack(
               children: [
                 Stack(
-                  alignment: AlignmentGeometry.centerLeft,
+                  alignment: AlignmentDirectional.centerStart,
                   clipBehavior: Clip.none,
                   children: [
                     QuistionCard(
                       questionNumber: state.currentIndex + 1,
                       totalQuestions: state.totalQuestions,
-                      questionText: lang == "ar"
+                      questionText: ar
                           ? review.title.ar
                           : review.title.en,
+                      mediaUrl: review.media,
                     ),
-                    Positioned(
-                      left: 10,
+                    PositionedDirectional(
+                      start: 10,
                       child: Arrowbackandnext(
-                        icon: Icon(Icons.chevron_left),
+                        icon: Icon(prevIcon),
                         onpressed: () => cubit.previousReviewQuestion(),
                       ),
                     ),
-                    Positioned(
-                      right: 10,
-                      child: Align(
-                        alignment: AlignmentGeometry.centerRight,
-                        child: Arrowbackandnext(
-                          icon: Icon(Icons.chevron_right),
-                          onpressed: () => cubit.nextReviewQuestion(),
-                        ),
+                    PositionedDirectional(
+                      end: 10,
+                      child: Arrowbackandnext(
+                        icon: Icon(nextIcon),
+                        onpressed: () => cubit.nextReviewQuestion(),
                       ),
                     ),
                   ],
@@ -371,7 +412,7 @@ class _QuizScreenState extends State<QuizScreen> {
               Builder(builder: (context) {
                 final optionNum = int.tryParse(entry.key) ?? 0;
                 final optionText =
-                    lang == "ar" ? entry.value.ar : entry.value.en;
+                    ar ? entry.value.ar : entry.value.en;
                 final isCorrect = optionNum == review.correctAnswer;
                 final isUserWrong =
                     optionNum == review.userAnswer && !isCorrect;

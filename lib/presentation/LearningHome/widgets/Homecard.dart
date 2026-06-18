@@ -22,11 +22,11 @@ class Homecard extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.only(
-            left: 12.0,
+          padding: const EdgeInsetsDirectional.only(
+            start: 12.0,
             top: 8,
             bottom: 8,
-            right: 8,
+            end: 8,
           ),
           child: Row(
             children: [

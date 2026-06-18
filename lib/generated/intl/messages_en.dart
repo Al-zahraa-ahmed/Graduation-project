@@ -20,10 +20,22 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(count) => "You\'ve answered all ${count} questions.";
+  static String m0(q) => "Showing results for ‘${q}’";
 
-  static String m1(answered, total) =>
+  static String m1(count) => "${count} Lessons";
+
+  static String m2(n) => "Lesson ${n}";
+
+  static String m3(count) => "Delete ${count} phrases?";
+
+  static String m4(count) => "${count} Selected";
+
+  static String m5(count) => "You\'ve answered all ${count} questions.";
+
+  static String m6(answered, total) =>
       "You\'ve answered ${answered} of ${total} questions.\nPlease answer all questions before submitting.";
+
+  static String m7(count) => "${count} frames";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -63,6 +75,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "Your privacy is protected",
     ),
     "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+    "categories_load_failed": MessageLookupByLibrary.simpleMessage(
+      "Failed to load categories",
+    ),
+    "categories_no_results": MessageLookupByLibrary.simpleMessage(
+      "No results found",
+    ),
     "categories_search": MessageLookupByLibrary.simpleMessage("Search"),
     "categories_title": MessageLookupByLibrary.simpleMessage("Categories"),
     "chat_text": MessageLookupByLibrary.simpleMessage("Chat Text"),
@@ -90,6 +108,13 @@ class MessageLookup extends MessageLookupByLibrary {
     "delete_title": MessageLookupByLibrary.simpleMessage(
       "Confirm Account Deletion",
     ),
+    "dictionary_load_failed": MessageLookupByLibrary.simpleMessage(
+      "Failed to load dictionary",
+    ),
+    "dictionary_no_results": MessageLookupByLibrary.simpleMessage(
+      "No words found",
+    ),
+    "dictionary_results_for": m0,
     "dictionary_title": MessageLookupByLibrary.simpleMessage("Dictionary"),
     "edit": MessageLookupByLibrary.simpleMessage("Edit"),
     "email": MessageLookupByLibrary.simpleMessage("Email"),
@@ -154,11 +179,43 @@ class MessageLookup extends MessageLookupByLibrary {
       "Because everyone deserves to be understood",
     ),
     "home1_welcome": MessageLookupByLibrary.simpleMessage("Welcome Back!"),
+    "home2_message": MessageLookupByLibrary.simpleMessage(
+      "Translate your Thoughts",
+    ),
+    "home2_service1": MessageLookupByLibrary.simpleMessage("Video Translation"),
+    "home2_service1_desc": MessageLookupByLibrary.simpleMessage(
+      "Capture video and convert it into translated text.",
+    ),
+    "home2_service2": MessageLookupByLibrary.simpleMessage("Voice Translation"),
+    "home2_service2_desc": MessageLookupByLibrary.simpleMessage(
+      "Convert spoken language into accurate text instantly.",
+    ),
+    "home2_service3": MessageLookupByLibrary.simpleMessage("Quick Response"),
+    "home2_service3_desc": MessageLookupByLibrary.simpleMessage(
+      "Fast responses for common daily situations.",
+    ),
+    "home2_submessage": MessageLookupByLibrary.simpleMessage(
+      "Because everyone deserves to be understood.",
+    ),
     "lang_ar": MessageLookupByLibrary.simpleMessage("Arabic"),
     "lang_en": MessageLookupByLibrary.simpleMessage("English"),
     "lessons_all": MessageLookupByLibrary.simpleMessage("All Lessons"),
+    "lessons_count_label": m1,
+    "lessons_empty_viewed": MessageLookupByLibrary.simpleMessage(
+      "No viewed lessons yet",
+    ),
+    "lessons_empty_viewed_hint": MessageLookupByLibrary.simpleMessage(
+      "Mark a lesson as done to see it here.",
+    ),
+    "lessons_lesson_n": m2,
+    "lessons_load_failed": MessageLookupByLibrary.simpleMessage(
+      "Failed to load lessons",
+    ),
     "lessons_num": MessageLookupByLibrary.simpleMessage("Lessons"),
     "lessons_title": MessageLookupByLibrary.simpleMessage("Lessons"),
+    "lessons_toggle_failed": MessageLookupByLibrary.simpleMessage(
+      "Couldn\'t update lesson, please try again.",
+    ),
     "lessons_viewed": MessageLookupByLibrary.simpleMessage("Viewed"),
     "lessons_vocab": MessageLookupByLibrary.simpleMessage("Family Vocabulary"),
     "live_tracking": MessageLookupByLibrary.simpleMessage("Live Hand Tracking"),
@@ -222,6 +279,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "otp_desc": MessageLookupByLibrary.simpleMessage(
       "For you security, We have sent a One-Time code to your e-mail user@gmail.com.Enter it to access your account.",
     ),
+    "otp_incomplete": MessageLookupByLibrary.simpleMessage(
+      "Please enter the full 4-digit code",
+    ),
     "otp_resent": MessageLookupByLibrary.simpleMessage("Resend code?"),
     "otp_sec": MessageLookupByLibrary.simpleMessage("Remaining"),
     "otp_title": MessageLookupByLibrary.simpleMessage("Enter your OTP"),
@@ -273,23 +333,42 @@ class MessageLookup extends MessageLookupByLibrary {
     "profile_validation_required": MessageLookupByLibrary.simpleMessage(
       "Username, name and email are required",
     ),
+    "qr_all_phrases": MessageLookupByLibrary.simpleMessage("All"),
     "qr_appreciate": MessageLookupByLibrary.simpleMessage(
       "I appreciate your help",
     ),
     "qr_bus": MessageLookupByLibrary.simpleMessage("Where is the bus station?"),
     "qr_cost": MessageLookupByLibrary.simpleMessage("How much does this cost?"),
     "qr_deaf": MessageLookupByLibrary.simpleMessage("I am deaf."),
+    "qr_delete_confirm_desc": MessageLookupByLibrary.simpleMessage(
+      "This cannot be undone.",
+    ),
+    "qr_delete_confirm_multi": m3,
+    "qr_delete_confirm_title": MessageLookupByLibrary.simpleMessage(
+      "Delete phrase?",
+    ),
+    "qr_edit_phrase": MessageLookupByLibrary.simpleMessage("Edit Phrase"),
+    "qr_empty_hint": MessageLookupByLibrary.simpleMessage(
+      "Tap + to add your first phrase",
+    ),
+    "qr_empty_title": MessageLookupByLibrary.simpleMessage("No phrases yet"),
     "qr_help": MessageLookupByLibrary.simpleMessage("Can you help me?"),
     "qr_meet": MessageLookupByLibrary.simpleMessage("Nice to meet you"),
+    "qr_n_selected": m4,
     "qr_need_help": MessageLookupByLibrary.simpleMessage("I need medical help"),
+    "qr_pinned": MessageLookupByLibrary.simpleMessage("Pinned"),
     "qr_police": MessageLookupByLibrary.simpleMessage("Call the police"),
+    "qr_save": MessageLookupByLibrary.simpleMessage("Save"),
+    "qr_tts_unavailable": MessageLookupByLibrary.simpleMessage(
+      "Text-to-speech is not available for this language on your device.",
+    ),
     "qr_uncomfortable": MessageLookupByLibrary.simpleMessage(
       "I feel uncomfortable",
     ),
     "question_num": MessageLookupByLibrary.simpleMessage("Question"),
     "quick_response": MessageLookupByLibrary.simpleMessage("Quick Response"),
-    "quiz_answered_all": m0,
-    "quiz_answered_partial": m1,
+    "quiz_answered_all": m5,
+    "quiz_answered_partial": m6,
     "quiz_btn": MessageLookupByLibrary.simpleMessage("Start now!"),
     "quiz_completed_title": MessageLookupByLibrary.simpleMessage(
       "Quiz Completed!",
@@ -302,8 +381,14 @@ class MessageLookup extends MessageLookupByLibrary {
       "You will lose all your progress\nif you leave now.",
     ),
     "quiz_leave_title": MessageLookupByLibrary.simpleMessage("Leave Quiz?"),
+    "quiz_load_failed": MessageLookupByLibrary.simpleMessage(
+      "Failed to load quizzes",
+    ),
     "quiz_no_quizzes": MessageLookupByLibrary.simpleMessage(
       "No quizzes available",
+    ),
+    "quiz_share_failed": MessageLookupByLibrary.simpleMessage(
+      "Couldn\'t create a share link, please try again.",
     ),
     "quiz_stay_btn": MessageLookupByLibrary.simpleMessage("Stay"),
     "quiz_title": MessageLookupByLibrary.simpleMessage(
@@ -400,6 +485,9 @@ class MessageLookup extends MessageLookupByLibrary {
     "select_all": MessageLookupByLibrary.simpleMessage("Select All"),
     "signup": MessageLookupByLibrary.simpleMessage("Sign up"),
     "skip_btn": MessageLookupByLibrary.simpleMessage("Skip"),
+    "something_went_wrong": MessageLookupByLibrary.simpleMessage(
+      "Something went wrong",
+    ),
     "submit_btn1": MessageLookupByLibrary.simpleMessage("Submit"),
     "submit_btn2": MessageLookupByLibrary.simpleMessage("Cancel"),
     "submit_desc": MessageLookupByLibrary.simpleMessage(
@@ -422,8 +510,22 @@ class MessageLookup extends MessageLookupByLibrary {
     "user_text": MessageLookupByLibrary.simpleMessage("User Text"),
     "username": MessageLookupByLibrary.simpleMessage("username"),
     "verify": MessageLookupByLibrary.simpleMessage("Verify"),
+    "video_hand_description": MessageLookupByLibrary.simpleMessage(
+      "Hand Description",
+    ),
     "video_no_media": MessageLookupByLibrary.simpleMessage("No media"),
+    "video_unavailable": MessageLookupByLibrary.simpleMessage(
+      "Video unavailable",
+    ),
     "viewed": MessageLookupByLibrary.simpleMessage("Viewed"),
+    "vt_frames_collected": m7,
+    "vt_processing": MessageLookupByLibrary.simpleMessage("Processing..."),
+    "vt_recent": MessageLookupByLibrary.simpleMessage("Recent"),
+    "vt_reset": MessageLookupByLibrary.simpleMessage("Reset"),
+    "vt_show_hands": MessageLookupByLibrary.simpleMessage(
+      "Show your hands to the camera",
+    ),
+    "vt_try_again": MessageLookupByLibrary.simpleMessage("Try Again"),
     "welcome_btn": MessageLookupByLibrary.simpleMessage("Get Started"),
     "welcome_desc": MessageLookupByLibrary.simpleMessage(
       "Already have an account?Log in",

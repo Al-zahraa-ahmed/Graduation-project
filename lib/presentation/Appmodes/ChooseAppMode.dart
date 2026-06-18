@@ -11,47 +11,49 @@ class OnboardingMode extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         height: double.infinity,
         decoration: BoxDecoration(
-          
           gradient: LinearGradient(
             begin: AlignmentGeometry.topCenter,
             end: AlignmentGeometry.bottomCenter,
             colors: [
-            Color(0xffEAEAFA),
-            Color(0xffD6D6F5),
-          ])
+              Color(0xffEAEAFA),
+              Color(0xffD6D6F5),
+            ],
+          ),
         ),
-        child: Column(
-          children: [
-            SizedBox(height: 60),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Column(
-                children: [
-                  Text(
-                    S.of(context).screen5_title,
-                    style: Textstyles.medium25.copyWith(
-                      color: Color(0xff1E1E7B),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 60),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                child: Column(
+                  children: [
+                    Text(
+                      S.of(context).screen5_title,
+                      style: Textstyles.medium25.copyWith(
+                        color: Color(0xff1E1E7B),
+                      ),
                     ),
-                  ),
-                  Text(
-                    S.of(context).screen5_desc1,
-                    style: Textstyles.medium13.copyWith(
-                      color: Color(0xff999999),
+                    Text(
+                      S.of(context).screen5_desc1,
+                      style: Textstyles.medium13.copyWith(
+                        color: Color(0xff999999),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SizedBox(height: 20,),
-         
-            ChooseWhichMode(),
-            SizedBox(height: 5,),
-            SizedBox(height: 10),
-            // SizedBox(height: 40,)
-          ],
+              SizedBox(height: 20),
+              ChooseWhichMode(),
+              SizedBox(height: 5),
+              SizedBox(height: 10),
+              // SizedBox(height: 40,)
+            ],
+          ),
         ),
       ),
     );
@@ -91,7 +93,7 @@ class ChooseWhichMode extends StatelessWidget {
         SizedBox(height: 16),
         GestureDetector(
           onTap: () {
-             Navigator.pushReplacement(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (buildcontext) {
@@ -125,17 +127,17 @@ class CustomCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 258,width: 269,
+      height: 258, width: 269,
       padding: EdgeInsets.only(bottom: 12, top: 10, right: 0, left: 4),
       decoration: BoxDecoration(
-      color: Colors.white,
+        color: Colors.white,
         boxShadow: [
           BoxShadow(
             spreadRadius: 1,
             blurRadius: 4,
-            offset: Offset(2,2 ),
-            color: Color(0xffADADEB)
-          )
+            offset: Offset(2, 2),
+            color: Color(0xffADADEB),
+          ),
         ],
         borderRadius: BorderRadius.circular(12),
         // gradient: LinearGradient(
@@ -152,9 +154,9 @@ class CustomCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          Image.asset(img,width: 198,height: 160,),
+          Image.asset(img, width: 198, height: 160),
           Text(txt1, style: Textstyles.medium20),
-          Text(textAlign: TextAlign.center,txt2, style: TextStyle(fontSize: 13,)),
+          Text(textAlign: TextAlign.center, txt2, style: TextStyle(fontSize: 13)),
         ],
       ),
     );

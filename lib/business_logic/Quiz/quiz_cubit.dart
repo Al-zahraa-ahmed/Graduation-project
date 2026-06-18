@@ -11,7 +11,15 @@ class QuizCubit extends Cubit<QuizState> {
 
   int? _lastQuizId;
 
+  /// Re-runs whichever load action last failed, so the error screen's Retry
+  /// button does the right thing whether we were loading the list, starting a
+  /// quiz, or opening a review.
+  Future<void> Function()? _retryAction;
+
+  Future<void> retry() async => _retryAction?.call();
+
   Future<void> loadQuizzes() async {
+    _retryAction = loadQuizzes;
     emit(QuizLoading());
     try {
       final quizzes = await _api.getQuizzes();
@@ -24,6 +32,7 @@ class QuizCubit extends Cubit<QuizState> {
   }
 
   Future<void> startQuiz({required int quizId}) async {
+    _retryAction = () => startQuiz(quizId: quizId);
     emit(QuizLoading());
     try {
       final results = await Future.wait([
@@ -113,6 +122,7 @@ class QuizCubit extends Cubit<QuizState> {
     required int quizId,
     required int attemptId,
   }) async {
+    _retryAction = () => loadReview(quizId: quizId, attemptId: attemptId);
     emit(QuizReviewLoading());
     try {
       final review = await _api.reviewQuiz(

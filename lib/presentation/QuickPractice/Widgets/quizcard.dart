@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/business_logic/Quiz/quiz_cubit.dart';
 import 'package:graduation_project/data/Models/QuizModel.dart';
+import 'package:graduation_project/main.dart';
 import 'package:graduation_project/presentation/Quiz/Quiz.dart';
 
 class QuizCard extends StatelessWidget {
@@ -13,13 +13,11 @@ class QuizCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final lang = CacheHelper.getData("lang") ?? "en";
-    final name = lang == "ar" ? quiz.name.ar : quiz.name.en;
-    final desc = lang == "ar" ? quiz.desc.ar : quiz.desc.en;
+    final name = isArabic() ? quiz.name.ar : quiz.name.en;
+    final desc = isArabic() ? quiz.desc.ar : quiz.desc.en;
 
     return GestureDetector(
       onTap: () {
-        // Navigate to quiz screen, passing quizId
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -30,29 +28,36 @@ class QuizCard extends StatelessWidget {
           ),
         );
       },
-      child: AspectRatio(
-        aspectRatio: 155 / 155,
-        child: Container(
-          width: 152,
-          height: 155,
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Color(0xffADADEB),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              quiz.img.isNotEmpty
-                  ? Image.network(
-                      quiz.img,
-                      height: 36,
-                      width: 36,
-                      color: Colors.white,
-                      errorBuilder: (_, __, ___) =>
-                          Icon(Icons.quiz, size: 36, color: Colors.white),
-                    )
-                  : Icon(Icons.quiz, size: 36, color: Colors.white),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: const Color(0xffADADEB),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            quiz.img.isNotEmpty
+                ? Image.network(
+                    quiz.img,
+                    height: 36,
+                    width: 36,
+                    color: Colors.white,
+                    loadingBuilder: (context, child, progress) {
+                      if (progress == null) return child;
+                      return const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                    errorBuilder: (_, __, ___) =>
+                        const Icon(Icons.quiz, size: 36, color: Colors.white),
+                  )
+                : const Icon(Icons.quiz, size: 36, color: Colors.white),
               SizedBox(height: 8),
               Text(
                 name,
@@ -77,7 +82,6 @@ class QuizCard extends StatelessWidget {
             ],
           ),
         ),
-      ),
     );
   }
 }

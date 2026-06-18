@@ -1,34 +1,22 @@
-
-import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
-import 'package:graduation_project/data/Models/UserModel.dart';
-import 'package:graduation_project/generated/l10n.dart';
-import 'package:graduation_project/presentation/CategouriesPage/CategouriesPage.dart';
-import 'package:graduation_project/presentation/ChatPage/chatbot.dart';
-import 'package:graduation_project/presentation/LearningHome/widgets/HomeService.dart';
-import 'package:graduation_project/presentation/VoiceTranslation/voice_translation_page.dart';
-import 'package:graduation_project/presentation/LearningHome/widgets/Homecard.dart';
-import 'package:graduation_project/presentation/Profile/ProfileScreen2.dart';
-import 'package:graduation_project/presentation/QuickPractice/quickpractice.dart';
-import 'package:graduation_project/presentation/QuickRespose/quickresponse.dart';
-import 'package:graduation_project/presentation/VideoTranslation/CameraScreen.dart';
-import 'package:graduation_project/presentation/VideoTranslation/HandTrackingScreen.dart';
-import 'package:graduation_project/presentation/VideoTranslation/VideoTranslationScreen.dart';
-import 'package:graduation_project/presentation/VideoTranslation/cameraboxScreen.dart';
-import 'package:graduation_project/presentation/VideoTranslation/handtrackingview.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/business_logic/SendFrames/send_frames_cubit.dart';
+import 'package:graduation_project/generated/l10n.dart';
+import 'package:graduation_project/presentation/LearningHome/widgets/HomeService.dart';
+import 'package:graduation_project/presentation/LearningHome/widgets/Homecard.dart';
+import 'package:graduation_project/presentation/LearningHome/widgets/WelcomeMsg.dart';
+import 'package:graduation_project/presentation/QuickRespose/quickresponse.dart';
+import 'package:graduation_project/presentation/VideoTranslation/handtrackingview.dart';
+import 'package:graduation_project/presentation/VoiceTranslation/voice_translation_page.dart';
 
 class Translationhome extends StatelessWidget {
   const Translationhome({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final userString = CacheHelper.getData("user");
-    final userMap = jsonDecode(userString);
-    final user = UserModel.fromJson(userMap);
+    final user = getSavedUser();
     return SafeArea(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -37,78 +25,70 @@ class Translationhome extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 WelcomeMsg(user: user),
-                SizedBox(height: 16),
-                Homecard(txt1: "Translate your Thoughts", txt2: "Because everyone deserves to be understood.", img: "Assets/images/Chatbot high-fives and answers the question.png",),
-                SizedBox(height: 21),
+                const SizedBox(height: 16),
+                Homecard(
+                  txt1: S.of(context).home2_message,
+                  txt2: S.of(context).home2_submessage,
+                  img:
+                      "Assets/images/Chatbot high-fives and answers the question.png",
+                ),
+                const SizedBox(height: 21),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
+                  padding: const EdgeInsetsDirectional.only(start: 20.0),
                   child: Text(
                     S.of(context).home1_services,
                     style: Textstyles.medium25,
                   ),
                 ),
-                SizedBox(height: 21),
+                const SizedBox(height: 21),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (buildcontext) {
-                                return BlocProvider(
-                                  create: (_) => SignPredictionCubit()..initModel(),
-                                  child: const HandTrackerView(),
-                                );
-                              },
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                              create: (_) => SignPredictionCubit()..initModel(),
+                              child: const HandTrackerView(),
                             ),
-                          );
-                        },
+                          ),
+                        ),
                         child: HomeService(
-                          txt1: "Video Translation",
-                          txt2: "Capture video and convert it into translated text.",
+                          txt1: S.of(context).home2_service1,
+                          txt2: S.of(context).home2_service1_desc,
                           img: "Assets/images/videotranslation.png",
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (buildcontext) {
-                                return const VoiceTranslationPage();
-                              },
-                            ),
-                          );
-                        },
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const VoiceTranslationPage(),
+                          ),
+                        ),
                         child: HomeService(
-                          txt1: "Voice Translation",
-                          txt2: "Convert spoken language into accurate text instantly.",
+                          txt1: S.of(context).home2_service2,
+                          txt2: S.of(context).home2_service2_desc,
                           img: "Assets/images/voicereco.png",
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (buildcontext) {
-                                return ChatPage();
-                              },
-                            ),
-                          );
-                        },
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const QuickResponsePage(),
+                          ),
+                        ),
                         child: HomeService(
-                          txt1: "Quick Response",
-                          txt2: "Fast responses for common daily situations.",
+                          txt1: S.of(context).home2_service3,
+                          txt2: S.of(context).home2_service3_desc,
                           img: "Assets/images/quickresponse.png",
                         ),
                       ),
-                     
                     ],
                   ),
                 ),
@@ -118,50 +98,5 @@ class Translationhome extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class WelcomeMsg extends StatelessWidget {
-  const WelcomeMsg({
-    super.key,
-    required this.user,
-  });
-
-  final UserModel user;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.only(right: 8, left: 20),
-      title: Text("${user.username}!", style: TextStyle(fontSize: 20)),
-      subtitle: Text(
-        S.of(context).home1_welcome,
-        style: Textstyles.medium13.copyWith(color: Color(0xff999999)),
-      ),
-      trailing: InkWell(
-        borderRadius: BorderRadius.circular(40),
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (builder) {
-                return ProfileScreen();
-              },
-            ),
-          );
-        },
-        child: Image.asset("Assets/images/settings.png"),
-      ),
-    );
-  }
-}
-
-
-class VideoScreen extends StatelessWidget {
-  const VideoScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

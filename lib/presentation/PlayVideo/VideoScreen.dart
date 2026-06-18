@@ -1,323 +1,137 @@
 import 'package:flutter/material.dart';
-import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
+import 'package:graduation_project/data/Models/CategoryModel.dart';
+import 'package:graduation_project/generated/l10n.dart';
+import 'package:graduation_project/main.dart';
+import 'package:graduation_project/presentation/ErrorsScreens/NotFound.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class Videoscreen extends StatefulWidget {
-  const Videoscreen({super.key});
-
-  @override
-  State<Videoscreen> createState() => _VideoscreenState();
-}
-
-class _VideoscreenState extends State<Videoscreen> {
-  late VideoPlayerController controller;
-
-  @override
-  void initState() {
-    super.initState();
-
-    controller =
-        VideoPlayerController.networkUrl(
-            Uri.parse(
-              "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-            ),
-          )
-          ..initialize().then((_) {
-            setState(() {});
-          });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
-  }
-}
-
-
-
-
-
-
-// class LessonVideoScreen extends StatefulWidget {
-//   const LessonVideoScreen({super.key});
-
-//   @override
-//   State<LessonVideoScreen> createState() => _LessonVideoScreenState();
-// }
-
-// class _LessonVideoScreenState extends State<LessonVideoScreen> {
-//   late VideoPlayerController controller;
-
-//   @override
-//   void initState() {
-//     super.initState();
-
-//     controller =
-//         VideoPlayerController.networkUrl(
-//             Uri.parse(
-//               "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-//             ),
-//           )
-//           ..initialize().then((_) {
-//             setState(() {});
-//           });
-//   }
-
-//   @override
-//   void dispose() {
-//     controller.dispose();
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: const Color(0xffF5F5F7),
-//       appBar: AppBar(
-//         backgroundColor: const Color(0xffD6D6F5),
-//         elevation: 0,
-//         leading: IconButton(
-//           icon: Icon(Icons.chevron_left),
-//           onPressed: () {
-//             Navigator.pop(context);
-//           },
-//         ),
-//         centerTitle: true,
-//         title: const Text("Apple", style: TextStyle(fontSize: 25,fontWeight:FontWeight(500))),
-//       ),
-
-//       body: Padding(
-//         padding: const EdgeInsets.symmetric(horizontal: 24,vertical: 24),
-//         child: SizedBox(
-//           width: double.infinity,
-//           child: Container(
-//             // color: Colors.red,
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.only(left: 12.0),
-//                   child: const Text(
-//                     "Food category - lesson 1",
-//                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-//                   ),
-//                 ),
-            
-//                 const SizedBox(height: 16),
-            
-//                 /// VIDEO CARD
-//                 AspectRatio(
-                  
-//                   aspectRatio: 327/247,
-//                   child: Container(
-//                     width: 327,
-//                     height: 247,
-//                     decoration: BoxDecoration(
-//                       color: const Color(0xffD9D7F1),
-//                       borderRadius: BorderRadius.circular(16),
-//                       boxShadow: [
-//                         BoxShadow(
-//                           color: Colors.black12,
-//                           blurRadius: 6,
-//                           offset: Offset(0, 3),
-//                         ),
-//                       ],
-//                     ),
-//                     child: controller.value.isInitialized
-//                         ? Stack(
-//                             alignment: Alignment.center,
-//                             children: [
-//                               /// VIDEO
-//                               ClipRRect(
-//                                 borderRadius: BorderRadius.circular(16),
-//                                 child: AspectRatio(
-//                                   aspectRatio: controller.value.aspectRatio,
-//                                   child: VideoPlayer(controller),
-//                                 ),
-//                               ),
-                              
-//                               /// PLAY BUTTON
-//                               IconButton(
-//                                 iconSize: 60,
-//                                 color: Colors.white,
-//                                 icon: Icon(
-//                                   controller.value.isPlaying
-//                                       ? Icons.pause_circle
-//                                       : Icons.play_circle,
-//                                 ),
-//                                 onPressed: () {
-//                                   setState(() {
-//                                     controller.value.isPlaying
-//                                         ? controller.pause()
-//                                         : controller.play();
-//                                   });
-//                                 },
-//                               ),
-//                             ],
-//                           )
-//                         : const Center(child: CircularProgressIndicator()),
-//                   ),
-//                 ),
-            
-//                 const SizedBox(height: 32),
-            
-//                 /// HAND DESCRIPTION
-//                 Padding(
-//                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-//                   child: Column(children: [
-//                   Row(
-//                     children:  [
-//                       Image.asset("Assets/images/hand description.png",width: 25,height: 25,),
-//                       SizedBox(width: 8),
-//                       Text(
-//                         "Hand Description",
-//                         style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
-//                       ),
-//                     ],
-//                   ),
-                              
-//                   const SizedBox(height: 10),
-                              
-//                   Container(
-//                     padding: const EdgeInsets.symmetric(vertical: 16,horizontal: 20),
-//                     decoration: BoxDecoration(
-//                       border: Border.all(width: 0.5,color: Color(0xffD6D6F5)),
-//                       color: const Color(0xffF2F2F2),
-//                       borderRadius: BorderRadius.circular(14),
-//                       boxShadow: [
-//                       BoxShadow(
-//                       offset: Offset(2, 2),
-//                       blurRadius: 4,
-//                       spreadRadius: 0.3,
-//                       color:  Color(0xffADADEB)
-//                       ) 
-//                       ]
-//                     ),
-//                     child: const Text(
-//                       "Form your hand into a 'C shape' and move it towards your cheek with a slight twisting motion.",
-//                     ),
-//                   ),
-                  
-//                   ],),
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
+/// Plays a YouTube lesson video. Backend serves all lesson `link`s as
+/// `https://youtu.be/{id}?si=...` URLs, which `video_player` cannot play
+/// directly — hence the dedicated YouTube embed.
+///
+/// Optional [desc] renders the bilingual "Hand Description" card under the
+/// player. Optional [onCompleted] fires exactly once when the user finishes
+/// the video — used by [LessonsScreen] to auto-mark the lesson as done.
 class LessonVideoScreen extends StatefulWidget {
-  const LessonVideoScreen({super.key});
+  const LessonVideoScreen({
+    super.key,
+    required this.videoUrl,
+    required this.title,
+    this.desc,
+    this.onCompleted,
+  });
+
+  final String videoUrl;
+  final String title;
+  final LocalizedText? desc;
+  final VoidCallback? onCompleted;
 
   @override
   State<LessonVideoScreen> createState() => _LessonVideoScreenState();
 }
 
 class _LessonVideoScreenState extends State<LessonVideoScreen> {
-  late VideoPlayerController controller;
-  ChewieController? chewieController;
+  YoutubePlayerController? _controller;
+  bool _completedFired = false;
 
   @override
   void initState() {
     super.initState();
-    initializeVideo();
+    final videoId = YoutubePlayer.convertUrlToId(widget.videoUrl);
+    if (videoId == null) {
+      // Bad URL — bounce to NotFound after first frame so the route is set up.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const NotFoundPage()),
+        );
+      });
+      return;
+    }
+    _controller = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: const YoutubePlayerFlags(
+        autoPlay: false,
+        mute: false,
+        enableCaption: true,
+      ),
+    )..addListener(_onPlayerEvent);
   }
 
-  Future<void> initializeVideo() async {
-    controller = VideoPlayerController.networkUrl(
-      Uri.parse(
-        "https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4",
-      ),
-    );
-
-    await controller.initialize();
-
-    chewieController = ChewieController(
-      videoPlayerController: controller,
-      autoPlay: false,
-      looping: false,
-      allowFullScreen: true,
-      allowMuting: true,
-      allowPlaybackSpeedChanging: true,
-      showControlsOnInitialize: false,
-      materialProgressColors: ChewieProgressColors(
-        playedColor: const Color(0xff6C63FF),
-        handleColor: const Color(0xff6C63FF),
-        bufferedColor: Colors.white54,
-        backgroundColor: Colors.black12,
-      ),
-      placeholder: Container(
-        color: const Color(0xffD9D7F1),
-      ),
-    );
-
-    if (mounted) {
-      setState(() {});
+  void _onPlayerEvent() {
+    final c = _controller;
+    if (c == null) return;
+    if (!_completedFired && c.value.playerState == PlayerState.ended) {
+      _completedFired = true;
+      widget.onCompleted?.call();
     }
   }
 
   @override
   void dispose() {
-    chewieController?.dispose();
-    controller.dispose();
+    _controller?.removeListener(_onPlayerEvent);
+    _controller?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xffF5F5F7),
-      appBar: AppBar(
-        backgroundColor: const Color(0xffD6D6F5),
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(
-            Icons.chevron_left,
-            color: Colors.black,
-            size: 30,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+    final c = _controller;
+    if (c == null) {
+      // While the post-frame callback re-routes to NotFound.
+      return const Scaffold(body: SizedBox.shrink());
+    }
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: c,
+        progressColors: const ProgressBarColors(
+          playedColor: Color(0xff6C63FF),
+          handleColor: Color(0xff6C63FF),
         ),
-        centerTitle: true,
-        title: const Text(
-          "Apple",
-          style: TextStyle(
-            fontSize: 25,
-            fontWeight: FontWeight.w500,
-            color: Colors.black,
+        // Default buffer spinner fills the player area; shrink it down.
+        bufferIndicator: const Center(
+          child: SizedBox(
+            width: 28,
+            height: 28,
+            child: CircularProgressIndicator(
+              strokeWidth: 2.5,
+              color: Color(0xff6C63FF),
+            ),
           ),
         ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
-        child: SizedBox(
-          width: double.infinity,
+      builder: (context, player) => Scaffold(
+        backgroundColor: const Color(0xffF5F5F7),
+        appBar: AppBar(
+          backgroundColor: const Color(0xffD6D6F5),
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(
+              Icons.chevron_left,
+              color: Colors.black,
+              size: 30,
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+          centerTitle: true,
+          title: Text(
+            widget.title,
+            style: const TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Padding(
-                padding: EdgeInsets.only(left: 12.0),
-                child: Text(
-                  "Food category - lesson 1",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-
-              /// VIDEO CARD
-              AspectRatio(
-                aspectRatio: 327 / 247,
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
                 child: Container(
-                  width: 327,
-                  height: 247,
                   decoration: BoxDecoration(
                     color: const Color(0xffD9D7F1),
                     borderRadius: BorderRadius.circular(20),
@@ -329,88 +143,83 @@ class _LessonVideoScreenState extends State<LessonVideoScreen> {
                       ),
                     ],
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: chewieController != null &&
-                            controller.value.isInitialized
-                        ? Chewie(
-                            controller: chewieController!,
-                          )
-                        : Container(
-                            color: const Color(0xffD9D7F1),
-                            child: const Center(
-                              child: CircularProgressIndicator(
-                                color: Color(0xff6C63FF),
-                              ),
-                            ),
-                          ),
-                  ),
+                  child: player,
                 ),
               ),
+              if (widget.desc != null) ...[
+                const SizedBox(height: 32),
+                _HandDescription(desc: widget.desc!),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
 
-              const SizedBox(height: 32),
+class _HandDescription extends StatelessWidget {
+  const _HandDescription({required this.desc});
+  final LocalizedText desc;
 
-              /// HAND DESCRIPTION
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          "Assets/images/hand description.png",
-                          width: 25,
-                          height: 25,
-                        ),
-                        const SizedBox(width: 8),
-                        const Text(
-                          "Hand Description",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 10),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 16,
-                        horizontal: 20,
-                      ),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 0.5,
-                          color: const Color(0xffD6D6F5),
-                        ),
-                        color: const Color(0xffF2F2F2),
-                        borderRadius: BorderRadius.circular(14),
-                        boxShadow: const [
-                          BoxShadow(
-                            offset: Offset(2, 2),
-                            blurRadius: 4,
-                            spreadRadius: 0.3,
-                            color: Color(0xffADADEB),
-                          ),
-                        ],
-                      ),
-                      child: const Text(
-                        "Form your hand into a 'C shape' and move it towards your cheek with a slight twisting motion.",
-                        style: TextStyle(
-                          fontSize: 14,
-                          height: 1.5,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ),
-                  ],
+  @override
+  Widget build(BuildContext context) {
+    final text = isArabic() ? desc.ar : desc.en;
+    return Padding(
+      padding: const EdgeInsetsDirectional.symmetric(horizontal: 16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Image.asset(
+                "Assets/images/hand description.png",
+                width: 25,
+                height: 25,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                S.of(context).video_hand_description,
+                style: const TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 16,
                 ),
               ),
             ],
           ),
-        ),
+          const SizedBox(height: 10),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+              vertical: 16,
+              horizontal: 20,
+            ),
+            decoration: BoxDecoration(
+              border: Border.all(
+                width: 0.5,
+                color: const Color(0xffD6D6F5),
+              ),
+              color: const Color(0xffF2F2F2),
+              borderRadius: BorderRadius.circular(14),
+              boxShadow: const [
+                BoxShadow(
+                  offset: Offset(2, 2),
+                  blurRadius: 4,
+                  spreadRadius: 0.3,
+                  color: Color(0xffADADEB),
+                ),
+              ],
+            ),
+            child: Text(
+              text,
+              style: const TextStyle(
+                fontSize: 14,
+                height: 1.5,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

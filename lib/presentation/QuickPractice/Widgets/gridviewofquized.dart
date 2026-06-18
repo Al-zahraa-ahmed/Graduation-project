@@ -15,7 +15,9 @@ class GridviewOfQuiz extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
         if (state is QuizError) {
-          return Center(child: Text(state.message));
+          return _QuizErrorState(
+            onRetry: () => context.read<QuizCubit>().loadQuizzes(),
+          );
         }
         if (state is QuizzesLoaded) {
           final quizzes = state.quizzes;
@@ -37,6 +39,52 @@ class GridviewOfQuiz extends StatelessWidget {
         }
         return const SizedBox();
       },
+    );
+  }
+}
+
+class _QuizErrorState extends StatelessWidget {
+  const _QuizErrorState({required this.onRetry});
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.error_outline_rounded,
+            size: 56,
+            color: Colors.red.shade300,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            S.of(context).quiz_load_failed,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey.shade700,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            onPressed: onRetry,
+            icon: const Icon(Icons.refresh_rounded, size: 18),
+            label: Text(S.of(context).retry),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xff8484E1),
+              foregroundColor: Colors.white,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

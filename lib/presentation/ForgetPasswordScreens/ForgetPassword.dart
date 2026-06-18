@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
+import 'package:graduation_project/Core/CustomWidgets/AppSnackBar.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
+import 'package:graduation_project/Core/Validators.dart';
 import 'package:graduation_project/business_logic/Auth/ForgetPasswordCubit/forget_password_cubit.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/Otp/OtpPage.dart';
@@ -25,7 +26,6 @@ class Forgetpassword extends StatelessWidget {
                 },
                 icon: Icon(Icons.chevron_left),
               ),
-              // SizedBox(width: 10,),
               Text(
                 S.of(context).screen20,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
@@ -57,62 +57,86 @@ class Forgetpassword extends StatelessWidget {
   }
 }
 
-class ForgetPassForm extends StatelessWidget {
-  ForgetPassForm({super.key});
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
-   String email="";
+class ForgetPassForm extends StatefulWidget {
+  const ForgetPassForm({super.key});
+
+  @override
+  State<ForgetPassForm> createState() => _ForgetPassFormState();
+}
+
+class _ForgetPassFormState extends State<ForgetPassForm> {
+  final formkey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final emailNode = FocusNode();
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    emailNode.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (!formkey.currentState!.validate()) {
+      if (_autovalidateMode != AutovalidateMode.onUserInteraction) {
+        setState(() {
+          _autovalidateMode = AutovalidateMode.onUserInteraction;
+        });
+      }
+      return;
+    }
+    context.read<ForgetPasswordCubit>().forgetpassword(
+      email: emailController.text.trim(),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final user = getSavedUser();
     return BlocConsumer<ForgetPasswordCubit, ForgetPasswordState>(
       listener: (context, state) {
         if (state is ForgetPasswordSuccess) {
-                    if (user == null) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(S.of(context).user_data_missing)),
-            );
-            return;
-          }
-
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (builder) {
-                return OtpPage(email: email, isResetPassword: true, userId: user!.id);
-              },
+              builder: (_) => OtpPage(
+                email: emailController.text.trim(),
+                isResetPassword: true,
+                userId: state.userId,
+              ),
             ),
           );
         } else if (state is ForgetPasswordFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errmsg)));
+          AppSnackBar.error(context, state.errmsg, onRetry: _submit);
         }
       },
       builder: (context, state) {
+        final isLoading = state is ForgetPasswordLoading;
         return Form(
           key: formkey,
+          autovalidateMode: _autovalidateMode,
           child: Column(
             children: [
               CustomTextField(
+                controller: emailController,
+                focusNode: emailNode,
+                keyboardtype: TextInputType.emailAddress,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (_) => isLoading ? null : _submit(),
                 hint: "Enter Your Email",
                 label: S.of(context).email,
-                onsaved: (value) {
-                  email = value!;
-                },
+                validator: (value) => Validators.email(
+                  value,
+                  requiredMsg: S.of(context).email_required,
+                ),
               ),
               SizedBox(height: 32),
-              GestureDetector(
-                onTap: () {
-                  if (formkey.currentState!.validate()) {
-                    formkey.currentState!.save();
-                    context.read<ForgetPasswordCubit>().forgetpassword(
-                      email: email,
-                    );
-                  }
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(txt: S.of(context).confirm_mail),
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  txt: S.of(context).confirm_mail,
+                  isLoading: isLoading,
+                  onpressed: _submit,
                 ),
               ),
             ],

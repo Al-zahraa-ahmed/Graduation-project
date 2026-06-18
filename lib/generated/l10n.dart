@@ -859,6 +859,86 @@ class S {
     );
   }
 
+  /// `Translate your Thoughts`
+  String get home2_message {
+    return Intl.message(
+      'Translate your Thoughts',
+      name: 'home2_message',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Because everyone deserves to be understood.`
+  String get home2_submessage {
+    return Intl.message(
+      'Because everyone deserves to be understood.',
+      name: 'home2_submessage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Video Translation`
+  String get home2_service1 {
+    return Intl.message(
+      'Video Translation',
+      name: 'home2_service1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Capture video and convert it into translated text.`
+  String get home2_service1_desc {
+    return Intl.message(
+      'Capture video and convert it into translated text.',
+      name: 'home2_service1_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Voice Translation`
+  String get home2_service2 {
+    return Intl.message(
+      'Voice Translation',
+      name: 'home2_service2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Convert spoken language into accurate text instantly.`
+  String get home2_service2_desc {
+    return Intl.message(
+      'Convert spoken language into accurate text instantly.',
+      name: 'home2_service2_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Quick Response`
+  String get home2_service3 {
+    return Intl.message(
+      'Quick Response',
+      name: 'home2_service3',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Fast responses for common daily situations.`
+  String get home2_service3_desc {
+    return Intl.message(
+      'Fast responses for common daily situations.',
+      name: 'home2_service3_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Category`
   String get screen12 {
     return Intl.message('Category', name: 'screen12', desc: '', args: []);
@@ -879,6 +959,26 @@ class S {
     return Intl.message(
       'Search',
       name: 'categories_search',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No results found`
+  String get categories_no_results {
+    return Intl.message(
+      'No results found',
+      name: 'categories_no_results',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to load categories`
+  String get categories_load_failed {
+    return Intl.message(
+      'Failed to load categories',
+      name: 'categories_load_failed',
       desc: '',
       args: [],
     );
@@ -1494,6 +1594,36 @@ class S {
     );
   }
 
+  /// `Failed to load quizzes`
+  String get quiz_load_failed {
+    return Intl.message(
+      'Failed to load quizzes',
+      name: 'quiz_load_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Something went wrong`
+  String get something_went_wrong {
+    return Intl.message(
+      'Something went wrong',
+      name: 'something_went_wrong',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't create a share link, please try again.`
+  String get quiz_share_failed {
+    return Intl.message(
+      'Couldn\'t create a share link, please try again.',
+      name: 'quiz_share_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No media`
   String get video_no_media {
     return Intl.message('No media', name: 'video_no_media', desc: '', args: []);
@@ -1532,6 +1662,116 @@ class S {
   /// `Viewed`
   String get viewed {
     return Intl.message('Viewed', name: 'viewed', desc: '', args: []);
+  }
+
+  /// `Lesson {n}`
+  String lessons_lesson_n(Object n) {
+    return Intl.message(
+      'Lesson $n',
+      name: 'lessons_lesson_n',
+      desc: '',
+      args: [n],
+    );
+  }
+
+  /// `{count} Lessons`
+  String lessons_count_label(Object count) {
+    return Intl.message(
+      '$count Lessons',
+      name: 'lessons_count_label',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `No viewed lessons yet`
+  String get lessons_empty_viewed {
+    return Intl.message(
+      'No viewed lessons yet',
+      name: 'lessons_empty_viewed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Mark a lesson as done to see it here.`
+  String get lessons_empty_viewed_hint {
+    return Intl.message(
+      'Mark a lesson as done to see it here.',
+      name: 'lessons_empty_viewed_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to load lessons`
+  String get lessons_load_failed {
+    return Intl.message(
+      'Failed to load lessons',
+      name: 'lessons_load_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't update lesson, please try again.`
+  String get lessons_toggle_failed {
+    return Intl.message(
+      'Couldn\'t update lesson, please try again.',
+      name: 'lessons_toggle_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Hand Description`
+  String get video_hand_description {
+    return Intl.message(
+      'Hand Description',
+      name: 'video_hand_description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Video unavailable`
+  String get video_unavailable {
+    return Intl.message(
+      'Video unavailable',
+      name: 'video_unavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Showing results for ‘{q}’`
+  String dictionary_results_for(Object q) {
+    return Intl.message(
+      'Showing results for ‘$q’',
+      name: 'dictionary_results_for',
+      desc: '',
+      args: [q],
+    );
+  }
+
+  /// `No words found`
+  String get dictionary_no_results {
+    return Intl.message(
+      'No words found',
+      name: 'dictionary_no_results',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to load dictionary`
+  String get dictionary_load_failed {
+    return Intl.message(
+      'Failed to load dictionary',
+      name: 'dictionary_load_failed',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Email is required`
@@ -1652,6 +1892,16 @@ class S {
   /// `Verify`
   String get verify {
     return Intl.message('Verify', name: 'verify', desc: '', args: []);
+  }
+
+  /// `Please enter the full 4-digit code`
+  String get otp_incomplete {
+    return Intl.message(
+      'Please enter the full 4-digit code',
+      name: 'otp_incomplete',
+      desc: '',
+      args: [],
+    );
   }
 
   /// `Enter your name`
@@ -1894,6 +2144,51 @@ class S {
     );
   }
 
+  /// `Show your hands to the camera`
+  String get vt_show_hands {
+    return Intl.message(
+      'Show your hands to the camera',
+      name: 'vt_show_hands',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Processing...`
+  String get vt_processing {
+    return Intl.message(
+      'Processing...',
+      name: 'vt_processing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Try Again`
+  String get vt_try_again {
+    return Intl.message('Try Again', name: 'vt_try_again', desc: '', args: []);
+  }
+
+  /// `Reset`
+  String get vt_reset {
+    return Intl.message('Reset', name: 'vt_reset', desc: '', args: []);
+  }
+
+  /// `{count} frames`
+  String vt_frames_collected(Object count) {
+    return Intl.message(
+      '$count frames',
+      name: 'vt_frames_collected',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `Recent`
+  String get vt_recent {
+    return Intl.message('Recent', name: 'vt_recent', desc: '', args: []);
+  }
+
   /// `Quick Response`
   String get quick_response {
     return Intl.message(
@@ -2051,6 +2346,101 @@ class S {
       name: 'qr_police',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `Pinned`
+  String get qr_pinned {
+    return Intl.message('Pinned', name: 'qr_pinned', desc: '', args: []);
+  }
+
+  /// `All`
+  String get qr_all_phrases {
+    return Intl.message('All', name: 'qr_all_phrases', desc: '', args: []);
+  }
+
+  /// `No phrases yet`
+  String get qr_empty_title {
+    return Intl.message(
+      'No phrases yet',
+      name: 'qr_empty_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Tap + to add your first phrase`
+  String get qr_empty_hint {
+    return Intl.message(
+      'Tap + to add your first phrase',
+      name: 'qr_empty_hint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Phrase`
+  String get qr_edit_phrase {
+    return Intl.message(
+      'Edit Phrase',
+      name: 'qr_edit_phrase',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Save`
+  String get qr_save {
+    return Intl.message('Save', name: 'qr_save', desc: '', args: []);
+  }
+
+  /// `Delete phrase?`
+  String get qr_delete_confirm_title {
+    return Intl.message(
+      'Delete phrase?',
+      name: 'qr_delete_confirm_title',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete {count} phrases?`
+  String qr_delete_confirm_multi(Object count) {
+    return Intl.message(
+      'Delete $count phrases?',
+      name: 'qr_delete_confirm_multi',
+      desc: '',
+      args: [count],
+    );
+  }
+
+  /// `This cannot be undone.`
+  String get qr_delete_confirm_desc {
+    return Intl.message(
+      'This cannot be undone.',
+      name: 'qr_delete_confirm_desc',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Text-to-speech is not available for this language on your device.`
+  String get qr_tts_unavailable {
+    return Intl.message(
+      'Text-to-speech is not available for this language on your device.',
+      name: 'qr_tts_unavailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{count} Selected`
+  String qr_n_selected(Object count) {
+    return Intl.message(
+      '$count Selected',
+      name: 'qr_n_selected',
+      desc: '',
+      args: [count],
     );
   }
 

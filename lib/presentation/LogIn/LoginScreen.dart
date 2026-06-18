@@ -21,10 +21,14 @@ class Loginscreen extends StatelessWidget {
                   bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
                 child: ConstrainedBox(
-                  constraints:BoxConstraints(minHeight: constraints.maxHeight) ,
-                  child: Align(
-                    alignment: AlignmentGeometry.bottomCenter,
-                    child: Column(children: [ LoginContainer()]),
+                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      children: const [
+                        Spacer(),
+                        LoginContainer(),
+                      ],
+                    ),
                   ),
                 ),
               );

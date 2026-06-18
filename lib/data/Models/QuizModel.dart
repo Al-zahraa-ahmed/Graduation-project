@@ -144,6 +144,7 @@ class QuizResultModel {
 class ReviewAnswerModel {
   final int questionId;
   final LocalizedText title;
+  final String media; // review endpoint returns this as `img`
   final Map<String, LocalizedText> options; // "1" -> LocalizedText, etc.
   final int? userAnswer; // option number or null
   final int correctAnswer; // option number
@@ -152,6 +153,7 @@ class ReviewAnswerModel {
   ReviewAnswerModel({
     required this.questionId,
     required this.title,
+    required this.media,
     required this.options,
     this.userAnswer,
     required this.correctAnswer,
@@ -167,6 +169,7 @@ class ReviewAnswerModel {
     return ReviewAnswerModel(
       questionId: json['question_id'] ?? 0,
       title: LocalizedText.fromJsonString(json['title'] ?? ''),
+      media: (json['img'] ?? '').toString(),
       options: parsedOptions,
       userAnswer: json['user_answer'],
       correctAnswer: json['correct_answer'] ?? 0,

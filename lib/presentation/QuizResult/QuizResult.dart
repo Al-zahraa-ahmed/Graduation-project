@@ -109,14 +109,25 @@ class QuickResult extends StatelessWidget {
                             img: "Assets/images/share.png",
                             txt: S.of(context).result_share,
                             onpressed: () async {
+                              final messenger = ScaffoldMessenger.of(context);
+                              final failedMsg =
+                                  S.of(context).quiz_share_failed;
                               final cubit = QuizCubit();
-                              final link = await cubit.generateShareLink(
-                                attemptId: userQuizId,
-                              );
-                              if (link != null) {
-                                SharePlus.instance.share(
-                                  ShareParams(text: link),
+                              try {
+                                final link = await cubit.generateShareLink(
+                                  attemptId: userQuizId,
                                 );
+                                if (link != null) {
+                                  await SharePlus.instance.share(
+                                    ShareParams(text: link),
+                                  );
+                                } else {
+                                  messenger.showSnackBar(
+                                    SnackBar(content: Text(failedMsg)),
+                                  );
+                                }
+                              } finally {
+                                await cubit.close();
                               }
                             },
                           ),

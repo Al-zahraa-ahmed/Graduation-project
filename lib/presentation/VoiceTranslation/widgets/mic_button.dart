@@ -20,7 +20,8 @@ class _MicButtonState extends State<MicButton>
     with SingleTickerProviderStateMixin {
   static const _lavender = Color(0xffEAEAFA);
   static const _shadow = Color(0xffADADEB);
-  static const _deep = Color(0xff7B7BD0);
+  static const _deep = Color(0xff5B5BD7);
+  static const _accent = Color(0xff8484E1);
 
   late final AnimationController _controller;
 
@@ -29,7 +30,7 @@ class _MicButtonState extends State<MicButton>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500),
+      duration: const Duration(milliseconds: 1800),
     );
     if (widget.isListening) _controller.repeat();
   }
@@ -54,8 +55,8 @@ class _MicButtonState extends State<MicButton>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 170,
-      height: 170,
+      width: 200,
+      height: 200,
       child: GestureDetector(
         onTap: widget.enabled ? widget.onTap : null,
         child: AnimatedBuilder(
@@ -65,8 +66,9 @@ class _MicButtonState extends State<MicButton>
               alignment: Alignment.center,
               children: [
                 if (widget.isListening) ...[
-                  _pulse(_controller.value),
-                  _pulse((_controller.value + 0.5) % 1.0),
+                  _ring(_controller.value),
+                  _ring((_controller.value + 0.33) % 1.0),
+                  _ring((_controller.value + 0.66) % 1.0),
                 ],
                 _innerCircle(),
               ],
@@ -77,17 +79,23 @@ class _MicButtonState extends State<MicButton>
     );
   }
 
-  Widget _pulse(double t) {
-    final scale = 1.0 + t * 0.7;
-    final opacity = (1.0 - t).clamp(0.0, 1.0) * 0.45;
-    return Transform.scale(
-      scale: scale,
-      child: Container(
-        width: 120,
-        height: 120,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: _shadow.withValues(alpha: opacity),
+  /// Expanding concentric ring that fades as it grows.
+  Widget _ring(double t) {
+    final scale = 1.0 + t * 0.9;
+    final opacity = (1.0 - t).clamp(0.0, 1.0) * 0.5;
+    return IgnorePointer(
+      child: Transform.scale(
+        scale: scale,
+        child: Container(
+          width: 140,
+          height: 140,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: _accent.withOpacity(opacity),
+              width: 2.5,
+            ),
+          ),
         ),
       ),
     );
@@ -96,32 +104,35 @@ class _MicButtonState extends State<MicButton>
   Widget _innerCircle() {
     final listening = widget.isListening;
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 250),
-      width: 120,
-      height: 120,
+      duration: const Duration(milliseconds: 280),
+      curve: Curves.easeOut,
+      width: listening ? 132 : 128,
+      height: listening ? 132 : 128,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: listening
-              ? const [_shadow, _deep]
+              ? const [_accent, _deep]
               : widget.enabled
-                  ? const [_lavender, _shadow]
-                  : [_lavender, _lavender.withValues(alpha: 0.6)],
+                  ? const [_shadow, _accent]
+                  : [_lavender, _lavender.withOpacity(0.6)],
         ),
         boxShadow: [
           BoxShadow(
-            color: _shadow.withValues(alpha: listening ? 0.7 : 0.45),
-            blurRadius: listening ? 22 : 14,
-            offset: const Offset(0, 6),
+            color: (listening ? _deep : _shadow).withOpacity(
+              listening ? 0.6 : 0.4,
+            ),
+            blurRadius: listening ? 28 : 16,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
       child: Icon(
         listening ? Icons.mic : Icons.mic_none,
         color: Colors.white,
-        size: 54,
+        size: 58,
       ),
     );
   }

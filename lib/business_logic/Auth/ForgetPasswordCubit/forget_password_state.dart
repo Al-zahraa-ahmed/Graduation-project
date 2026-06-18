@@ -7,7 +7,11 @@ final class ForgetPasswordInitial extends ForgetPasswordState {}
 
 final class ForgetPasswordLoading extends ForgetPasswordState {}
 
-final class ForgetPasswordSuccess extends ForgetPasswordState {}
+final class ForgetPasswordSuccess extends ForgetPasswordState {
+  final int userId;
+
+  ForgetPasswordSuccess({required this.userId});
+}
 
 final class ForgetPasswordFailure extends ForgetPasswordState {
   final String errmsg;

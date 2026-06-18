@@ -39,8 +39,10 @@ class _HandTrackerViewState extends State<HandTrackerView> {
   /// Python: `if hands_were_detected and len(sequence) > 10` → predict.
   static const int _minFramesForPrediction = 10;
 
-  /// Latest hand count, just for UI overlay.
-  int _latestHandCount = 0;
+  /// Per-frame chip state. Kept in a notifier so updating it does NOT rebuild
+  /// the whole Scaffold (CameraPreview, AspectRatio, BlocBuilder) every frame.
+  final ValueNotifier<({int handCount, int frames})> _chipState =
+      ValueNotifier((handCount: 0, frames: 0));
 
   @override
   void initState() {
@@ -115,7 +117,7 @@ class _HandTrackerViewState extends State<HandTrackerView> {
         }
       }
 
-      if (mounted) setState(() => _latestHandCount = hands.length);
+      _chipState.value = (handCount: hands.length, frames: _sequence.length);
     } catch (e) {
       debugPrint('Hand detection error: $e');
     } finally {
@@ -172,6 +174,7 @@ class _HandTrackerViewState extends State<HandTrackerView> {
     _disposed = true;
     _controller?.stopImageStream();
     _controller?.dispose();
+    _chipState.dispose();
     SystemChrome.setPreferredOrientations(DeviceOrientation.values);
     super.dispose();
   }
@@ -200,11 +203,15 @@ class _HandTrackerViewState extends State<HandTrackerView> {
                     Positioned(
                       top: 16,
                       right: 16,
-                      child: _StatusChip(
-                        active: _latestHandCount > 0,
-                        text: _latestHandCount > 0
-                            ? '${_sequence.length} frames'
-                            : S.of(context).live_tracking,
+                      child: ValueListenableBuilder<
+                          ({int handCount, int frames})>(
+                        valueListenable: _chipState,
+                        builder: (context, v, _) => _StatusChip(
+                          active: v.handCount > 0,
+                          text: v.handCount > 0
+                              ? '${v.frames} frames'
+                              : S.of(context).live_tracking,
+                        ),
                       ),
                     ),
                   ],

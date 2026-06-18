@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/business_logic/Categories/categories_cubit.dart';
-import 'package:graduation_project/data/Models/CategoryModel.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/main.dart';
 import 'package:graduation_project/Core/CustomWidgets/SearchBar.dart';
@@ -51,23 +50,16 @@ class CaregoryPageBody extends StatefulWidget {
 }
 
 class _CaregoryPageBodyState extends State<CaregoryPageBody> {
-
   @override
   Widget build(BuildContext context) {
-    // late List<dynamic> l=context.read<SearchCubit>().
-    return BlocConsumer<CategoriesCubit, CategoriesState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+    return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
         if (state is CategoriesSuccess) {
-          final List<CategoryModel> visible_categouries = state.visible;
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Column(
               children: [
-                SizedBox(height: 20),
-                // SearchBar(),
+                const SizedBox(height: 20),
                 Search(
                   onchanged: (value) {
                     context.read<CategoriesCubit>().search(
@@ -76,19 +68,100 @@ class _CaregoryPageBodyState extends State<CaregoryPageBody> {
                     );
                   },
                 ),
-                SizedBox(height: 36),
-                Expanded(child: GridOfCards(l: visible_categouries)),
+                const SizedBox(height: 36),
+                Expanded(
+                  child: state.visible.isEmpty
+                      ? const _NoResultsState()
+                      : GridOfCards(l: state.visible),
+                ),
               ],
             ),
           );
-        } else if (state is CategoriesLoading) {
-          return Center(child: CircularProgressIndicator());
         } else if (state is CategoriesError) {
-          return Center(child: Text(state.message));
-        } else {
-          return Text("hi");
+          return _ErrorState(
+            message: S.of(context).categories_load_failed,
+            onRetry: () =>
+                context.read<CategoriesCubit>().loadCategouries(),
+          );
         }
+        return const Center(child: CircularProgressIndicator());
       },
+    );
+  }
+}
+
+class _NoResultsState extends StatelessWidget {
+  const _NoResultsState();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.search_off_rounded,
+            size: 64,
+            color: Colors.grey.shade400,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            S.of(context).categories_no_results,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey.shade600,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _ErrorState extends StatelessWidget {
+  const _ErrorState({required this.message, required this.onRetry});
+  final String message;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            Icons.error_outline_rounded,
+            size: 64,
+            color: Colors.red.shade300,
+          ),
+          const SizedBox(height: 12),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey.shade700,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 16),
+          ElevatedButton.icon(
+            onPressed: onRetry,
+            icon: const Icon(Icons.refresh_rounded, size: 18),
+            label: Text(S.of(context).retry),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xff8484E1),
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(
+                  horizontal: 24, vertical: 12),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

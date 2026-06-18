@@ -50,7 +50,7 @@ class ListViewOfDictionarySections extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.only(left: 30),
+      padding: const EdgeInsetsDirectional.only(start: 30),
       scrollDirection: Axis.horizontal,
       itemCount: l.length,
       itemBuilder: (buildcontext, index) {
@@ -81,7 +81,7 @@ class DictionarySections extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 180),
-      margin: EdgeInsets.only(right: 8),
+      margin: const EdgeInsetsDirectional.only(end: 8),
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
 
       decoration: BoxDecoration(

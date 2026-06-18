@@ -33,33 +33,51 @@ class LearningCards extends StatelessWidget {
                       CircleAvatar(
                         backgroundColor: Color(0xffD6D6F5),
                         child: Image.network(
-                          color: Colors.white,
                           c.img.trim(),
+                          color: Colors.white,
                           height: 26,
                           width: 26,
+                          loadingBuilder: (context, child, progress) {
+                            if (progress == null) return child;
+                            return const SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            );
+                          },
+                          errorBuilder: (context, _, __) => const Icon(
+                            Icons.image_not_supported_outlined,
+                            color: Colors.white,
+                            size: 22,
+                          ),
                         ),
                       ),
                       Percentage(percentage: c.progress.toString()),
                     ],
                   ),
-                  Expanded(child: SizedBox()),
+                  const Spacer(),
                   Text(
-                    overflow: TextOverflow.ellipsis,
-                    // softWrap: true,
-                    maxLines: 2,
                     isArabic() ? c.name.ar : c.name.en,
-                    style: TextStyle(
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 18,
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(height: 5),
-                  Text(
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    isArabic() ? c.desc.ar : c.desc.en,
-                    style: Textstyles.regular13.copyWith(color: Colors.white),
+                  const SizedBox(height: 4),
+                  Flexible(
+                    child: Text(
+                      isArabic() ? c.desc.ar : c.desc.en,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: Textstyles.regular13
+                          .copyWith(color: Colors.white),
+                    ),
                   ),
                 ],
               ),
@@ -67,18 +85,30 @@ class LearningCards extends StatelessWidget {
           ),
 
           Align(
-            alignment: AlignmentGeometry.centerRight,
+            alignment: isArabic()
+                ? AlignmentDirectional.centerEnd
+                : AlignmentGeometry.centerRight,
             child: Padding(
-              padding: const EdgeInsets.only(right: 1.0),
-              child: Image.asset("Assets/images/Ellipse 2.png"),
+              padding: isArabic()
+                  ? const EdgeInsetsDirectional.only(end: 1.0)
+                  : const EdgeInsets.only(right: 1.0),
+              child: Transform.flip(
+                flipX: isArabic(),
+                child: Image.asset("Assets/images/Ellipse 2.png"),
+              ),
             ),
           ),
           Align(
-            alignment: AlignmentGeometry.centerRight,
-            child: Image.asset(
-              "Assets/images/arrow.png",
-              width: 15,
-              height: 13,
+            alignment: isArabic()
+                ? AlignmentDirectional.centerEnd
+                : AlignmentGeometry.centerRight,
+            child: Transform.flip(
+              flipX: isArabic(),
+              child: Image.asset(
+                "Assets/images/arrow.png",
+                width: 15,
+                height: 13,
+              ),
             ),
           ),
         ],

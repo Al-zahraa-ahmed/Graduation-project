@@ -19,16 +19,19 @@ class Quickpractice extends StatelessWidget {
           centerTitle: true,
           leading: Row(
             children: [
-              SizedBox(width: 20),
+              const SizedBox(width: 20),
               IconButton(
-                style: IconButton.styleFrom(backgroundColor: Color(0xffD6D6F5)),
+                style: IconButton.styleFrom(
+                    backgroundColor: const Color(0xffD6D6F5)),
                 color: Colors.white,
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: Icon(Icons.chevron_left),
+                onPressed: () => Navigator.pop(context),
+                icon: const Icon(Icons.chevron_left),
               ),
             ],
+          ),
+          title: Text(
+            S.of(context).home1_service3,
+            style: Textstyles.medium25,
           ),
         ),
         body: Column(
@@ -57,8 +60,8 @@ class Quickpractice extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Positioned(
-                    right: -10,
+                  PositionedDirectional(
+                    end: -10,
                     bottom: -50,
                     child: Image.asset(
                       "Assets/images/Woman busy with her study assignments.png",

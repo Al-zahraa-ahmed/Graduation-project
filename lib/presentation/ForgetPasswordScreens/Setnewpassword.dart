@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
+import 'package:graduation_project/Core/CustomWidgets/AppSnackBar.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
+import 'package:graduation_project/Core/Validators.dart';
 import 'package:graduation_project/business_logic/Auth/ResetPasswordCubit/reset_password_cubit.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/ForgetPasswordScreens/ChangedSuccessfully.dart';
@@ -48,7 +49,7 @@ class SetNewPassword extends StatelessWidget {
                 Text(S.of(context).new_desc, style: TextStyle(fontSize: 13)),
                 Text(S.of(context).new_desc2, style: TextStyle(fontSize: 13)),
                 SizedBox(height: 34),
-                ResetPasswordForm(reset_token: reset_token,),
+                ResetPasswordForm(reset_token: reset_token),
               ],
             ),
           ),
@@ -66,42 +67,70 @@ class ResetPasswordForm extends StatefulWidget {
 }
 
 class _ResetPasswordFormState extends State<ResetPasswordForm> {
-  late String pass1, pass2;
+  final formkey = GlobalKey<FormState>();
+  final pass1Controller = TextEditingController();
+  final pass2Controller = TextEditingController();
+  final pass1Node = FocusNode();
+  final pass2Node = FocusNode();
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
 
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  @override
+  void dispose() {
+    pass1Controller.dispose();
+    pass2Controller.dispose();
+    pass1Node.dispose();
+    pass2Node.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (!formkey.currentState!.validate()) {
+      if (_autovalidateMode != AutovalidateMode.onUserInteraction) {
+        setState(() {
+          _autovalidateMode = AutovalidateMode.onUserInteraction;
+        });
+      }
+      return;
+    }
+    context.read<ResetPasswordCubit>().resetPassword(
+      reset_token: widget.reset_token,
+      pass: pass1Controller.text,
+      pass2: pass2Controller.text,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ResetPasswordCubit, ResetPasswordState>(
       listener: (context, state) {
         if (state is ResetPasswordSuccess) {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-              builder: (buildcontext) {
-                return MessagePage();
-              },
-            ),
+            MaterialPageRoute(builder: (_) => const MessagePage()),
           );
         } else if (state is ResetPasswordFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errmsg)));
-        } else if (state is ResetPasswordLoading) {
-          print("hi");
+          AppSnackBar.error(context, state.errmsg, onRetry: _submit);
         }
       },
       builder: (context, state) {
+        final isLoading = state is ResetPasswordLoading;
         return Form(
           key: formkey,
+          autovalidateMode: _autovalidateMode,
           child: Column(
             children: [
               CustomTextField(
-                hint: "Enter Your Password",
+                controller: pass1Controller,
+                focusNode: pass1Node,
+                isabvious: true,
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) => pass2Node.requestFocus(),
+                hint: S.of(context).enter_your_password,
                 label: S.of(context).password,
-                onsaved: (value) {
-                  pass1 = value!;
-                },
+                validator: (value) => Validators.password(
+                  value,
+                  requiredMsg: S.of(context).password_required,
+                ),
               ),
               SizedBox(height: 5),
               Padding(
@@ -116,11 +145,18 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
               ),
               SizedBox(height: 34),
               CustomTextField(
-                hint: "Enter Your Password",
+                controller: pass2Controller,
+                focusNode: pass2Node,
+                isabvious: true,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (_) => isLoading ? null : _submit(),
+                hint: S.of(context).enter_your_password,
                 label: S.of(context).profile_confirm_pass,
-                onsaved: (value) {
-                  pass2 = value!;
-                },
+                validator: (value) => Validators.confirmPassword(
+                  value,
+                  pass1Controller.text,
+                  mismatchMsg: S.of(context).passwords_must_match,
+                ),
               ),
               SizedBox(height: 5),
               Padding(
@@ -133,22 +169,13 @@ class _ResetPasswordFormState extends State<ResetPasswordForm> {
                   ),
                 ),
               ),
-
               SizedBox(height: 32),
-              GestureDetector(
-                onTap: () {
-                  if (formkey.currentState!.validate()) {
-                    formkey.currentState!.save();
-                    context.read<ResetPasswordCubit>().resetPassword(
-                      reset_token: widget.reset_token,
-                      pass: pass1,
-                      pass2: pass2,
-                    );
-                  }
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: CustomButton(txt: "Reset Password"),
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  txt: S.of(context).new_btn,
+                  isLoading: isLoading,
+                  onpressed: _submit,
                 ),
               ),
             ],

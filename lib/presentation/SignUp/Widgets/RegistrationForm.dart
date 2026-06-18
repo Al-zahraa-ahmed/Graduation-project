@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_project/generated/l10n.dart';
+import 'package:graduation_project/Core/CustomWidgets/AppSnackBar.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomButton.dart';
 import 'package:graduation_project/Core/CustomWidgets/CustomTextField.dart';
 import 'package:graduation_project/Core/CustomWidgets/MultiColorText.dart';
+import 'package:graduation_project/Core/Validators.dart';
 import 'package:graduation_project/business_logic/Auth/SignUpCubit/SignUpCubit.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/Otp/OtpPage.dart';
 
 class RegistrationForm extends StatefulWidget {
@@ -15,10 +17,65 @@ class RegistrationForm extends StatefulWidget {
 }
 
 class _RegistrationFormState extends State<RegistrationForm> {
-  bool isRememberMe = false;
-  GlobalKey<FormState> formkey = GlobalKey<FormState>();
-  late String email, name, pass, pass2;
-  late int userid;
+  bool agreedToTerms = false;
+  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+  final formkey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmController = TextEditingController();
+  final nameNode = FocusNode();
+  final emailNode = FocusNode();
+  final passwordNode = FocusNode();
+  final confirmNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) nameNode.requestFocus();
+    });
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmController.dispose();
+    nameNode.dispose();
+    emailNode.dispose();
+    passwordNode.dispose();
+    confirmNode.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    if (!formkey.currentState!.validate()) {
+      // Switch to live validation so errors clear as the user types.
+      if (_autovalidateMode != AutovalidateMode.onUserInteraction) {
+        setState(() {
+          _autovalidateMode = AutovalidateMode.onUserInteraction;
+        });
+      }
+      return;
+    }
+    if (!agreedToTerms) {
+      AppSnackBar.error(
+        context,
+        'You must agree to the processing of personal data',
+      );
+      return;
+    }
+    context.read<SignUpCubit>().SignUp(
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      password: passwordController.text,
+      password2: confirmController.text,
+      agreement: agreedToTerms,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<SignUpCubit, SignUpState>(
@@ -27,125 +84,117 @@ class _RegistrationFormState extends State<RegistrationForm> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (BuildContext) {
-                return OtpPage(userId: state.userid, email: email, isResetPassword: false,);
-              },
+              builder: (_) => OtpPage(
+                userId: state.userid,
+                email: emailController.text.trim(),
+                isResetPassword: false,
+              ),
             ),
           );
         } else if (state is SignUpFailure) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text(state.errormsg)));
+          AppSnackBar.error(context, state.errormsg, onRetry: _submit);
         }
       },
       builder: (context, state) {
+        final isLoading = state is SignUpLoading;
         return Form(
           key: formkey,
+          autovalidateMode: _autovalidateMode,
           child: Column(
             children: [
               CustomTextField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return S.of(context).name_required;
-                  }
-                },
+                controller: nameController,
+                focusNode: nameNode,
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) => emailNode.requestFocus(),
+                validator: (value) => Validators.name(
+                  value,
+                  requiredMsg: S.of(context).name_required,
+                ),
                 label: S.of(context).profile_name,
                 hint: S.of(context).enter_name,
-                onsaved: (value) {
-                  name = value!;
-                },
               ),
-              SizedBox(height: 45),
+              SizedBox(height: 32),
               CustomTextField(
+                controller: emailController,
+                focusNode: emailNode,
                 keyboardtype: TextInputType.emailAddress,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return S.of(context).email_required;
-                  }
-                },
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) => passwordNode.requestFocus(),
+                validator: (value) => Validators.email(
+                  value,
+                  requiredMsg: S.of(context).email_required,
+                ),
                 label: S.of(context).email,
                 hint: S.of(context).enter_your_email,
-                onsaved: (value) {
-                  email = value!;
-                },
               ),
-              SizedBox(height: 45),
+              SizedBox(height: 32),
               CustomTextField(
+                controller: passwordController,
+                focusNode: passwordNode,
                 isabvious: true,
+                textInputAction: TextInputAction.next,
+                onFieldSubmitted: (_) => confirmNode.requestFocus(),
                 label: S.of(context).password,
                 hint: S.of(context).enter_your_password,
-                onsaved: (value) {
-                  pass = value!;
-                },
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return S.of(context).password_required;
-                  }
-                },
+                validator: (value) => Validators.password(
+                  value,
+                  requiredMsg: S.of(context).password_required,
+                ),
               ),
-              SizedBox(height: 45),
+              SizedBox(height: 32),
               CustomTextField(
+                controller: confirmController,
+                focusNode: confirmNode,
+                isabvious: true,
+                textInputAction: TextInputAction.done,
+                onFieldSubmitted: (_) => isLoading ? null : _submit(),
                 label: S.of(context).profile_confirm_pass,
                 hint: S.of(context).confirm_your_password,
-                onsaved: (value) {
-                  pass2 = value!;
-                },
-                validator: (value) {
-                  if ((value == null || value.isEmpty)&& value==pass) {
-                    return S.of(context).passwords_must_match;
-                  }
-                },
+                validator: (value) => Validators.confirmPassword(
+                  value,
+                  passwordController.text,
+                  mismatchMsg: S.of(context).passwords_must_match,
+                ),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Row(
                   children: [
                     Checkbox(
-                      fillColor: MaterialStateProperty.resolveWith((states) {
-                        return Colors.white; // الخلفية تفضل أبيض دايمًا
-                      }),
+                      fillColor: WidgetStateProperty.resolveWith(
+                        (states) => Colors.white,
+                      ),
                       checkColor: Color(0xff999999),
-                      side: MaterialStateBorderSide.resolveWith((states) {
-                        return BorderSide(
-                          color: Color(0xff999999), // الحواف رمادي دايمًا
+                      side: WidgetStateBorderSide.resolveWith(
+                        (states) => BorderSide(
+                          color: Color(0xff999999),
                           width: 2,
-                        );
-                      }),
-                      value: isRememberMe,
+                        ),
+                      ),
+                      value: agreedToTerms,
                       onChanged: (newvalue) {
                         setState(() {
-                          isRememberMe = newvalue!;
+                          agreedToTerms = newvalue ?? false;
                         });
                       },
                     ),
-                    MultiColorText(
-                      txt1: S.of(context).agree_processing,
-                      txt2: S.of(context).personal_data,
+                    Expanded(
+                      child: MultiColorText(
+                        txt1: S.of(context).agree_processing,
+                        txt2: S.of(context).personal_data,
+                      ),
                     ),
                   ],
                 ),
               ),
               SizedBox(height: 10),
-              InkWell(
-                onTap: () {
-                  if (formkey.currentState!.validate() &&
-                      isRememberMe == true) {
-                        formkey.currentState!.save();
-                    context.read<SignUpCubit>().SignUp(
-                      name: name,
-                      email: email,
-                      password: pass,
-                      password2: pass2,
-                      agreement: isRememberMe,
-                    );
-                    
-                  }
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  child: state is SignUpLoading
-                      ? Center(child: CircularProgressIndicator())
-                      : CustomButton(txt: "Sign Up"),
+              SizedBox(
+                width: double.infinity,
+                child: CustomButton(
+                  txt: "Sign Up",
+                  isLoading: isLoading,
+                  onpressed: _submit,
                 ),
               ),
             ],

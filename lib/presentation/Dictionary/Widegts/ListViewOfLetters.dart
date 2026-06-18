@@ -50,7 +50,7 @@ class ListViewOfLetters extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: EdgeInsets.only(left: 32, top: 12),
+      padding: const EdgeInsetsDirectional.only(start: 32, top: 12),
       scrollDirection: Axis.horizontal,
       itemCount: l.length,
       itemBuilder: (buildcontext, index) {
@@ -82,7 +82,7 @@ class Letters extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(milliseconds: 180),
-      margin: EdgeInsets.only(right: 8),
+      margin: const EdgeInsetsDirectional.only(end: 8),
       // padding: EdgeInsets.all(8),
       width: 40,
       height: 40,

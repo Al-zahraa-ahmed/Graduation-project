@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:meta/meta.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -82,22 +81,17 @@ class VoiceTranslationCubit extends Cubit<VoiceTranslationState> {
     emit(VoiceTranslationReady(text: ''));
   }
 
-  /// Resolve locale from app cache. Falls back to device default if the
-  /// preferred locale isn't installed on the speech engine.
+  /// Arabic-only: pick whichever Arabic variant the device has installed
+  /// (ar-SA, ar-EG, ar-AE...). If none, fall back to the literal ar-SA so the
+  /// speech engine surfaces a clear error instead of silently using English.
   Future<String?> _resolveLocaleId() async {
-    final lang = CacheHelper.getData('lang') as String? ?? 'en';
-    final preferred = lang == 'ar' ? 'ar-SA' : 'en-US';
+    const preferred = 'ar-SA';
     try {
       final locales = await _speech.locales();
-      final prefix = preferred.split('-').first;
-      final hit = locales.firstWhere(
-        (l) => l.localeId.startsWith(prefix),
-        orElse: () => locales.firstWhere(
-          (l) => l.localeId.startsWith(preferred),
-          orElse: () => locales.first,
-        ),
-      );
-      return hit.localeId;
+      for (final l in locales) {
+        if (l.localeId.startsWith('ar')) return l.localeId;
+      }
+      return preferred;
     } catch (_) {
       return preferred;
     }

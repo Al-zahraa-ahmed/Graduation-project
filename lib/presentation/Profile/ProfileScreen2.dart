@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
+import 'package:graduation_project/Core/CustomWidgets/AppSnackBar.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
 import 'package:graduation_project/data/Models/ProfileModel.dart';
@@ -58,26 +59,28 @@ class ProfileScreenBlocBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<ProfileCubit, ProfileState>(
       listener: (context, state) {
-        // TODO: implement listener
+        // Surface failed pref-syncs (changeLang / changeMode) to the user.
+        // The cubit has already rolled back its in-memory state so the UI
+        // continues to show the previous (now-canonical) lang/mode.
+        if (state is ProfilePrefUpdateFailed) {
+          AppSnackBar.error(context, state.errmsg);
+        }
       },
       builder: (context, state) {
         if (state is ProfileLoading) {
-    return const Center(child: CircularProgressIndicator());
-  }
+          return const Center(child: CircularProgressIndicator());
+        }
         if (state is ProfileSucces) {
-          final ProfileModel user = state.user;
-          print("kkkkkkkkkkkkkkkk");
-          print(user.toJson().toString());
           return ProfileScreenBody(user: state.user);
-        } 
+        }
+        if (state is ProfilePrefUpdateFailed) {
+          return ProfileScreenBody(user: state.user);
+        }
         if (state is ProfileFailure) {
           return ProfileScreenBody();
-    // return Center(child: Text(state.errmsg));
+        }
 
-  }
-
-  return const SizedBox.shrink();
-
+        return const SizedBox.shrink();
       },
     );
   }
@@ -306,17 +309,9 @@ class ProfileScreenBody extends StatelessWidget {
                   },
                 ),
                 BuildDivider(),
-                ChooseLanguage(
-                  firstselected: user?.language == "en"
-                      ? AppLanguage.english
-                      : AppLanguage.arabic,
-                ),
+                const ChooseLanguage(),
                 BuildDivider(),
-                ChooseMode(
-                  firstselected: user?.mode == "l"
-                      ? AppMode.educationalMode
-                      : AppMode.translationMode,
-                ),
+                const ChooseMode(),
               ],
             ),
             SectionTitle(title: S.of(context).about_title),

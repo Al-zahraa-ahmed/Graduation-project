@@ -3,14 +3,20 @@ import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/generated/l10n.dart';
 
 class Search extends StatelessWidget {
-  const Search({super.key, this.onchanged});
-  final  Function(String)? onchanged;
+  const Search({
+    super.key,
+    this.onchanged,
+    this.onSubmitted,
+    this.initialValue,
+  });
+  final Function(String)? onchanged;
+  final ValueChanged<String>? onSubmitted;
+  final String? initialValue;
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 48,
       width: 327,
-      // padding: EdgeInsetsDirectional.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         border: Border.all(color: Color(0xffD6D6F5)),
         color: Colors.white,
@@ -25,7 +31,12 @@ class Search extends StatelessWidget {
         ],
       ),
       child: TextFormField(
-        onChanged:onchanged ,
+        initialValue: initialValue,
+        textInputAction: onSubmitted != null
+            ? TextInputAction.search
+            : TextInputAction.done,
+        onChanged: onchanged,
+        onFieldSubmitted: onSubmitted,
         decoration: InputDecoration(
           isDense: true,
           contentPadding: EdgeInsets.all(0),
@@ -43,7 +54,7 @@ class Search extends StatelessWidget {
             "Assets/images/search.png",height: 20,width: 20,
           ),
           hint: Align(
-            alignment: Alignment.centerLeft,
+            alignment: AlignmentDirectional.centerStart,
             child: Text(
               S.of(context).categories_search,
               style: Textstyles.medium20.copyWith(color: Color(0xffD6D6F5)),

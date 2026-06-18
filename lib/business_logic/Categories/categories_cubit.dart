@@ -111,6 +111,47 @@ class CategoriesApi {
       rethrow;
     }
   }
+
+  /// Returns only the lessons the user has marked as done in this category.
+  /// Backend returns HTTP 404 when the user has no viewed lessons yet —
+  /// we treat that as an empty list, not an error.
+  Future<List<LessonsModel>> getViewedLessons({required int id}) async {
+    try {
+      final token = CacheHelper.getData("token");
+      final response = await dio.get(
+        "https://signlingo.org/api/categories/$id/viewed-lessons",
+        options: Options(
+          headers: {
+            "Accept": "application/json",
+            "Authorization": "Bearer $token",
+          },
+        ),
+      );
+      final data = response.data['data'];
+      if (data == null) return const [];
+      return (data as List)
+          .map((e) => LessonsModel.fromJson(e as Map<String, dynamic>))
+          .toList();
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 404) return const [];
+      rethrow;
+    }
+  }
+
+  /// Toggle the done state of a lesson server-side. Returns the new state.
+  Future<bool> toggleLesson({required int lessonId}) async {
+    final token = CacheHelper.getData("token");
+    final response = await dio.post(
+      "https://signlingo.org/api/lessons/$lessonId/toggle",
+      options: Options(
+        headers: {
+          "Accept": "application/json",
+          "Authorization": "Bearer $token",
+        },
+      ),
+    );
+    return response.data['data']['done'] as bool;
+  }
 }
 
 

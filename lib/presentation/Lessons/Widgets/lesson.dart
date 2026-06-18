@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/data/Models/LessonsModel.dart';
+import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/main.dart';
 
 class Lesson extends StatelessWidget {
@@ -8,53 +9,95 @@ class Lesson extends StatelessWidget {
     super.key,
     required this.l,
     required this.index,
-     this.ontap, required this.isselected,
+    required this.isToggling,
+    this.onToggle,
+    this.onOpen,
   });
+
   final LessonsModel l;
   final int index;
-  final void Function()? ontap;
-  final bool isselected;
+  final bool isToggling;
+
+  /// Tap the checkbox circle → toggle done state.
+  final VoidCallback? onToggle;
+
+  /// Tap the rest of the row → open the lesson video.
+  final VoidCallback? onOpen;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 20.0, right: 8),
+      padding: const EdgeInsetsDirectional.only(bottom: 20.0, end: 8),
       child: Row(
         children: [
-          Container(
-            padding: EdgeInsets.all(10),
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-              color: Color(0xffD6D6F5),
-              borderRadius: BorderRadius.circular(40),
+          // Checkbox circle has its own tap zone (mark done / undone).
+          GestureDetector(
+            onTap: isToggling ? null : onToggle,
+            behavior: HitTestBehavior.opaque,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: const Color(0xffD6D6F5),
+                borderRadius: BorderRadius.circular(40),
+              ),
+              child: isToggling
+                  ? const Center(
+                      child: SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Color(0xff5B5BD7),
+                        ),
+                      ),
+                    )
+                  : CheckContainer(isselected: l.done),
             ),
-
+          ),
+          const SizedBox(width: 23),
+          // Rest of the row → opens the video.
+          Expanded(
             child: GestureDetector(
-              onTap: ontap,
-              child: CheckContainer(isselected: isselected),
+              onTap: onOpen,
+              behavior: HitTestBehavior.opaque,
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          S.of(context).lessons_lesson_n(index),
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Color(0xff999999),
+                          ),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          isArabic() ? l.name.ar : l.name.en,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  if (l.duration != null && l.duration!.isNotEmpty)
+                    Text(
+                      l.duration!,
+                      style: Textstyles.medium13.copyWith(
+                        color: const Color(0xff999999),
+                      ),
+                    ),
+                ],
+              ),
             ),
-          ),
-
-          // **************************
-          SizedBox(width: 23),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Lesson ${index}",
-                style: TextStyle(fontSize: 20, color: Color(0xff999999)),
-              ),
-              // SizedBox(height: 5,),
-              Text(
-                isArabic() ?l.name.ar : l.name.en,
-                style: TextStyle(fontSize: 20),
-              ),
-            ],
-          ),
-          Expanded(child: SizedBox()),
-          Text(
-            "20.15",
-            style: Textstyles.medium13.copyWith(color: Color(0xff999999)),
           ),
         ],
       ),
@@ -64,7 +107,6 @@ class Lesson extends StatelessWidget {
 
 class CheckContainer extends StatelessWidget {
   const CheckContainer({super.key, required this.isselected});
-
   final bool isselected;
 
   @override
@@ -72,18 +114,17 @@ class CheckContainer extends StatelessWidget {
     return Container(
       height: 22,
       width: 22,
-      // padding: EdgeInsets.all(3),
       decoration: BoxDecoration(
-        color: isselected ? Color(0xff5B5BD7) : null,
+        color: isselected ? const Color(0xff5B5BD7) : null,
         borderRadius: BorderRadius.circular(40),
-        border: Border.all(width: 2, color: Color(0xff5B5BD7)),
+        border: Border.all(width: 2, color: const Color(0xff5B5BD7)),
       ),
       child: Center(
         child: Icon(
+          Icons.check,
           fontWeight: FontWeight.w800,
           size: 14,
-          Icons.check,
-          color: isselected ? Colors.white : Color(0xff5B5BD7),
+          color: isselected ? Colors.white : const Color(0xff5B5BD7),
         ),
       ),
     );

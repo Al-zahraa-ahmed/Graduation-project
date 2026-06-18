@@ -1,10 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
-import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
 import 'package:graduation_project/data/Models/ProfileModel.dart';
 import 'package:graduation_project/data/Models/UserModel.dart';
-// import 'user_model.dart';
-// import 'cache_helper.dart';
 
 class UserApiService {
   late final Dio dio;
@@ -13,9 +10,19 @@ class UserApiService {
     dio = Dio(
       BaseOptions(
         baseUrl: "https://signlingo.org/api/user/",
-        headers: {
-          "Accept": "application/json",
-          "Authorization": "Bearer ${CacheHelper.getData("token")}",
+        headers: {"Accept": "application/json"},
+      ),
+    );
+    // Read the token at request-time so this Dio instance can outlive token
+    // changes (e.g., the instance was created before the user logged in).
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          final token = CacheHelper.getData("token");
+          if (token is String && token.isNotEmpty) {
+            options.headers["Authorization"] = "Bearer $token";
+          }
+          handler.next(options);
         },
       ),
     );
@@ -31,11 +38,8 @@ class UserApiService {
 
   Future<ProfileModel> getUserMainData() async {
     try {
-      final response = await dio.get(
-        "https://signlingo.org/api/user/main-data",
-      );
+      final response = await dio.get("main-data");
       final data = response.data["data"];
-      print(data);
       return ProfileModel.fromJson(data);
     } on DioException catch (e) {
       throw Exception(e.response?.data["message"] ?? "Failed to get main data");
@@ -86,13 +90,7 @@ class UserApiService {
   }
 
   Future<void> changeLanguage({required String language}) async {
-    try {
-      await dio.patch("change-lang", data: {"lang": language});
-    } on DioException catch (e) {
-      throw Exception(
-        e.response?.data["message"] ?? "Failed to change language",
-      );
-    }
+    await dio.patch("change-lang", data: {"lang": language});
   }
 
   Future<void> deleteAccount() async {
@@ -116,18 +114,10 @@ class UserApiService {
   }
 
   Future<void> changeMode({required String mode}) async {
-    try {
-      await dio.patch("change-mode", data: {"mode": mode});
-    } on DioException catch (e) {
-      throw Exception(e.response?.data["message"] ?? "Failed to change mode");
-    }
+    await dio.patch("change-mode", data: {"mode": mode});
   }
 
   Future<void> changeTheme({required String theme}) async {
-    try {
-      await dio.patch("change-theme", data: {"theme": theme});
-    } on DioException catch (e) {
-      throw Exception(e.response?.data["message"] ?? "Failed to change theme");
-    }
+    await dio.patch("change-theme", data: {"theme": theme});
   }
 }
