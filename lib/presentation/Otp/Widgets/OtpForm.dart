@@ -1,5 +1,6 @@
 import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/CustomWidgets/AppSnackBar.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +9,7 @@ import 'package:graduation_project/business_logic/Auth/OtpCubit/otp_cubit.dart';
 import 'package:graduation_project/business_logic/Profile/profile_cubit.dart';
 import 'package:graduation_project/presentation/ForgetPasswordScreens/Setnewpassword.dart';
 import 'package:graduation_project/presentation/LearningHome/learninghome.dart';
+import 'package:graduation_project/presentation/LearningHome/translationHome.dart';
 import 'package:graduation_project/presentation/Otp/Widgets/Otp_input_fields.dart';
 
 class OtpInputsForm extends StatefulWidget {
@@ -104,11 +106,16 @@ class _OtpInputsFormState extends State<OtpInputsForm> {
           // Token is now cached; pull fresh profile so app-wide lang/mode
           // reflect what the server says. Fire-and-forget.
           context.read<ProfileCubit>().getMainData();
+          // Route to the home matching the user's pre-signup mode choice
+          // (saved to cache from the onboarding ChooseAppMode screen).
+          final mode = CacheHelper.getData('mode') as String? ?? 'l';
           WidgetsBinding.instance.addPostFrameCallback((_) {
             if (!context.mounted) return;
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (_) => LearingHome()),
+              MaterialPageRoute(
+                builder: (_) => mode == 'l' ? LearingHome() : Translationhome(),
+              ),
             );
           });
         } else if (state is OtpForgetVerifySuccess) {

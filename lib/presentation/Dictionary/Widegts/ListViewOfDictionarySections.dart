@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_project/business_logic/Dictionary/dictionary_cubit.dart';
-import 'package:graduation_project/data/Models/WordModel.dart';
 
 
 
@@ -14,28 +13,24 @@ class DictionarySection extends StatelessWidget {
       buildWhen: (previous, current) {
         if (previous is DictionarySuccess && current is DictionarySuccess) {
           return previous.selectedCategory != current.selectedCategory ||
-              previous.allWordsByLetters != current.allWordsByLetters;
+              previous.categories != current.categories;
         }
         return true;
       },
       builder: (context, state) {
           if (state is! DictionarySuccess) return const SizedBox();
 
-        final List<WordModel> words = state.allWordsByLetters.values
-            .expand((list) => list)
-            .toList();
-
-        final List<String> categories = words
-            .map((e) => e.category)
-            .toSet()
-            .toList();
         return SizedBox(
           height: 60,
-          child: ListViewOfDictionarySections(l: categories, ontap:  (String category) {
+          child: ListViewOfDictionarySections(
+            l: state.categories,
+            ontap: (String category) {
               context.read<DictionaryCubit>().selectCategory(
                 state.selectedCategory == category ? null : category,
               );
-            },selectedCategory: state.selectedCategory ,),
+            },
+            selectedCategory: state.selectedCategory,
+          ),
         );
       },
     );

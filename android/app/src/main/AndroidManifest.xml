@@ -41,6 +41,10 @@
 
          In particular, this is used by the Flutter engine in io.flutter.plugin.text.ProcessTextPlugin. -->
     <queries>
+        <!-- Allow launching/detecting the standalone Unity AR card-game app
+             (Android 11+ package visibility). Remove if the AR game feature
+             is dropped. -->
+        <package android:name="com.DefaultCompany.TestARAR" />
         <intent>
             <action android:name="android.intent.action.PROCESS_TEXT"/>
             <data android:mimeType="text/plain"/>

@@ -150,6 +150,12 @@ class MessageLookup extends MessageLookupByLibrary {
     "forget_field": MessageLookupByLibrary.simpleMessage("Enter your email"),
     "forget_hyper": MessageLookupByLibrary.simpleMessage("Forgot Password?"),
     "forget_title": MessageLookupByLibrary.simpleMessage("Forget Password?"),
+    "google_no_id_token": MessageLookupByLibrary.simpleMessage(
+      "Couldn\'t get a valid Google token. Please try again.",
+    ),
+    "google_sign_in_failed": MessageLookupByLibrary.simpleMessage(
+      "Google sign-in failed. Please try again.",
+    ),
     "hand_landmarks": MessageLookupByLibrary.simpleMessage(
       "Hand Landmarks Realtime",
     ),

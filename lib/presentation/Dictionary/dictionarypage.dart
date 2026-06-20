@@ -6,7 +6,8 @@ import 'package:graduation_project/business_logic/Dictionary/dictionary_cubit.da
 import 'package:graduation_project/Core/CustomWidgets/SearchBar.dart';
 import 'package:graduation_project/presentation/Dictionary/Widegts/ListViewOfDictionarySections.dart';
 import 'package:graduation_project/presentation/Dictionary/Widegts/ListViewOfLetters.dart';
-import 'package:graduation_project/presentation/Dictionary/Widegts/ListViewOfWords.dart';
+import 'package:graduation_project/presentation/Dictionary/Widegts/ListViewOfWords.dart'
+    show DictionaryWordsSliver;
 import 'package:graduation_project/presentation/Dictionary/Widegts/ShowingResultText.dart';
 
 class DictionaryPage extends StatelessWidget {
@@ -54,7 +55,12 @@ class _DictionaryBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Only rebuild on coarse state changes (Loading↔Success↔Failure). Filter
+    // updates within Success keep the same runtimeType, so inner widgets
+    // (LettersSection, DictionarySection, DictionaryWordsSliver) handle them
+    // via their own buildWhen — the outer tree stays mounted.
     return BlocBuilder<DictionaryCubit, DictionaryState>(
+      buildWhen: (prev, curr) => prev.runtimeType != curr.runtimeType,
       builder: (context, state) {
         if (state is DictionaryFailure) {
           return _ErrorState(
@@ -66,13 +72,13 @@ class _DictionaryBody extends StatelessWidget {
           return const Center(child: CircularProgressIndicator());
         }
 
-        final hasResults =
-            state.filteredWordsByLetters.values.any((w) => w.isNotEmpty);
-
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
+        // CustomScrollView gives us a single scrollable surface, so
+        // SliverList.builder can lazy-build word cards instead of building
+        // all of them up-front like the old nested ListView did.
+        return CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: Container(
                 color: Colors.white,
                 child: Column(
                   children: [
@@ -89,20 +95,13 @@ class _DictionaryBody extends StatelessWidget {
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  const LettersSection(),
-                  const DictionarySection(),
-                  const ShowingResultText(),
-                  const SizedBox(height: 14),
-                  if (hasResults)
-                    const DictionaryWordsSection()
-                  else
-                    const _NoResultsState(),
-                ],
-              ),
-            ],
-          ),
+            ),
+            const SliverToBoxAdapter(child: LettersSection()),
+            const SliverToBoxAdapter(child: DictionarySection()),
+            const SliverToBoxAdapter(child: ShowingResultText()),
+            const SliverToBoxAdapter(child: SizedBox(height: 14)),
+            const DictionaryWordsSliver(emptyState: _NoResultsState()),
+          ],
         );
       },
     );

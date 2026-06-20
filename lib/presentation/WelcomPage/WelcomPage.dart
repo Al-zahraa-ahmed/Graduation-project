@@ -30,11 +30,11 @@ class Platform_Mode_Welcome_Page extends StatelessWidget {
                     children: [
                       Text(
                         S.of(context).screen6_title,
-                        style: TextStyle(fontSize: 39, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
                       ),
                       Text(
                         txt1,
-                        style: TextStyle(fontSize: 39, fontWeight: FontWeight.w600),
+                        style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
                       ),
                       Text(
                         txt2,
@@ -46,7 +46,7 @@ class Platform_Mode_Welcome_Page extends StatelessWidget {
                   ),
                 ),
             
-                SizedBox(height: 69),
+                SizedBox(height: 32),
                 Stack(
                   alignment: AlignmentGeometry.center,
                   clipBehavior: Clip.none,

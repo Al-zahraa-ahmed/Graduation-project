@@ -15,15 +15,17 @@ class ChooseLanguage extends StatefulWidget {
 class _ChooseLanguageState extends State<ChooseLanguage> {
   bool isExpanded = false;
 
+  /// Cache is the source of truth for the active locale (matches main.dart's
+  /// MaterialApp). State is only used as a fallback before the cache has been
+  /// initialized, so the checkmark always lines up with what the app actually
+  /// renders.
   String _currentLang(ProfileState state) {
-    if (state is ProfileSucces) return state.user.language ?? _cacheLang();
-    if (state is ProfilePrefUpdateFailed) {
-      return state.user.language ?? _cacheLang();
-    }
-    return _cacheLang();
+    final cache = CacheHelper.getData('lang') as String?;
+    if (cache != null && cache.isNotEmpty) return cache;
+    if (state is ProfileSucces) return state.user.language ?? 'en';
+    if (state is ProfilePrefUpdateFailed) return state.user.language ?? 'en';
+    return 'en';
   }
-
-  String _cacheLang() => CacheHelper.getData('lang') as String? ?? 'en';
 
   @override
   Widget build(BuildContext context) {
@@ -61,38 +63,40 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(S.of(context).lang_ar,
-                            style: TextStyle(fontSize: 16)),
-                        InkWell(
-                          onTap: () {
-                            if (isAr) return;
-                            context
-                                .read<ProfileCubit>()
-                                .changelang(lang: 'ar');
-                          },
-                          child: CheckContainer(isselected: isAr),
+                    InkWell(
+                      onTap: () {
+                        if (isAr) return;
+                        context.read<ProfileCubit>().changelang(lang: 'ar');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(S.of(context).lang_ar,
+                                style: TextStyle(fontSize: 16)),
+                            CheckContainer(isselected: isAr),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(S.of(context).lang_en,
-                            style: TextStyle(fontSize: 16)),
-                        InkWell(
-                          onTap: () {
-                            if (!isAr) return;
-                            context
-                                .read<ProfileCubit>()
-                                .changelang(lang: 'en');
-                          },
-                          child: CheckContainer(isselected: !isAr),
+                    SizedBox(height: 4),
+                    InkWell(
+                      onTap: () {
+                        if (!isAr) return;
+                        context.read<ProfileCubit>().changelang(lang: 'en');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(S.of(context).lang_en,
+                                style: TextStyle(fontSize: 16)),
+                            CheckContainer(isselected: !isAr),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),

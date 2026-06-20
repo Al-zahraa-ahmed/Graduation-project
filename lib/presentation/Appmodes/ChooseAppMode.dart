@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/presentation/WelcomPage/WelcomPage.dart';
@@ -70,15 +71,20 @@ class ChooseWhichMode extends StatelessWidget {
     return Column(
       // mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        // First card = Platform/Learning mode ('l'). The welcome page that
+        // describes the learning experience is screen7_platformmode (not
+        // screen6_transmode) — they were previously swapped.
         GestureDetector(
-          onTap: () {
+          onTap: () async {
+            await CacheHelper.saveData(key: 'mode', value: 'l');
+            if (!context.mounted) return;
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (buildcontext) {
                   return Platform_Mode_Welcome_Page(
-                    txt1: S.of(buildcontext).screen6_transmode,
-                    txt2: S.of(buildcontext).screen6_desc,
+                    txt1: S.of(buildcontext).screen7_platformmode,
+                    txt2: S.of(buildcontext).screen7_desc,
                   );
                 },
               ),
@@ -91,15 +97,19 @@ class ChooseWhichMode extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16),
+        // Second card = Translation/Assistant mode ('a'). Pairs with
+        // screen6_transmode in the welcome page.
         GestureDetector(
-          onTap: () {
+          onTap: () async {
+            await CacheHelper.saveData(key: 'mode', value: 'a');
+            if (!context.mounted) return;
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (buildcontext) {
                   return Platform_Mode_Welcome_Page(
-                    txt1: S.of(buildcontext).screen7_platformmode,
-                    txt2: S.of(buildcontext).screen7_desc,
+                    txt1: S.of(buildcontext).screen6_transmode,
+                    txt2: S.of(buildcontext).screen6_desc,
                   );
                 },
               ),

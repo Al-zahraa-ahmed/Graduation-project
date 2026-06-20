@@ -92,10 +92,10 @@ class _LessonVideoScreenState extends State<LessonVideoScreen> {
         // Default buffer spinner fills the player area; shrink it down.
         bufferIndicator: const Center(
           child: SizedBox(
-            width: 28,
-            height: 28,
+            width: 12,
+            height: 12,
             child: CircularProgressIndicator(
-              strokeWidth: 2.5,
+              strokeWidth: 1.5,
               color: Color(0xff6C63FF),
             ),
           ),
@@ -143,7 +143,36 @@ class _LessonVideoScreenState extends State<LessonVideoScreen> {
                       ),
                     ],
                   ),
-                  child: player,
+                  // Cover YouTube's iframe-side white spinner with our own
+                  // small one until the player reports ready. After that
+                  // the overlay disappears and the player runs as normal.
+                  child: Stack(
+                    children: [
+                      player,
+                      Positioned.fill(
+                        child: ValueListenableBuilder<YoutubePlayerValue>(
+                          valueListenable: c,
+                          builder: (context, value, _) {
+                            if (value.isReady) {
+                              return const SizedBox.shrink();
+                            }
+                            return Container(
+                              color: const Color(0xffD9D7F1),
+                              alignment: Alignment.center,
+                              child: const SizedBox(
+                                width: 22,
+                                height: 22,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                  color: Color(0xff6C63FF),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               if (widget.desc != null) ...[

@@ -10,6 +10,9 @@ final class DictionaryLoading extends DictionaryState {}
 final class DictionarySuccess extends DictionaryState {
   final Map<String, List<WordModel>> allWordsByLetters;
   final Map<String, List<WordModel>> filteredWordsByLetters;
+  /// Cached on construction so the category strip doesn't recompute the full
+  /// distinct list on every state emission (search keystrokes, filter taps).
+  final List<String> categories;
   final String searchQuery;
   final String? selectedLetter;
   final String? selectedCategory;
@@ -17,6 +20,7 @@ final class DictionarySuccess extends DictionaryState {
   DictionarySuccess({
     required this.allWordsByLetters,
     required this.filteredWordsByLetters,
+    required this.categories,
     this.searchQuery = "",
     this.selectedLetter,
     this.selectedCategory,
@@ -25,6 +29,7 @@ final class DictionarySuccess extends DictionaryState {
   DictionarySuccess copyWith({
     Map<String, List<WordModel>>? allWordsByLetters,
     Map<String, List<WordModel>>? filteredWordsByLetters,
+    List<String>? categories,
     String? searchQuery,
     String? selectedLetter,
     String? selectedCategory,
@@ -35,6 +40,7 @@ final class DictionarySuccess extends DictionaryState {
       allWordsByLetters: allWordsByLetters ?? this.allWordsByLetters,
       filteredWordsByLetters:
           filteredWordsByLetters ?? this.filteredWordsByLetters,
+      categories: categories ?? this.categories,
       searchQuery: searchQuery ?? this.searchQuery,
       selectedLetter: clearLetter ? null: (selectedLetter ?? this.selectedLetter),
       selectedCategory: clearCategory? null: (selectedCategory ?? this.selectedCategory),

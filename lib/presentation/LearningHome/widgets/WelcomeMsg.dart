@@ -29,7 +29,11 @@ class WelcomeMsg extends StatelessWidget {
             MaterialPageRoute(builder: (_) => ProfileScreen()),
           );
         },
-        child: Image.asset('Assets/images/settings.png'),
+        child: Image.asset(
+          'Assets/images/settings.png',
+          width: 36,
+          height: 36,
+        ),
       ),
     );
   }

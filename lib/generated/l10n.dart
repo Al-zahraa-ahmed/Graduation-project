@@ -1624,6 +1624,26 @@ class S {
     );
   }
 
+  /// `Google sign-in failed. Please try again.`
+  String get google_sign_in_failed {
+    return Intl.message(
+      'Google sign-in failed. Please try again.',
+      name: 'google_sign_in_failed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Couldn't get a valid Google token. Please try again.`
+  String get google_no_id_token {
+    return Intl.message(
+      'Couldn\'t get a valid Google token. Please try again.',
+      name: 'google_no_id_token',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `No media`
   String get video_no_media {
     return Intl.message('No media', name: 'video_no_media', desc: '', args: []);

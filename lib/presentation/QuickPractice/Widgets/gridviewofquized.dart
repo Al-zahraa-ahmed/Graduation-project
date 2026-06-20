@@ -12,21 +12,32 @@ class GridviewOfQuiz extends StatelessWidget {
     return BlocBuilder<QuizCubit, QuizState>(
       builder: (context, state) {
         if (state is QuizLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const SizedBox(
+            height: 240,
+            child: Center(child: CircularProgressIndicator()),
+          );
         }
         if (state is QuizError) {
-          return _QuizErrorState(
-            onRetry: () => context.read<QuizCubit>().loadQuizzes(),
+          return SizedBox(
+            height: 240,
+            child: _QuizErrorState(
+              onRetry: () => context.read<QuizCubit>().loadQuizzes(),
+            ),
           );
         }
         if (state is QuizzesLoaded) {
           final quizzes = state.quizzes;
           if (quizzes.isEmpty) {
-            return Center(child: Text(S.of(context).quiz_no_quizzes));
+            return SizedBox(
+              height: 240,
+              child: Center(child: Text(S.of(context).quiz_no_quizzes)),
+            );
           }
           return GridView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               mainAxisSpacing: 20,
               crossAxisSpacing: 20,
               crossAxisCount: 2,

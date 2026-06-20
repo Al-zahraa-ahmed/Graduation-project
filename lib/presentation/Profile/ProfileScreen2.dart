@@ -32,6 +32,18 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
+  void initState() {
+    super.initState();
+    // Defensive: if the user lands here before the app-level getMainData
+    // (e.g. cold-start with a token but main.dart's bloc was rebuilt), make
+    // sure we kick off the fetch instead of showing a blank body.
+    final cubit = context.read<ProfileCubit>();
+    if (cubit.state is ProfileInitial) {
+      cubit.getMainData();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffEAEAFA),
@@ -67,7 +79,10 @@ class ProfileScreenBlocBuilder extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        if (state is ProfileLoading) {
+        // Initial (before fetch starts) and Loading both show the spinner
+        // so the user never sees a half-rendered profile with placeholder
+        // text while the network is in flight.
+        if (state is ProfileInitial || state is ProfileLoading) {
           return const Center(child: CircularProgressIndicator());
         }
         if (state is ProfileSucces) {
@@ -77,11 +92,64 @@ class ProfileScreenBlocBuilder extends StatelessWidget {
           return ProfileScreenBody(user: state.user);
         }
         if (state is ProfileFailure) {
-          return ProfileScreenBody();
+          return _ProfileErrorState(
+            message: state.errmsg,
+            onRetry: () => context.read<ProfileCubit>().getMainData(),
+          );
         }
 
         return const SizedBox.shrink();
       },
+    );
+  }
+}
+
+class _ProfileErrorState extends StatelessWidget {
+  const _ProfileErrorState({required this.message, required this.onRetry});
+  final String message;
+  final VoidCallback onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.error_outline_rounded,
+              size: 64,
+              color: Colors.red.shade300,
+            ),
+            const SizedBox(height: 12),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey.shade700,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              onPressed: onRetry,
+              icon: const Icon(Icons.refresh_rounded, size: 18),
+              label: Text(S.of(context).retry),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xff8484E1),
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -183,99 +251,8 @@ class ProfileScreenBody extends StatelessWidget {
   void _showDeleteDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder: (dialogContext) {
-        return Dialog(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  S.of(context).delete_title,
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 12),
-                Text(
-                  S.of(context).delete_desc,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                  ),
-                ),
-                SizedBox(height: 24),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    onPressed: () async {
-                      try {
-                        final cubit = context.read<ProfileCubit>();
-                        await cubit.deleteAccount();
-                        await CacheHelper.removeData("token");
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (_) => Loginscreen()),
-                          (route) => false,
-                        );
-                      } catch (e) {
-                        Navigator.pop(dialogContext);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(S.of(context).profile_load_error)),
-                        );
-                      }
-                    },
-                    child: Text(
-                      S.of(context).delete_btn1,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 10),
-                SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xffD9D9D9),
-                      padding: EdgeInsets.symmetric(vertical: 14),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      elevation: 0,
-                    ),
-                    onPressed: () => Navigator.pop(dialogContext),
-                    child: Text(
-                      S.of(context).delete_btn2,
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      },
+      barrierDismissible: false,
+      builder: (_) => const _DeleteAccountDialog(),
     );
   }
 
@@ -290,6 +267,7 @@ class ProfileScreenBody extends StatelessWidget {
             ProfileContainer(
               email: user?.email ?? "email",
               username: user?.username,
+              imgUrl: user?.img,
             ),
             SectionTitle(title: S.of(context).account_title),
             SectionContainer(
@@ -334,6 +312,128 @@ class ProfileScreenBody extends StatelessWidget {
               ontap: () {
                 _showDeleteDialog(context);
               },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Confirmation dialog for account deletion.
+///
+/// Stateful so it can: show an in-button spinner during the network call,
+/// guard against double-taps, and use `mounted` checks instead of a raw
+/// BuildContext across the async gap.
+class _DeleteAccountDialog extends StatefulWidget {
+  const _DeleteAccountDialog();
+
+  @override
+  State<_DeleteAccountDialog> createState() => _DeleteAccountDialogState();
+}
+
+class _DeleteAccountDialogState extends State<_DeleteAccountDialog> {
+  bool _loading = false;
+
+  Future<void> _confirmDelete() async {
+    if (_loading) return;
+    setState(() => _loading = true);
+    try {
+      await context.read<ProfileCubit>().deleteAccount();
+      await CacheHelper.removeData("token");
+      if (!mounted) return;
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => Loginscreen()),
+        (route) => false,
+      );
+    } catch (_) {
+      if (!mounted) return;
+      setState(() => _loading = false);
+      AppSnackBar.error(context, S.of(context).something_went_wrong);
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.white,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              S.of(context).delete_title,
+              style: const TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              S.of(context).delete_desc,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+            const SizedBox(height: 24),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                ),
+                onPressed: _loading ? null : _confirmDelete,
+                child: _loading
+                    ? const SizedBox(
+                        height: 22,
+                        width: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          color: Colors.white,
+                        ),
+                      )
+                    : Text(
+                        S.of(context).delete_btn1,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xffD9D9D9),
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 0,
+                ),
+                // Block cancel mid-request so we don't leave an orphaned
+                // delete call racing against a dismissed dialog.
+                onPressed: _loading ? null : () => Navigator.pop(context),
+                child: Text(
+                  S.of(context).delete_btn2,
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
             ),
           ],
         ),

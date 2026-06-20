@@ -4,24 +4,34 @@
 
 ## Last Full Scan
 
-- **Date:** 2026-05-23 (incremental refresh; previous full scan 2026-05-08)
-- **Commit:** `ef92bb51e0a7bb412e27637fe958cc3e19baacb3` (unchanged since 2026-05-08 — nothing has been pushed/committed in the interim)
+- **Date:** 2026-06-18 (incremental refresh; previous refresh 2026-05-23; full scan 2026-05-08)
+- **Commit:** `fa06aa3` (the big audit-pass batch that was uncommitted at the last two snapshots has **finally landed** — `ef92bb5` → `fa06aa3`; debt #9 largely resolved)
 - **Branch:** `main`
-- **Working tree:** dirty — **43 modified files**, 2 deleted (`VerifyForgetPass` cubit + state), 1 new untracked (`.product/progress.md`); the two Core utilities (`AppSnackBar.dart`, `Validators.dart`) introduced in the previous snapshot are **still untracked** after 15 days
+- **Working tree:** dirty — 11 modified + 1 new untracked feature folder (`lib/business_logic/Auth/GoogleAuth/`). Modified: categories_cubit, dictionary_cubit, GoogleOrFacebook.dart, the 4 localization files, gradle.properties, pubspec.yaml/lock, a macOS plugin registrant. `AppSnackBar.dart` + `Validators.dart` are now **committed** (no longer untracked).
+
+## Changes since 2026-05-23 refresh
+
+- **Audit-pass batch committed** as `fa06aa3` — Login/SignUp hardening, Core utilities, OtpCubit consolidation, Profile/UserModel fixes are now in git history (was the #1 process risk).
+- **NEW feature — Google Sign-In:** `lib/business_logic/Auth/GoogleAuth/{google_auth_cubit,google_auth_state}.dart` (untracked). Adds `google_sign_in: ^6.2.1`. Hits `POST /api/auth/google` with the Google `id_token`; backend returns a different envelope than `/api/login` (`access_token` + flat `user`, no `data` wrapper). Wired into the SignUp `GoogleOrFacebook` widget.
+- **NEW feature — Connectivity gate:** `lib/Core/CustomWidgets/ConnectivityGate.dart` + `connectivity_plus: ^6.0.0`. Wraps the whole app in `main.dart` (composed with DevicePreview's builder) to show a NoConnection overlay above the navigator app-wide.
+- **NEW cubit — QuickResponse:** `business_logic/QuickResponse/{quick_response_cubit,quick_response_state}.dart`.
+- **TODO/FIXME count → 0** (was 3).
+- **Prod deps 19 → 21** (google_sign_in, connectivity_plus).
 
 ## Counts
 
 | Metric | Value | Δ since 2026-05-08 |
 |--------|-------|--------------------|
-| Dart files in `lib/` | **137** | −2 (VerifyForgetPass cubit + state removed) |
+| Dart files in `lib/` | **144** | +7 (GoogleAuth ×2, QuickResponse ×2, ConnectivityGate, + others) |
 | Dart files in `test/` | 1 | — |
-| Cubit pairs | **13** (Auth×**5**, Categories, Dictionary, Lessons, Profile, Quiz, Search, SendFrames, VoiceTranslation) | −1 (VerifyForgetPassCubit folded into OtpCubit; `verify-forget-otp` endpoint now lives on OtpCubit) |
+| Cubit pairs | **15** (Auth×**6** incl. GoogleAuth, Categories, Dictionary, Lessons, Profile, Quiz, QuickResponse, Search, SendFrames, VoiceTranslation) | +2 (GoogleAuth, QuickResponse) |
 | Screen files in `lib/presentation/` | 80 (incl. widgets) — 22 feature folders | — |
 | Data models | 7 | — |
 | API services | 6 (Api_Service, HandLandmarker, mediapipe_hand_service, QuizApiService, UserApiService, sign_language_classifier) | — |
 | Repositories | 1 (AuthRepo only — still empty) | — |
-| Production deps in pubspec.yaml | 19 | — |
-| TODO / FIXME / HACK / XXX comments | **3** (DictionaryPage, CategouriesPage, lessonScreen) | −2 (main.dart listener TODO removed; one more elsewhere) |
+| Production deps in pubspec.yaml | **21** | +2 (google_sign_in, connectivity_plus) |
+| TODO / FIXME / HACK / XXX comments | **0** | −3 |
+| `print(...)` debug calls in `lib/` | **46** | ~+20 (GoogleAuth cubit is heavily instrumented) |
 | Target platforms scaffolded | 6 (android, ios, web, windows, macos, linux) | — |
 | Total `lib/` LOC | ~16,480 (incl. ~3,000 generated) | +295 (audit-pass churn) |
 

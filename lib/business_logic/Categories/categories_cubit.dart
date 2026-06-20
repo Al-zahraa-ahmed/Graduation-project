@@ -165,11 +165,13 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     emit(CategoriesLoading());
     try {
       final all = await categoriesApi.getCategories();
+      if (isClosed) return;
       emit(CategoriesSuccess(all: all, visible: all));
     } on DioException catch (e) {
       print("STATUS: ${e.response?.statusCode}");
       print("DATA: ${e.response?.data}");
       print("MESSAGE: ${e.message}");
+      if (isClosed) return;
       emit(CategoriesError('Failed to load categories'));
     }
   }

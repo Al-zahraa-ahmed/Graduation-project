@@ -31,10 +31,10 @@ dependencies:
   bloc: ^9.2.0
   cached_network_image: ^3.4.1
   connectivity_plus: ^6.0.0
+  google_sign_in: ^6.2.1
   camera: ^0.11.3
   chewie: ^1.13.0
   cupertino_icons: ^1.0.8
-  device_preview: ^1.3.1
   dio: ^5.9.1
   dots_indicator: ^4.0.1
   flutter_tts: ^4.2.0
@@ -44,6 +44,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_svg: ^2.0.10
+  external_app_launcher: ^4.0.0
   onnxruntime: ^1.4.1
   image_picker: ^1.2.1
   percent_indicator: ^4.2.5
@@ -56,8 +57,22 @@ dependencies:
 
 dev_dependencies:
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.1
   flutter_test:
     sdk: flutter
+
+# Generates Android / iOS launcher icons from a single source PNG.
+# Run: dart run flutter_launcher_icons
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "Assets/images/signlingohand.png"
+  min_sdk_android: 21
+  adaptive_icon_background: "#EAEAFA"
+  adaptive_icon_foreground: "Assets/images/signlingohand.png"
+
+# Native splash intentionally NOT configured — we want a plain white screen
+# during cold start, then the animated Dart SplashScreen takes over.
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

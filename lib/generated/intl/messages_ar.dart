@@ -150,6 +150,12 @@ class MessageLookup extends MessageLookupByLibrary {
       "هل نسيت كلمة المرور؟",
     ),
     "forget_title": MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
+    "google_no_id_token": MessageLookupByLibrary.simpleMessage(
+      "تعذّر الحصول على رمز Google صالح، حاول مرة أخرى.",
+    ),
+    "google_sign_in_failed": MessageLookupByLibrary.simpleMessage(
+      "فشل تسجيل الدخول بحساب Google، حاول مرة أخرى.",
+    ),
     "hand_landmarks": MessageLookupByLibrary.simpleMessage(
       "معالم اليد اللحظية",
     ),

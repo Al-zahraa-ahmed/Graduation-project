@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
+import 'package:graduation_project/Core/Network/auth_interceptor.dart';
 import 'package:graduation_project/data/Models/ProfileModel.dart';
 import 'package:graduation_project/data/Models/UserModel.dart';
 
@@ -26,6 +27,8 @@ class UserApiService {
         },
       ),
     );
+    // On 401 (stale/expired/revoked token), clear it and bounce to login.
+    dio.interceptors.add(AuthInterceptor());
   }
 
   Future<void> selectModeFirstTime({required String mode}) async {
@@ -95,11 +98,14 @@ class UserApiService {
 
   Future<void> deleteAccount() async {
     try {
-      await dio.post("delete-account");
+      // Backend route only accepts DELETE (POST returns 405).
+      await dio.delete("delete-account");
     } on DioException catch (e) {
-      throw Exception(
-        e.response?.data["message"] ?? "Failed to delete account",
-      );
+      final data = e.response?.data;
+      final msg = (data is Map && data['message'] != null)
+          ? data['message'].toString()
+          : 'Failed to delete account';
+      throw Exception(msg);
     }
   }
 

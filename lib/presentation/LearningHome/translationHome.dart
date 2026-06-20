@@ -47,7 +47,10 @@ class Translationhome extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
                     children: [
-                      GestureDetector(
+                      HomeService(
+                        txt1: S.of(context).home2_service1,
+                        txt2: S.of(context).home2_service1_desc,
+                        img: "Assets/images/videotranslation.png",
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -57,36 +60,27 @@ class Translationhome extends StatelessWidget {
                             ),
                           ),
                         ),
-                        child: HomeService(
-                          txt1: S.of(context).home2_service1,
-                          txt2: S.of(context).home2_service1_desc,
-                          img: "Assets/images/videotranslation.png",
-                        ),
                       ),
-                      GestureDetector(
+                      HomeService(
+                        txt1: S.of(context).home2_service2,
+                        txt2: S.of(context).home2_service2_desc,
+                        img: "Assets/images/voicereco.png",
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) => const VoiceTranslationPage(),
                           ),
                         ),
-                        child: HomeService(
-                          txt1: S.of(context).home2_service2,
-                          txt2: S.of(context).home2_service2_desc,
-                          img: "Assets/images/voicereco.png",
-                        ),
                       ),
-                      GestureDetector(
+                      HomeService(
+                        txt1: S.of(context).home2_service3,
+                        txt2: S.of(context).home2_service3_desc,
+                        img: "Assets/images/quickresponse.png",
                         onTap: () => Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (_) => const QuickResponsePage(),
                           ),
-                        ),
-                        child: HomeService(
-                          txt1: S.of(context).home2_service3,
-                          txt2: S.of(context).home2_service3_desc,
-                          img: "Assets/images/quickresponse.png",
                         ),
                       ),
                     ],

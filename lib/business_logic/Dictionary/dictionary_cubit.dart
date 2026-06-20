@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:graduation_project/Core/Errors/ApiExceptions.dart';
 import 'package:graduation_project/business_logic/Categories/categories_cubit.dart';
 import 'package:graduation_project/business_logic/Search/cubit/search_cubit.dart';
 import 'package:graduation_project/data/Models/WordModel.dart';
@@ -39,10 +40,21 @@ class DictionaryCubit extends Cubit<DictionaryState> {
     emit(DictionaryLoading());
     try {
       final response = await categoriesApi.getDictionary();
+      if (isClosed) return;
+
+      // Precompute the distinct category list once so the category strip
+      // can read it as O(1) instead of expand+map+toSet on every rebuild.
+      final categories = response.values
+          .expand((list) => list)
+          .map((w) => w.category)
+          .where((c) => c.isNotEmpty)
+          .toSet()
+          .toList();
 
       final loaded = DictionarySuccess(
         allWordsByLetters: response,
         filteredWordsByLetters: response,
+        categories: categories,
         searchQuery: initialQuery ?? '',
       );
 
@@ -54,11 +66,8 @@ class DictionaryCubit extends Cubit<DictionaryState> {
         emit(loaded);
       }
     } on DioException catch (e) {
-      emit(
-        DictionaryFailure(
-          errmsg: e.message ?? 'Something went wrong',
-        ),
-      );
+      if (isClosed) return;
+      emit(DictionaryFailure(errmsg: ApiException.fromDio(e).message));
     }
   }
 
@@ -112,6 +121,7 @@ class DictionaryCubit extends Cubit<DictionaryState> {
   }
 
   void _applyFilters(DictionarySuccess current) {
+    if (isClosed) return;
     final query = current.searchQuery.trim().toLowerCase();
     final selectedLetter = current.selectedLetter;
     final selectedCategory = current.selectedCategory;

@@ -17,15 +17,17 @@ class ChooseMode extends StatefulWidget {
 class _ChooseModeState extends State<ChooseMode> {
   bool isExpanded = false;
 
+  /// Cache is the source of truth for the active mode (matches main.dart's
+  /// MaterialApp home routing). State is only used as a fallback before the
+  /// cache has been initialized, so the checkmark always lines up with the
+  /// home screen the user is actually using.
   String _currentMode(ProfileState state) {
-    if (state is ProfileSucces) return state.user.mode ?? _cacheMode();
-    if (state is ProfilePrefUpdateFailed) {
-      return state.user.mode ?? _cacheMode();
-    }
-    return _cacheMode();
+    final cache = CacheHelper.getData('mode') as String?;
+    if (cache != null && cache.isNotEmpty) return cache;
+    if (state is ProfileSucces) return state.user.mode ?? 'l';
+    if (state is ProfilePrefUpdateFailed) return state.user.mode ?? 'l';
+    return 'l';
   }
-
-  String _cacheMode() => CacheHelper.getData('mode') as String? ?? 'l';
 
   Future<void> _switchTo(String mode) async {
     final cubit = context.read<ProfileCubit>();
@@ -76,34 +78,40 @@ class _ChooseModeState extends State<ChooseMode> {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(S.of(context).mode_learn,
-                            style: TextStyle(fontSize: 16)),
-                        InkWell(
-                          onTap: () {
-                            if (isLearn) return;
-                            _switchTo('l');
-                          },
-                          child: CheckContainer(isselected: isLearn),
+                    InkWell(
+                      onTap: () {
+                        if (isLearn) return;
+                        _switchTo('l');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(S.of(context).mode_learn,
+                                style: TextStyle(fontSize: 16)),
+                            CheckContainer(isselected: isLearn),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
-                    SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(S.of(context).mode_ass,
-                            style: TextStyle(fontSize: 16)),
-                        InkWell(
-                          onTap: () {
-                            if (!isLearn) return;
-                            _switchTo('a');
-                          },
-                          child: CheckContainer(isselected: !isLearn),
+                    SizedBox(height: 4),
+                    InkWell(
+                      onTap: () {
+                        if (!isLearn) return;
+                        _switchTo('a');
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(S.of(context).mode_ass,
+                                style: TextStyle(fontSize: 16)),
+                            CheckContainer(isselected: !isLearn),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ],
                 ),

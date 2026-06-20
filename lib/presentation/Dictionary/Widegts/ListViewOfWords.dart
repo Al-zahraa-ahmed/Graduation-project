@@ -6,8 +6,14 @@ import 'package:graduation_project/data/Models/WordModel.dart';
 import 'package:graduation_project/presentation/ErrorsScreens/NotFound.dart';
 import 'package:graduation_project/presentation/PlayVideo/VideoScreen.dart';
 
-class DictionaryWordsSection extends StatelessWidget {
-  const DictionaryWordsSection({super.key});
+/// Renders the filtered word list as a true sliver so the parent
+/// CustomScrollView can lazy-build word cards as they scroll into view.
+/// When the filter produces no matches, fills the remaining viewport with
+/// a friendly empty state so the layout doesn't collapse to a thin strip.
+class DictionaryWordsSliver extends StatelessWidget {
+  const DictionaryWordsSliver({super.key, required this.emptyState});
+
+  final Widget emptyState;
 
   @override
   Widget build(BuildContext context) {
@@ -20,31 +26,23 @@ class DictionaryWordsSection extends StatelessWidget {
         return true;
       },
       builder: (context, state) {
-        if (state is! DictionarySuccess) return const SizedBox();
-
-        final List<WordModel> filteredWords = state
-            .filteredWordsByLetters
+        if (state is! DictionarySuccess) {
+          return const SliverToBoxAdapter(child: SizedBox.shrink());
+        }
+        final List<WordModel> filteredWords = state.filteredWordsByLetters
             .values
             .expand((list) => list)
             .toList();
-
-        return ListViewOfWords(w: filteredWords);
-      },
-    );
-  }
-}
-
-class ListViewOfWords extends StatelessWidget {
-  const ListViewOfWords({super.key, required this.w});
-  final List<WordModel> w;
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: w.length,
-      itemBuilder: (buildcontext, index) {
-        return WordCard(w: w[index]);
+        if (filteredWords.isEmpty) {
+          return SliverFillRemaining(
+            hasScrollBody: false,
+            child: emptyState,
+          );
+        }
+        return SliverList.builder(
+          itemCount: filteredWords.length,
+          itemBuilder: (context, index) => WordCard(w: filteredWords[index]),
+        );
       },
     );
   }
@@ -82,12 +80,10 @@ class WordCard extends StatelessWidget {
     return Container(
       width: 329,
       height: 87,
-      margin: EdgeInsets.only(left: 32, right: 32, bottom: 16),
-      padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.only(left: 32, right: 32, bottom: 16),
       decoration: BoxDecoration(
-        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             offset: Offset(2, 2),
             color: Color(0xffADADEB),
@@ -96,35 +92,49 @@ class WordCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+      child: Material(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        child: InkWell(
+          onTap: () => _openVideo(context),
+          borderRadius: BorderRadius.circular(12),
+          splashColor: const Color(0x33ADADEB),
+          highlightColor: const Color(0x1AADADEB),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  w.word,
-                  style: Textstyles.medium16,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        w.word,
+                        style: Textstyles.medium16,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                      Text(
+                        w.category,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Color(0xff999999),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-                Text(
-                  w.category,
-                  style: TextStyle(fontSize: 13, color: Color(0xff999999)),
+                const Icon(
+                  Icons.play_circle,
+                  size: 42,
+                  color: Color(0xffADADEB),
                 ),
               ],
             ),
           ),
-          IconButton(
-            padding: EdgeInsets.all(0),
-            iconSize: 42,
-            icon: Icon(Icons.play_circle),
-            color: Color(0xffADADEB),
-            onPressed: () => _openVideo(context),
-          ),
-        ],
+        ),
       ),
     );
   }

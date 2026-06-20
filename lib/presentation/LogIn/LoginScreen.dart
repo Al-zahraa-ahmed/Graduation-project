@@ -10,29 +10,21 @@ class Loginscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => LoginCubit(),
-      child: SafeArea(
-        child: Scaffold(
-          backgroundColor: Color(0xffEAEAFA),
-           resizeToAvoidBottomInset: true,
-          body: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              return SingleChildScrollView(
-                padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom,
-                ),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: constraints.maxHeight),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      children: const [
-                        Spacer(),
-                        LoginContainer(),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            },
+      child: Scaffold(
+        backgroundColor: const Color(0xffEAEAFA),
+        // Keep the sheet anchored at a fixed 70% of the screen even when the
+        // keyboard opens. The SingleChildScrollView inside LoginContainer
+        // scrolls the focused TextField above the keyboard.
+        resizeToAvoidBottomInset: false,
+        // SafeArea applied only at the top so the sheet's bottom edge sits
+        // flush with the bottom of the screen (no gesture-area gap).
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: const [
+              Spacer(),
+              LoginContainer(),
+            ],
           ),
         ),
       ),

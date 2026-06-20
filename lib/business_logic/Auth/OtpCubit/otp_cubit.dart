@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
@@ -5,6 +6,7 @@ import 'package:dio/dio.dart';
 import 'package:graduation_project/Core/Cash_helper/Cash_Helper.dart';
 import 'package:graduation_project/Core/Errors/ApiExceptions.dart';
 import 'package:graduation_project/data/Models/UserModel.dart';
+import 'package:graduation_project/data/Services/UserApiService.dart';
 import 'package:meta/meta.dart';
 
 part 'otp_state.dart';
@@ -62,6 +64,20 @@ class OtpCubit extends Cubit<OtpState> {
       final user = UserModel.fromJson(Map<String, dynamic>.from(userJson));
       await CacheHelper.saveData(key: "token", value: token);
       await CacheHelper.saveData(key: "user", value: jsonEncode(user.toJson()));
+
+      // Persist the mode the user picked during onboarding to the server.
+      // True fire-and-forget — uses a separate UserApiService instance with
+      // its own Dio (not the cubit's dio, which gets force-closed on close()).
+      // `unawaited` + `catchError` keeps any failure from bubbling up as an
+      // unhandled async error after the cubit has emitted Success.
+      final pickedMode = CacheHelper.getData('mode') as String?;
+      if (pickedMode != null && pickedMode.isNotEmpty) {
+        unawaited(
+          UserApiService()
+              .selectModeFirstTime(mode: pickedMode)
+              .catchError((_) {}),
+        );
+      }
 
       if (isClosed) return;
       emit(OtpVerifySuccess(token: token, user: user));

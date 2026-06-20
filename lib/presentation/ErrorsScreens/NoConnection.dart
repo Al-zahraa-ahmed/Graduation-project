@@ -45,11 +45,22 @@ class Noconnection extends StatelessWidget {
             width: 150,
           ),
           SizedBox(height: 30),
-          Text(S.of(context).no_connection, style: Textstyles.medium25),
-          SizedBox(height: 8),
           Text(
-            S.of(context).no_connection_desc,
-            style: TextStyle(color: Color(0xff999999), fontSize: 16),
+            S.of(context).no_connection,
+            style: Textstyles.medium25,
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 8),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            child: Text(
+              S.of(context).no_connection_desc,
+              style: const TextStyle(
+                color: Color(0xff999999),
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
           ),
           SizedBox(height: 36),
           if (!isOverlay)

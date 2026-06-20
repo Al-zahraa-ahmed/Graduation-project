@@ -214,6 +214,8 @@
     "quiz_load_failed":"فشل تحميل الاختبارات",
     "something_went_wrong":"حدث خطأ ما",
     "quiz_share_failed":"تعذّر إنشاء رابط المشاركة، حاول مرة أخرى.",
+    "google_sign_in_failed":"فشل تسجيل الدخول بحساب Google، حاول مرة أخرى.",
+    "google_no_id_token":"تعذّر الحصول على رمز Google صالح، حاول مرة أخرى.",
     "video_no_media":"لا توجد وسائط",
     "review_answers":"مراجعة الإجابات",
 

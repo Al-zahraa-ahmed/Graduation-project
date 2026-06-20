@@ -216,6 +216,8 @@
     "quiz_load_failed":"Failed to load quizzes",
     "something_went_wrong":"Something went wrong",
     "quiz_share_failed":"Couldn't create a share link, please try again.",
+    "google_sign_in_failed":"Google sign-in failed. Please try again.",
+    "google_no_id_token":"Couldn't get a valid Google token. Please try again.",
     "video_no_media":"No media",
     "review_answers":"Review Answers",
 

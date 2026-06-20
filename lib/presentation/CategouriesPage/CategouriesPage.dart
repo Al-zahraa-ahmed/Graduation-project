@@ -55,27 +55,40 @@ class _CaregoryPageBodyState extends State<CaregoryPageBody> {
     return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
         if (state is CategoriesSuccess) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              children: [
-                const SizedBox(height: 20),
-                Search(
-                  onchanged: (value) {
-                    context.read<CategoriesCubit>().search(
-                      value,
-                      isArabic: isArabic(),
-                    );
-                  },
+          // CustomScrollView so the Search scrolls away with the cards;
+          // only the AppBar stays pinned (it's the Scaffold's appBar).
+          return CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 20),
+                      Search(
+                        onchanged: (value) {
+                          context.read<CategoriesCubit>().search(
+                            value,
+                            isArabic: isArabic(),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 36),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 36),
-                Expanded(
-                  child: state.visible.isEmpty
-                      ? const _NoResultsState()
-                      : GridOfCards(l: state.visible),
+              ),
+              if (state.visible.isEmpty)
+                const SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: _NoResultsState(),
+                )
+              else
+                SliverPadding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                  sliver: GridOfCards(l: state.visible),
                 ),
-              ],
-            ),
+            ],
           );
         } else if (state is CategoriesError) {
           return _ErrorState(
