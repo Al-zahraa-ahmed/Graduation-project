@@ -212,10 +212,14 @@ class _SplashScreenState extends State<SplashScreen>
                 const SizedBox(height: 16),
                 // Letter-by-letter reveal: each glyph fades + slides up
                 // on its own staggered interval within _textReveal.
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: List.generate(_word.length, (i) {
+                // Force LTR so the SignLingo wordmark always reads left-to-
+                // right, even when the app locale is Arabic (RTL).
+                Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisSize: MainAxisSize.min,
+                    children: List.generate(_word.length, (i) {
                     return FadeTransition(
                       opacity: _letterAnims[i],
                       child: SlideTransition(
@@ -233,7 +237,8 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                       ),
                     );
-                  }),
+                    }),
+                  ),
                 ),
               ],
             ),

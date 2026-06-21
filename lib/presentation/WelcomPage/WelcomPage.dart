@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_project/Core/TextStyles/TextStyles.dart';
 import 'package:graduation_project/generated/l10n.dart';
 import 'package:graduation_project/Core/CustomWidgets/MultiColorText.dart';
+import 'package:graduation_project/main.dart';
 import 'package:graduation_project/presentation/LogIn/LoginScreen.dart';
 import 'package:graduation_project/presentation/SignUp/SignUpScreen.dart';
 
@@ -85,8 +86,10 @@ class Platform_Mode_Welcome_Page extends StatelessWidget {
                     );
                   },
                   child: MultiColorText2(
-                    txt1: "Already have an account?",
-                    txt2: "Log in",
+                    txt1: isArabic()
+                        ? "هل لديك حساب بالفعل؟"
+                        : "Already have an account?",
+                    txt2: isArabic() ? "تسجيل الدخول" : "Log in",
                   ),
                 ),
               ],

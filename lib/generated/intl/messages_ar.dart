@@ -474,16 +474,16 @@ class MessageLookup extends MessageLookupByLibrary {
     "screen6_desc": MessageLookupByLibrary.simpleMessage(
       ".يساعدك هذا الوضع على التواصل فورًا باستخدام الترجمة اللحظية",
     ),
-    "screen6_title": MessageLookupByLibrary.simpleMessage(
-      "مرحبًا بك في الوضع المساعد",
-    ),
+    "screen6_title": MessageLookupByLibrary.simpleMessage("مرحبًا بك"),
+    "screen6_transmode": MessageLookupByLibrary.simpleMessage("في وضع الترجمة"),
     "screen7": MessageLookupByLibrary.simpleMessage("ويلكم 2"),
     "screen7_desc": MessageLookupByLibrary.simpleMessage(
       ".يساعدك هذا الوضع على تعلم لغة الإشارة خطوة بخطوة من خلال محتوى تفاعلي",
     ),
-    "screen7_title": MessageLookupByLibrary.simpleMessage(
-      "مرحبًا بك في وضع التعلم",
+    "screen7_platformmode": MessageLookupByLibrary.simpleMessage(
+      "في وضع التعليم",
     ),
+    "screen7_title": MessageLookupByLibrary.simpleMessage("مرحبًا بك"),
     "screen8": MessageLookupByLibrary.simpleMessage("التسجيل"),
     "screen9": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
     "select_all": MessageLookupByLibrary.simpleMessage("تحديد الكل"),

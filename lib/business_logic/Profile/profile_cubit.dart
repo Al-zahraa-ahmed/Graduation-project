@@ -27,18 +27,18 @@ class ProfileCubit extends Cubit<ProfileState> {
     try {
       final response = await userApi.getUserMainData();
       if (isClosed) return;
-      // First-login sync: if the device has no cached locale/mode yet, adopt
-      // the server's values so a fresh device matches the account's prefs.
-      // Once cached, the local choice wins and is only updated via
-      // [changelang]/[changeMode].
-      if (CacheHelper.getData('lang') == null &&
-          response.language != null &&
-          response.language!.isNotEmpty) {
+      // Server is canonical for user preferences. Overwrite the local cache
+      // with the server's values so SplashScreen routing, the ChooseMode /
+      // ChooseLanguage checkmarks, and the no-op short-circuit in
+      // [changelang] / [changeMode] all agree on the same value. If cache
+      // and state drift apart, the no-op check (prevUser.field == newValue)
+      // can skip the API call entirely and the UI shows a stale cached
+      // value forever — the original symptom: tapping a mode toggle
+      // navigates to the new home but the server never receives the change.
+      if (response.language != null && response.language!.isNotEmpty) {
         await CacheHelper.saveData(key: 'lang', value: response.language!);
       }
-      if (CacheHelper.getData('mode') == null &&
-          response.mode != null &&
-          response.mode!.isNotEmpty) {
+      if (response.mode != null && response.mode!.isNotEmpty) {
         await CacheHelper.saveData(key: 'mode', value: response.mode!);
       }
       emit(ProfileSucces(user: response));

@@ -6,7 +6,8 @@ import 'package:graduation_project/presentation/Appmodes/ChooseAppMode.dart';
 import 'package:graduation_project/presentation/onboarding/Widgets/Screen.dart';
 
 /// Slide-from-right + fade. Used for onboarding step → step and the final
-/// step → OnboardingMode so each transition has the same feel.
+/// step → OnboardingMode so each transition has the same feel — regardless
+/// of locale, the new screen enters from the right.
 PageRoute<T> _slideForwardRoute<T>(Widget next) {
   return PageRouteBuilder<T>(
     pageBuilder: (_, __, ___) => next,
@@ -96,10 +97,16 @@ class Onboardingscreen extends StatelessWidget {
                   txt2: current.desc,
                 ),
               ),
-              DotsIndicator(
-                dotsCount: _totalSteps,
-                position: index.toDouble(),
-                decorator: const DotsDecorator(),
+              // Force LTR so the dots always read left → right (the active
+              // dot starts on the left and advances rightward) regardless
+              // of the app locale.
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: DotsIndicator(
+                  dotsCount: _totalSteps,
+                  position: index.toDouble(),
+                  decorator: const DotsDecorator(),
+                ),
               ),
               const SizedBox(height: 20),
               CustomButton(
